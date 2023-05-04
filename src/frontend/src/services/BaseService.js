@@ -1,4 +1,4 @@
-import Http from "./http.init";
+import Http from "./http.js";
 
 export default class BaseService {
     constructor() {
