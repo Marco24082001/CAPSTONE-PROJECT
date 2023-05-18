@@ -2,17 +2,38 @@
     <div class="login">
         <el-card>
             <h2>Login</h2>
-            <el-form class="login-form" :model="model" :rules="rules" ref="form" @submit.enter.prevent="login">
+            <el-form
+                class="login-form"
+                :model="model"
+                :rules="rules"
+                ref="form"
+                @submit.enter.prevent="login"
+            >
                 <el-form-item prop="email">
-                    <el-input v-model="model.email" placeholder="email" :prefix-icon="ICONS.User"> </el-input>
+                    <el-input v-model="model.email" placeholder="email" :prefix-icon="ICONS.User">
+                    </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="model.password" placeholder="Password" type="password" :prefix-icon="ICONS.Lock"></el-input>
+                    <el-input
+                        v-model="model.password"
+                        placeholder="Password"
+                        type="password"
+                        :prefix-icon="ICONS.Lock"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button :loading="loading" class="login-button" type="primary" native-type="submit" block>Login</el-button>
+                    <el-button
+                        :loading="loading"
+                        class="login-button"
+                        type="primary"
+                        native-type="submit"
+                        block
+                        >Login</el-button
+                    >
                 </el-form-item>
-                <a class="forgot-password" href="https://oxfordinformatics.com/">Forgot password ?</a>
+                <a class="forgot-password" href="https://oxfordinformatics.com/"
+                    >Forgot password ?</a
+                >
             </el-form>
         </el-card>
     </div>
@@ -85,14 +106,11 @@ export default {
                 return;
             }
             const res = await AuthenticationService.login(this.model);
-            console.log("ngoaile");
-            console.log(res);
             if (res.status === 200) {
                 this.$router.push("/");
             } else {
                 ElMessage.error("Tài khoản mật khẩu không đúng!");
             }
-            // if ()
         },
     },
 };

@@ -1,14 +1,14 @@
 import BaseService from "../BaseService";
 import jwt_decode from "jwt-decode";
 
-import { storeTokenToVuex } from "@/helper/storeHelper";
+import { storeTokenToVuex, storeCurrentUserToVuex } from "@/helper/storeHelper";
 class AuthenticationService extends BaseService {
     get entity() {
         return "auth";
     }
 
     async login(data) {
-        const res = this.request()
+        const post_login = this.request()
             .post(`/${this.entity}/login/`, data)
             .then(
                 (response) => {
@@ -18,15 +18,14 @@ class AuthenticationService extends BaseService {
                     return error.response;
                 }
             );
+        const res = await post_login
+
+        console.log(res)
         if (res.status === 200) {
-            console.log(jwt_decode(res.data.access));
+            console.log(jwt_decode(res.data.access))
             storeTokenToVuex(res.data);
+            storeCurrentUserToVuex(jwt_decode(res.data.access));
         }
-        // if (!res.data.error) {
-        //     storeTokenToVuex(res.data);
-        //     const currentUser = (await this.getCurrentUser()).data.response;
-        //     storeCurrentUserToVuex(currentUser);
-        // }
         return res;
     }
 
