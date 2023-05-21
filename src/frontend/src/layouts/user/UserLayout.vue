@@ -29,6 +29,7 @@ export default {
     margin-top: 5rem;
 }
 .main-panel {
+    margin-top: 4rem;
     color: var(--cs-color-contrast-900);
 }
 </style>
