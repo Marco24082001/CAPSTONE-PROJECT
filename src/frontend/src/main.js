@@ -13,4 +13,4 @@ app.use(ElementPlus);
 app.use(router);
 // app.use(PaperDashboard);
 app.use(store);
-app.mount("#app");
+app.mount("#app"); 

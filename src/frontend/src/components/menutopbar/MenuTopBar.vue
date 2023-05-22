@@ -18,7 +18,9 @@
         </ul>
 
         <div v-if="!user.currentUser.user_id" class="header-btn">
-            <router-link to="/register" class="sign-up" :class="user.currentUser.first_name">Sign Up</router-link>
+            <router-link to="/register" class="sign-up" :class="user.currentUser.first_name"
+                >Sign Up</router-link
+            >
             <router-link to="/login" class="sign-in">Sign In</router-link>
         </div>
         <div v-else class="profile-menu">
@@ -57,7 +59,10 @@
                 active-value="dark"
                 inactive-value="default"
                 active-color="var(--cs-color-secondary)"
-                style="--el-switch-on-color: var(--cs-color-contrast-400); --el-switch-off-color: var(--cs-color-contrast-400)"
+                style="
+                    --el-switch-on-color: var(--cs-color-contrast-400);
+                    --el-switch-off-color: var(--cs-color-contrast-400);
+                "
                 size="small"
             />
         </div>
@@ -67,7 +72,6 @@
 import MenuLink from "./MenuLink.vue";
 import { mapState } from "vuex";
 import AuthenticationService from "@/services/authentication/AuthenticationService.js";
-
 
 export default {
     name: "menu-topbar",
@@ -154,7 +158,7 @@ export default {
         logout: async function () {
             await AuthenticationService.logout();
             this.$router.go();
-        }
+        },
     },
 };
 </script>
@@ -294,7 +298,7 @@ header {
             overflow: hidden;
             transition: max-height 0.5s;
             background-color: var(--cs-color-submenu-background);
-            box-shadow: 0 5px 15px 0 rgba(0,0,0,.1);
+            box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
             border-top: 1px var(--cs-color-contrast-200) solid;
             &.open-menu {
                 max-height: 400px;
@@ -351,7 +355,7 @@ header {
                         transition: transform 0.5s;
                     }
                     &:hover {
-                        color:var(--cs-color-secondary);
+                        color: var(--cs-color-secondary);
                         .bx-chevron-right {
                             transform: translateX(5px);
                         }
