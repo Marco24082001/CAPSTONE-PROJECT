@@ -3,46 +3,46 @@
         <div class="card-projects">
             <div class="card-project">
                 <div class="image">
-                    <img src="@/assets/project_img/earphone.png" alt="" />
+                    <img src="@/assets/project_img/project-0.jpg" alt="" />
                 </div>
                 <div class="namePrice">
-                    <h3>earphone</h3>
-                    <span>$ 15.99</span>
+                    <h3>Chung tay hỗ trợ học</h3>
+                    <!-- <span>$ 15.99</span> -->
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
 
             <div class="card-project">
                 <div class="image">
-                    <img src="@/assets/project_img/earphone.png" alt="" />
+                    <img src="@/assets/project_img/project-2.png" alt="" />
                 </div>
                 <div class="namePrice">
-                    <h3>earphone</h3>
-                    <span>$ 15.99</span>
+                    <h3>Chung tay hỗ trợ học</h3>
+                    <!-- <span>$ 15.99</span> -->
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
 
             <div class="card-project">
                 <div class="image">
-                    <img src="@/assets/project_img/earphone.png" alt="" />
+                    <img src="@/assets/project_img/project-3.jpg" alt="" />
                 </div>
                 <div class="namePrice">
-                    <h3>earphone</h3>
-                    <span>$ 15.99</span>
+                    <h3>Chung tay hỗ trợ học</h3>
+                    <!-- <span>$ 15.99</span> -->
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
 
             <div class="card-project">
                 <div class="image">
-                    <img src="@/assets/project_img/earphone.png" alt="" />
+                    <img src="@/assets/project_img/project-4.png" alt="" />
                 </div>
                 <div class="namePrice">
-                    <h3>earphone</h3>
-                    <span>$ 15.99</span>
+                    <h3>Chung tay hỗ trợ học</h3>
+                    <!-- <span>$ 15.99</span> -->
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
         </div>
     </div>
@@ -75,22 +75,22 @@ export default {
         justify-content: center;
         flex-wrap: wrap;
         gap: 3rem;
+        .card-project {
+            position: relative;
+            background-color: var(--sectionBack);
+            width: 350px;
+            height: 300px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 20px 40px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
     }
 }
 
-.card-project {
-    position: relative;
-    background-color: var(--sectionBack);
-    width: 350px;
-    height: 300px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 20px 40px;
-    border-radius: 10px;
-    transition: 0.3s;
-}
 .card-project:hover {
     transform: translateY(-15px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
