@@ -2,10 +2,13 @@
     <div class="container">
         <div class="card-projects">
             <div class="card-project">
-                <div class="image">
+                <a
+                    href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
+                    class="image-index"
+                >
                     <img src="@/assets/project_img/project-0.jpg" alt="" />
-                </div>
-                <div class="namePrice">
+                </a>
+                <div class="card-content">
                     <h3>Chung tay hỗ trợ học</h3>
                     <!-- <span>$ 15.99</span> -->
                 </div>
@@ -13,10 +16,10 @@
             </div>
 
             <div class="card-project">
-                <div class="image">
+                <div class="image-index">
                     <img src="@/assets/project_img/project-2.png" alt="" />
                 </div>
-                <div class="namePrice">
+                <div class="card-content">
                     <h3>Chung tay hỗ trợ học</h3>
                     <!-- <span>$ 15.99</span> -->
                 </div>
@@ -24,21 +27,24 @@
             </div>
 
             <div class="card-project">
-                <div class="image">
+                <div class="image-index">
                     <img src="@/assets/project_img/project-3.jpg" alt="" />
                 </div>
-                <div class="namePrice">
-                    <h3>Chung tay hỗ trợ học</h3>
+                <div class="card-content">
+                    <div class="card-meta">Cộng đồng</div>
+                    <h3 class="card-title">Chung tay hỗ trợ học</h3>
+                    <div class="target">400.000.000$</div>
+                    <div class="card-author"><a href="#"> Quỹ học bổng Võ Thành Vĩ </a></div>
                     <!-- <span>$ 15.99</span> -->
                 </div>
                 <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
 
             <div class="card-project">
-                <div class="image">
+                <div class="image-index">
                     <img src="@/assets/project_img/project-4.png" alt="" />
                 </div>
-                <div class="namePrice">
+                <div class="card-content">
                     <h3>Chung tay hỗ trợ học</h3>
                     <!-- <span>$ 15.99</span> -->
                 </div>
@@ -70,7 +76,7 @@ export default {
     .card-projects {
         width: 100%;
         align-self: center;
-        // height: 30%;
+        height: 65vh;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -78,71 +84,65 @@ export default {
         .card-project {
             position: relative;
             background-color: var(--sectionBack);
-            width: 350px;
-            height: 300px;
+            width: 15rem;
+            height: 80%;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px 20px 40px;
-            border-radius: 10px;
+            // padding: 20px 20px 40px;
             transition: 0.3s;
+            &:hover {
+                transform: translateY(-15px);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            }
+            .image-index {
+                display: grid;
+                overflow: hidden;
+                place-content: center;
+                height: 40%;
+                img {
+                    width: 100%;
+                }
+            }
+            .card-content {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
         }
     }
 }
 
-.card-project:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-.image {
-    width: 100%;
-    height: 60%;
-    display: grid;
-    place-content: center;
-}
-.image img {
-    width: 240px;
-}
-.namePrice {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.namePrice h3 {
-    font-size: 2em;
-    text-transform: capitalize;
-    color: var(--textColor);
-}
-.namePrice span {
-    font-size: 1.5em;
-    color: var(--starColor);
-}
-.card-project p {
-    font-size: 18px;
-    line-height: 25px;
-}
-.stars svg {
-    font-size: 1.3em;
-    color: var(--starColor);
-}
-.bay {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-}
-.bay button {
-    padding: 10px 20px;
-    border-radius: 7px;
-    border: none;
-    background-color: var(--textColor);
-    color: var(--sectionBack);
-    font-size: 18px;
-    text-transform: capitalize;
-    cursor: pointer;
-    transition: 0.5s;
-}
-.bay button:hover {
-    transform: scale(1.1);
-}
+// .card-content span {
+//     font-size: 1.5em;
+//     color: var(--starColor);
+// }
+// .card-project p {
+//     font-size: 18px;
+//     line-height: 25px;
+// }
+// .stars svg {
+//     font-size: 1.3em;
+//     color: var(--starColor);
+// }
+// .bay {
+//     position: absolute;
+//     bottom: 20px;
+//     right: 20px;
+// }
+// .bay button {
+//     padding: 10px 20px;
+//     border-radius: 7px;
+//     border: none;
+//     background-color: var(--textColor);
+//     color: var(--sectionBack);
+//     font-size: 18px;
+//     text-transform: capitalize;
+//     cursor: pointer;
+//     transition: 0.5s;
+// }
+// .bay button:hover {
+//     transform: scale(1.1);
+// }
 </style>
