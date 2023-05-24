@@ -9,12 +9,83 @@
                     <img src="@/assets/project_img/project-0.jpg" alt="" />
                 </a>
                 <div class="cp-content">
-                    <h3>Chung tay hỗ trợ học</h3>
+                    <div class="cp-meta">
+                        <a href="/#">Cộng đồng</a>
+                    </div>
+                    <h2 class="cp-title">
+                        <a
+                            href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
+                            >Chung tay hỗ trợ học</a
+                        >
+                    </h2>
+                    <div class="cp-progressbar"></div>
                     <!-- <span>$ 15.99</span> -->
+                    <div class="cp-details">
+                        <div class="cp-details-data">
+                            <a class="cp-author-avatar" href="#">
+                                <img
+                                    src="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
+                                />
+                            </a>
+                            <div class="cp-details-meta">
+                                <div class="cp-author-meta">
+                                    <a href="/#">Quỹ Xã hội Phan Anh</a>
+                                </div>
+                                <div class="cp-post-meta">
+                                    <div class="cp-meta-date">Tháng 26, 2020</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cp-target"><span>100000 $</span></div>
+                    </div>
                 </div>
                 <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
             </div>
 
+            <div class="cp-project">
+                <a
+                    href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
+                    class="image-index"
+                >
+                    <img src="@/assets/project_img/project-3.jpg" alt="" />
+                </a>
+                <div class="cp-content">
+                    <div class="cp-meta">
+                        <a href="/#">Cộng đồng</a>
+                    </div>
+                    <h2 class="cp-title">
+                        <a
+                            href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
+                            >Chung tay hỗ trợ học</a
+                        >
+                    </h2>
+                    <div class="cp-progressbar">
+                        <div class="neo-progressbar">
+                            <div style="width: 5%"></div>
+                        </div>
+                    </div>
+                    <!-- <span>$ 15.99</span> -->
+                    <div class="cp-details">
+                        <div class="cp-details-data">
+                            <a class="cp-author-avatar" href="#">
+                                <img
+                                    src="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
+                                />
+                            </a>
+                            <div class="cp-details-meta">
+                                <div class="cp-author-meta">
+                                    <a href="/#">Quỹ Xã hội Phan Anh</a>
+                                </div>
+                                <div class="cp-post-meta">
+                                    <div class="cp-meta-date">Tháng 26, 2020</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cp-target"><span>100000 $</span></div>
+                    </div>
+                </div>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
+            </div>
             <div class="cp-project">
                 <a
                     href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
@@ -179,28 +250,46 @@ export default {
                             font-style: var(--cs-font-post-meta-style);
                             letter-spacing: var(--cs-font-post-meta-letter-spacing);
                             text-transform: var(--cs-font-post-meta-text-transform);
+                            .cp-author-meta a {
+                                font-weight: 500;
+                                color: var(--cs-color-meta-links, var(--cs-color-primary));
+                                &:hover {
+                                    color: var(
+                                        --cs-color-meta-links-hover,
+                                        var(--cs-color-secondary)
+                                    );
+                                }
+                            }
                             .cp-post-meta {
-                                // flex: 0 0 100%;
-                                // width: 100%;
+                                display: flex;
+                                align-items: center;
+                                flex-wrap: wrap;
+                                transition: 0.25s;
+                                color: var(--cs-color-meta);
+                                font-family: var(--cs-font-post-meta-family), sans-serif;
+                                font-size: var(--cs-font-post-meta-size);
+                                font-weight: var(--cs-font-post-meta-weight);
+                                font-style: var(--cs-font-post-meta-style);
+                                letter-spacing: var(--cs-font-post-meta-letter-spacing);
+                                text-transform: var(--cs-font-post-meta-text-transform);
                             }
                         }
                     }
 
                     .cp-target {
                         span {
-                            // display: inline-flex;
-                            // align-items: center;
-                            // justify-content: center;
-                            // text-decoration: none;
-                            // border: none;
-                            // border-radius: var(--cs-primary-border-radius);
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            text-decoration: none;
+                            border: none;
+                            border-radius: var(--cs-primary-border-radius);
                             line-height: 1rem;
                             transition: 0.25s;
                             box-shadow: none;
                             cursor: pointer;
                             padding: 0.75rem 1.5rem;
                             border-radius: var(--cs-primary-border-radius);
-                            --cs-color-style: var(--cs-color-button-contrast);
                             --cs-color-style-contrast: var(--cs-color-button);
                             --cs-color-style-border: var(--cs-color-contrast-200);
                             --cs-color-style-hover: var(--cs-color-button);
@@ -215,6 +304,11 @@ export default {
                             font-style: var(--cs-font-primary-style);
                             letter-spacing: var(--cs-font-primary-letter-spacing);
                             text-transform: var(--cs-font-primary-text-transform);
+                            &:hover {
+                                border: 1px solid var(--cs-color-style-hover-border);
+                                background-color: var(--cs-color-style-hover);
+                                color: var(--cs-color-style-hover-contrast);
+                            }
                         }
                     }
                 }

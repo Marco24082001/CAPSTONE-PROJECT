@@ -45,6 +45,12 @@ a {
     .body {
         min-height: 100vh;
         background-color: var(--cs-color-site-background);
+        font-family: var(--cs-font-base-family), sans-serif;
+        font-size: var(--cs-font-base-size);
+        font-weight: var(--cs-font-base-weight);
+        font-style: var(--cs-font-base-style);
+        line-height: var(--cs-font-base-line-height);
+        letter-spacing: var(--cs-font-base-letter-spacing);
     }
 }
 
