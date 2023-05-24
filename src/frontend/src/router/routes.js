@@ -2,6 +2,7 @@ import UserLayout from "@/layouts/user/UserLayout.vue";
 import Login from "@/pages/login/index.vue";
 import Home from "@/pages/home/index.vue";
 import ListProjects from "@/pages/project/list_projects.vue";
+import ProjectDetail from "@/pages/project/project_detail.vue";
 
 const routes = [
     {
@@ -16,9 +17,14 @@ const routes = [
                 component: Home,
             },
             {
-                path: "project",
-                name: "listproject",
+                path: "projects",
+                name: "Projects",
                 component: ListProjects,
+            },
+            {
+                path: "projects/:id",
+                name: "projectdetail",
+                component: ProjectDetail,
             },
         ],
     },

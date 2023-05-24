@@ -88,7 +88,7 @@ export default {
                     name: "Home Page",
                 },
                 {
-                    path: "/project",
+                    path: "/projects",
                     name: "Project",
                 },
                 {
@@ -166,7 +166,7 @@ export default {
 <style lang="scss" scoped>
 header {
     position: fixed;
-    transition: all 0.45s ease;
+    // transition: all 0.45s ease;
     width: 100%;
     top: 0;
     right: 0;
