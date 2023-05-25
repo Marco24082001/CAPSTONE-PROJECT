@@ -30,6 +30,7 @@ export default {
 }
 .main-panel {
     margin-top: 4rem;
+    padding: 0px 10%;
     color: var(--cs-color-contrast-900);
 }
 </style>

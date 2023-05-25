@@ -36,7 +36,7 @@ export default {
 }
 
 .container {
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -44,8 +44,8 @@ export default {
         width: 100%;
         align-self: center;
         // height: 65vh;
-        display: flex;
-        justify-content: center;
+        display: inline-flex;
+        // justify-content: center;
         flex-wrap: wrap;
         gap: 4rem;
     }
