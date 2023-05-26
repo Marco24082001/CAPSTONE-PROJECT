@@ -11,7 +11,6 @@ from api_base.manager import CustomUserManager
 
 
 class User(BaseModel, AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     # google_login = models.BooleanField(default=False)
     email = models.EmailField(db_index=True, unique=True, max_length=254)
     first_name = models.CharField(max_length=255)
