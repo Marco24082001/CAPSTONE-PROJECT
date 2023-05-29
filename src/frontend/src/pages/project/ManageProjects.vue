@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <div class="cp-projects">
+            <CardCreate></CardCreate>
             <CardProject
                 project_img="project-0.jpg"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
@@ -18,11 +19,13 @@
 </template>
 
 <script>
-import CardProject from "@/pages/project/cardProject.vue"
+import CardProject from "@/pages/project/cardProject.vue";
+import CardCreate from "@/pages/project/CardCreate.vue";
 export default {
     name: "Manage-Projects",
     components: {
         CardProject,
+        CardCreate,
     },
 };
 </script>

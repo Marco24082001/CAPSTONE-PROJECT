@@ -5,19 +5,19 @@
         </side-bar> -->
         <MenuSideBar></MenuSideBar>
         <div class="main-panel">
-            <layout-content></layout-content>
+            <Dashboard-content></Dashboard-content>
         </div>
     </div>
 </template>
 <style lang="scss"></style>
 <script>
-import LayoutContent from "./Content.vue";
+import DashboardContent from "@/layouts/dashboard/Content.vue";
 import MenuSideBar from "@/components/menusidebar/MenuSideBar.vue";
 export default {
     name: "dashboard-layout",
     components: {
         MenuSideBar,
-        LayoutContent,
+        DashboardContent,
     },
 };
 </script>
@@ -27,8 +27,11 @@ export default {
     display: flex;
 }
 .main-panel {
-    margin-top: 4rem;
-    padding: 0px 10%;
+    position: relative;
+    left: 250px;
+    width: calc(100% - 250px);
+    padding: 0 3%;
     color: var(--cs-color-contrast-900);
+    // background: red;
 }
 </style>

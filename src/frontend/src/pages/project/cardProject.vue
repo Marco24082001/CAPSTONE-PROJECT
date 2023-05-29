@@ -1,9 +1,6 @@
 <template>
     <div class="cp-project">
-        <router-link :to="{name: 'Projectdetail' , params: { id: 123 }}"
-            
-            class="image-index"
-        >
+        <router-link :to="{ name: 'Projectdetail', params: { id: 123 } }" class="image-index">
             <img :src="require('@/assets/project_img/' + project_img + '')" alt="" />
         </router-link>
         <div class="cp-content">
@@ -138,7 +135,7 @@ export default {
                     height: 0.4rem;
                     border-radius: 6px;
                     width: 40px;
-                    background-color: #FF2E5B;
+                    background-color: #ff2e5b;
                     z-index: 11111;
                 }
             }

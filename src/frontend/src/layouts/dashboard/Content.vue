@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-    name: "layout-content",
+    name: "Dashboard-content",
 };
 </script>
 <style>

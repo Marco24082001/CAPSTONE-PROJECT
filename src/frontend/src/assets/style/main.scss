@@ -129,6 +129,7 @@
     --cs-entry-content-medium-width: 800px;
     --cs-entry-content-large-width: 1160px;
     --cs-block-content-width: 600px;
+    --cs-main-panel-pading: 0px 10%;
 }
 
 :root,
@@ -170,6 +171,7 @@
     --cs-color-accent: #007aff;
     --cs-color-accent-contrast: #fff;
     --cs-color-overlay-background: rgba(0, 0, 0, 0.45);
+    --cs-box-shadow-menu: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
 }
 
 :root,
@@ -186,6 +188,7 @@
     --cs-color-button-hover: #004eff;
     --cs-color-button-hover-contrast: #fff;
     --cs-color-overlay-background: rgba(49, 50, 54, 0.4);
+    --cs-box-shadow-menu: 0 5px 15px 0 rgba(255, 255, 255, 0.1);
 
     --cs-palette-color-black: #fff;
     --cs-palette-color-white: #000;

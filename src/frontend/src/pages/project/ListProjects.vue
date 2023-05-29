@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import CardProject from "@/pages/project/cardProject.vue"
+import CardProject from "@/pages/project/cardProject.vue";
 export default {
     name: "List-Projects",
     components: {
@@ -37,6 +37,7 @@ export default {
 
 .container {
     width: 100%;
+    padding: var(--cs-main-panel-pading);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
