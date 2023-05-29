@@ -39,7 +39,7 @@
                     ></router-link>
                     <router-link to="/" class="sub-menu-link"
                         ><div class="bx bx-briefcase-alt-2 sub-menu-icon"></div>
-                        <p>Your projects</p>
+                        <p>Dashboard</p>
                         <div class="bx bx-chevron-right"></div>
                     </router-link>
                     <router-link to="/" @click="logout" class="sub-menu-link"

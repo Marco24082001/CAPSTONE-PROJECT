@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { storeTokenToVuex, storeCurrentUserToVuex } from "@/helper/storeHelper";
 class AuthenticationService extends BaseService {
     get entity() {
-        return "auth";
+        return "api_auth";
     }
 
     async login(data) {

@@ -14,15 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import permissions
-
+from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
 
 schema_view = swagger_get_schema_view(
     openapi.Info(
-        title="Posts API",
+        title="Donation API",
         default_version='1.0.0',
         description="API documentation of App"
     ),
@@ -35,9 +35,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',
             include([
-                path('auth/', include('api_auth.urls')),
-                path('users/', include('api_user.urls')),
-                path('swagger/schema/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-schema'),
+                path('api_auth/', include('api_auth.urls')),
+                path('api_user/', include('api_user.urls')),
+                path('api_project/', include('api_project.urls')),
+                path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-schema'),
+                path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-schema'),
             ])
     ),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
+    ]

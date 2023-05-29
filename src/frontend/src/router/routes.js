@@ -1,9 +1,10 @@
 import UserLayout from "@/layouts/user/UserLayout.vue";
+import DashBoardLayout from "@/layouts/dashboard/DashboardLayout.vue";
 import Login from "@/pages/login/index.vue";
 import Home from "@/pages/home/index.vue";
-import ListProjects from "@/pages/project/list_projects.vue";
-import ProjectDetail from "@/pages/project/project_detail.vue";
-
+import ListProjects from "@/pages/project/ListProjects.vue";
+import ProjectDetail from "@/pages/project/ProjectDetail.vue";
+// import ManageProject from "@/pages/project/ManageProjects.vue";
 const routes = [
     {
         path: "/",
@@ -13,7 +14,7 @@ const routes = [
         children: [
             {
                 path: "home",
-                name: "homepage",
+                name: "HomePage",
                 component: Home,
             },
             {
@@ -23,10 +24,27 @@ const routes = [
             },
             {
                 path: "projects/:id",
-                name: "projectdetail",
+                name: "Projectdetail",
                 component: ProjectDetail,
             },
+            {
+                path: "dashboard",
+                name: "Dashboard",
+                component: DashBoardLayout,
+                // redirect: "dashboard/project",
+                // children: [
+                //     {
+                //         path: "project",
+                //         name: "ManageProject",
+                //         component: ManageProject,
+                //     },
+                // ],
+            },
         ],
+    },
+    {
+        path: "/:user",
+        name: "",
     },
     {
         path: "/login",

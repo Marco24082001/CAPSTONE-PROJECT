@@ -15,4 +15,3 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         instance = self.Meta.model.objects.create_user(**validated_data)
         return instance
-

@@ -1,1 +1,1 @@
-from .base import BaseViewSet
+from .base_view import BaseViewSet

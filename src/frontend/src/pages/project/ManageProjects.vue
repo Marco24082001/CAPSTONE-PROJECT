@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import CardProject from "./cardProject.vue";
+import CardProject from "./CardProject.vue";
 export default {
-    name: "List-Projects",
+    name: "Manage-Projects",
     components: {
         CardProject,
     },

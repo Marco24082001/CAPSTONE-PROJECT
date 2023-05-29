@@ -1,1 +1,1 @@
-from .mytoken import MyTokenObtainPairSerializer
+from .mytoken_serial import MyTokenObtainPairSerializer
