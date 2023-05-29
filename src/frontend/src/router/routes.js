@@ -4,7 +4,7 @@ import Login from "@/pages/login/index.vue";
 import Home from "@/pages/home/index.vue";
 import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
-// import ManageProject from "@/pages/project/ManageProjects.vue";
+import ManageProject from "@/pages/project/ManageProjects.vue";
 const routes = [
     {
         path: "/",
@@ -31,14 +31,14 @@ const routes = [
                 path: "dashboard",
                 name: "Dashboard",
                 component: DashBoardLayout,
-                // redirect: "dashboard/project",
-                // children: [
-                //     {
-                //         path: "project",
-                //         name: "ManageProject",
-                //         component: ManageProject,
-                //     },
-                // ],
+                redirect: "dashboard/project",
+                children: [
+                    {
+                        path: "project",
+                        name: "ManageProject",
+                        component: ManageProject,
+                    },
+                ],
             },
         ],
     },

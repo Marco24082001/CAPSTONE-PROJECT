@@ -1,6 +1,6 @@
 <template>
     <div class="cp-project">
-        <router-link :to="{name: 'projectdetail' , params: { id: 123 }}"
+        <router-link :to="{name: 'Projectdetail' , params: { id: 123 }}"
             
             class="image-index"
         >

@@ -3,7 +3,6 @@
         <!-- <side-bar v-if="role === 'admin'" :sidebarLinks="sidebarLinks">
             <template v-slot:links> </template>
         </side-bar> -->
-        vs
         <MenuSideBar></MenuSideBar>
         <div class="main-panel">
             <layout-content></layout-content>
