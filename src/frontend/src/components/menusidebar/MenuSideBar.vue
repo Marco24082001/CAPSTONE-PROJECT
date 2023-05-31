@@ -22,19 +22,19 @@
                     <li class="nav-link">
                         <a href="#">
                             <div class="bx bx-briefcase-alt-2 icon"></div>
-                            <span class="text nav-text">Projects</span>
+                            <span class="text nav-text">Project</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="#">
                             <div class="bx bx-chart icon"></div>
-                            <span class="text nav-text">Analytics</span>
+                            <span class="text nav-text">Analytic</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="#">
                             <div class="bx bx-heart icon"></div>
-                            <span class="text nav-text">Likes</span>
+                            <span class="text nav-text">Like</span>
                         </a>
                     </li>
                 </ul>
@@ -72,10 +72,13 @@ export default {
         opacity: 1;
     }
     .image {
-        min-width: 60px;
+        min-width: 70px;
         display: flex;
         align-items: center;
         justify-content: center;
+        .img {
+            width: 40px;
+        }
     }
 }
 .menu-sidebar {
@@ -162,7 +165,7 @@ export default {
 
         .icon,
         .text {
-            color: var(--text-color);
+            color: var(--cs-color-secondary);
             transition: var(--tran-02);
         }
         a {
@@ -174,10 +177,10 @@ export default {
             border-radius: 6px;
             transition: var(--tran-04);
             &:hover {
-                background: var(--primary-color);
+                background: var(--cs-color-button-hover);
                 .icon,
                 .text {
-                    color: var(--sidebar-color);
+                    color: var(--wc-primary-text);
                 }
             }
         }

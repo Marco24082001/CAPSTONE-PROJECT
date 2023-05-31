@@ -1,8 +1,28 @@
 <template>
     <div class="cp-project">
-        <router-link :to="{ name: 'Projectdetail', params: { id: 123 } }" class="image-index">
-            <img :src="require('@/assets/project_img/' + project_img + '')" alt="" />
-        </router-link>
+        <div class="image-project">
+            <div class="tooltip" v-if="isManageProject">
+                <div class="bx bx-dots-horizontal tooltip-icon" @click="toggleToolTip"></div>
+                <div class="tooltip-menu" :class="{ 'open-tooltip': isToolOpen }">
+                    <div class="tooltip-menu-item">
+                        <div class="bx bx-detail tooltip-menu-icon"></div>
+                        <p>View Detail</p>
+                    </div>
+                    <div class="tooltip-menu-item">
+                        <div class="bx bx-edit tooltip-menu-icon"></div>
+                        <p>Edit</p>
+                    </div>
+                    <div class="tooltip-menu-item">
+                        <div class="bx bx-trash tooltip-menu-icon"></div>
+                        <p>Delete</p>
+                    </div>
+                </div>
+            </div>
+            <router-link :to="{ name: 'Projectdetail', params: { id: 123 } }" class="image-index">
+                <img :src="require('@/assets/project_img/' + project_img + '')" alt="" />
+            </router-link>
+        </div>
+
         <div class="cp-content">
             <div class="cp-meta">
                 <a href="/#">Cộng đồng</a>
@@ -54,6 +74,21 @@ export default {
         author_img: {
             type: String,
         },
+        isManageProject: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    data() {
+        return {
+            isToolOpen: false,
+        };
+    },
+    methods: {
+        toggleToolTip() {
+            this.isToolOpen = !this.isToolOpen;
+            console.log("thanhvi");
+        },
     },
 };
 </script>
@@ -62,7 +97,6 @@ export default {
     position: relative;
     background-color: var(--sectionBack);
     width: 20rem;
-    // box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     transition: 0.3s;
@@ -70,6 +104,77 @@ export default {
     //     transform: translateY(-15px);
     //     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     // }
+    &:hover {
+        box-shadow: var(--cs-box-shadow-menu);
+    }
+    .image-project {
+        display: flex;
+        flex-direction: column;
+        .tooltip {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.367);
+            height: 3rem;
+            align-items: center;
+            // justify-content: center;
+            opacity: 0;
+            transition: 0.4s ease;
+            z-index: 1;
+            .tooltip-icon {
+                position: absolute;
+                font-size: 1.4rem;
+                right: 1.1rem;
+                color: #d1cdcd;
+                cursor: pointer;
+            }
+
+            .tooltip-menu {
+                position: absolute;
+                padding: 0.5rem 0;
+                top: 100%;
+                right: 1.1rem;
+                width: 105px;
+                max-height: 0px;
+                opacity: 0;
+                overflow: hidden;
+                transition: all 0.5s;
+                background-color: var(--cs-color-submenu-background);
+                box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
+                .tooltip-menu-item {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    color: var(--cs-color-primary);
+                    background-color: transparent;
+                    margin: 0.2rem 0;
+                    font-size: var(--cs-font-submenu-size);
+                    font-weight: var(--cs-font-submenu-weight);
+                    font-style: var(--cs-font-submenu-style);
+                    letter-spacing: var(--cs-font-submenu-letter-spacing);
+                    text-transform: var(--cs-font-submenu-text-transform);
+                    cursor: pointer;
+                    transition: transform 0.5s;
+                    .tooltip-menu-icon {
+                        border-radius: 50%;
+                        margin-right: 10px;
+                        padding: 5px;
+                    }
+
+                    &:hover {
+                        color: var(--cs-color-secondary);
+                    }
+                }
+                &.open-tooltip {
+                    opacity: 1;
+                    max-height: 400px;
+                }
+            }
+        }
+        &:hover > .tooltip {
+            opacity: 1;
+        }
+    }
     .image-index {
         display: grid;
         overflow: hidden;

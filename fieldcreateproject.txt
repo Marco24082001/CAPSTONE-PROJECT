@@ -1,0 +1,6 @@
+image
+title
+category
+fund goal
+sumary
+description

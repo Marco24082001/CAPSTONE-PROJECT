@@ -5,6 +5,7 @@ import Home from "@/pages/home/index.vue";
 import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
 import ManageProject from "@/pages/project/ManageProjects.vue";
+import CreateProject from "@/pages/project/CreateProject.vue";
 const routes = [
     {
         path: "/",
@@ -31,12 +32,17 @@ const routes = [
                 path: "dashboard",
                 name: "Dashboard",
                 component: DashBoardLayout,
-                redirect: "dashboard/project",
+                redirect: "dashboard/projects",
                 children: [
                     {
-                        path: "project",
+                        path: "projects",
                         name: "ManageProject",
                         component: ManageProject,
+                    },
+                    {
+                        path: "projects/create",
+                        name: "CreateProject",
+                        component: CreateProject,
                     },
                 ],
             },

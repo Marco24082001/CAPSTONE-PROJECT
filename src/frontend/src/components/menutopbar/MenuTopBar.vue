@@ -37,7 +37,7 @@
                         <p>Your profile</p>
                         <div class="bx bx-chevron-right"></div
                     ></router-link>
-                    <router-link to="/" class="sub-menu-link"
+                    <router-link to="/dashboard/projects" class="sub-menu-link"
                         ><div class="bx bx-briefcase-alt-2 sub-menu-icon"></div>
                         <p>Dashboard</p>
                         <div class="bx bx-chevron-right"></div>

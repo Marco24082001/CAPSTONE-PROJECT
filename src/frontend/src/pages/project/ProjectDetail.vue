@@ -78,6 +78,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: var(--cs-main-panel-pading);
     gap: 3rem;
 
     .project-header {

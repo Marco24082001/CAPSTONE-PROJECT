@@ -1,16 +1,31 @@
 <template>
     <div class="container">
+        <div class="cp-header">
+            <div class="button-create-wrapper">
+                <RouterLink to="/dashboard/projects/create">Start Project!</RouterLink>
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
+                        <path
+                            d="M265.17 125.577l-80-80c-4.88-4.88-12.796-4.88-17.677 0-4.882 4.882-4.882 12.796 0 17.678l58.66 58.66H12.5c-6.903 0-12.5 5.598-12.5 12.5 0 6.903 5.597 12.5 12.5 12.5h213.654l-58.66 58.662c-4.88 4.882-4.88 12.796 0 17.678 2.44 2.44 5.64 3.66 8.84 3.66s6.398-1.22 8.84-3.66l79.997-80c4.883-4.882 4.883-12.796 0-17.678z"
+                        />
+                    </svg>
+                </div>
+            </div>
+        </div>
         <div class="cp-projects">
-            <CardCreate></CardCreate>
+            <!-- <CardCreate></CardCreate> -->
             <CardProject
+                isManageProject="true"
                 project_img="project-0.jpg"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
             ></CardProject>
             <CardProject
+                isManageProject="true"
                 project_img="project-1.jpg"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
             ></CardProject>
             <CardProject
+                isManageProject="true"
                 project_img="project-2.png"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
             ></CardProject>
@@ -20,12 +35,10 @@
 
 <script>
 import CardProject from "@/pages/project/cardProject.vue";
-import CardCreate from "@/pages/project/CardCreate.vue";
 export default {
     name: "Manage-Projects",
     components: {
         CardProject,
-        CardCreate,
     },
 };
 </script>
@@ -43,14 +56,72 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: 0px 5%;
     .cp-projects {
         width: 100%;
         align-self: center;
         // height: 65vh;
         display: inline-flex;
-        // justify-content: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 4rem;
+    }
+
+    .cp-header {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        margin-bottom: 3rem;
+        .button-create-wrapper {
+            position: relative;
+            a {
+                display: block;
+                width: 200px;
+                height: 40px;
+                line-height: 40px;
+                font-weight: 500;
+                text-decoration: none;
+                background: var(--cs-color-button);
+                text-align: center;
+                color: var(--wc-primary-text);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                // border: 3px solid #333;
+                transition: all 0.35s;
+                cursor: pointer;
+                &:hover {
+                    width: 200px;
+                    border: 3px solid var(--cs-color-button);
+                    background: transparent;
+                    color: var(--cs-color-button);
+                }
+                &:hover + .icon {
+                    border: 3px solid var(--cs-color-button);
+                    right: -18%;
+                    z-index: 1;
+                }
+            }
+            .icon {
+                width: 40px;
+                height: 40px;
+                border: 3px solid transparent;
+                position: absolute;
+                transform: rotate(45deg);
+                right: 0;
+                top: 0;
+                z-index: -1;
+                transition: all 0.35s;
+                svg {
+                    width: 30px;
+                    position: absolute;
+                    top: calc(50% - 15px);
+                    left: calc(50% - 15px);
+                    transform: rotate(-45deg);
+                    fill: var(--cs-color-button);
+                    transition: all 0.35s;
+                }
+            }
+        }
     }
 }
 </style>
