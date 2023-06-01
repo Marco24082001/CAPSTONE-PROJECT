@@ -8,8 +8,9 @@
                     label-position="left"
                     :model="projectForm"
                     :rules="projectFromRules"
+                    ref="form"
                 >
-                    <el-form-item label="Pictures">
+                    <el-form-item label="Pictures" prop="image_url">
                         <!-- <el-upload
                             v-model:file-list="fileList"
                             action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
@@ -24,17 +25,19 @@
                             class="avatar-uploader"
                             action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
                             :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"
                         >
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                            <img
+                                v-if="projectForm.image_url"
+                                :src="projectForm.image_url"
+                                class="avatar"
+                            />
                             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="Title">
+                    <el-form-item label="Title" prop="title">
                         <el-input v-model="projectForm.title"></el-input>
                     </el-form-item>
-                    <el-form-item label="Category">
+                    <el-form-item label="Category" prop="type_projects">
                         <el-select
                             v-model="projectForm.type_projects"
                             multiple
@@ -52,21 +55,21 @@
                             />
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="Fund goal">
+                    <el-form-item label="Fund goal" prop="fund_goal">
                         <el-input-number
                             v-model="projectForm.fund_goal"
                             :step="1000"
                             :min="10000"
                         />
                     </el-form-item>
-                    <el-form-item label="Summary">
+                    <el-form-item label="Summary" prop="summary">
                         <el-input v-model="projectForm.summary"></el-input>
                     </el-form-item>
-                    <el-form-item label="Description">
+                    <el-form-item label="Description" prop="description">
                         <el-input v-model="projectForm.description" type="textarea" />
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary">Create</el-button>
+                        <el-button type="primary" @click="handleCreateProject">Create</el-button>
                         <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
@@ -77,7 +80,7 @@
 
 <script>
 import AppToolbar from "@/components/AppToolbar.vue";
-
+import ProjectService from "@/services/project/ProjectService";
 export default {
     name: "create-project",
     props: {
@@ -91,15 +94,15 @@ export default {
                 return [
                     {
                         label: "Cộng đồng",
-                        value: "5605da24ecd44cfda2db85b3005ef693",
+                        value: "17560ffd-3c83-4fd7-b423-87b36657bccf",
                     },
                     {
                         label: "Giáo dục",
-                        value: "f1f9a8de6efa4fcea775816e45377688",
+                        value: "73c86067-70cc-4e8f-bc54-eddeb0562cbc",
                     },
                     {
                         label: "Y tế",
-                        value: "704cd15e0d13472a974661d730a80144",
+                        value: "60bf7f49-96dd-44de-b809-624c409f92c6",
                     },
                 ];
             },
@@ -114,12 +117,26 @@ export default {
             dialogImageUrl: "",
             dialogVisible: false,
             projectForm: {
-                title: "",
-                image_url: "",
-                summary: "",
-                description: "",
-                type_projects: [],
-                fund_goal: 0,
+                // user: "c397deb0-a6a1-4f89-b621-0639c76edb57",
+                // title: "",
+                // image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ETPUM3G6l9Pe3VTHbMbx_yfLk5KqZ_kU9w&usqp=CAU",
+                // summary: "",
+                // description: "",
+                // type_projects: [],
+                // fund_goal: 0,
+                // fund_total: 0,
+                // fund_used: 0,
+                // status: 'PUBLISHED',
+                title: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                image_url: "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png",
+                summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                description: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                fund_goal: 333333.0,
+                // fund_total: 0.0,
+                // fund_used: 0.0,
+                // status: "PUBLISHED",
+                user: "c397deb0-a6a1-4f89-b621-0639c76edb57",
+                type_projects: ["73c86067-70cc-4e8f-bc54-eddeb0562cbc"],
             },
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
@@ -142,6 +159,18 @@ export default {
         handlePictureCardPreview(uploadFile) {
             this.dialogImageUrl = uploadFile.url;
             this.dialogVisible = true;
+        },
+        handleCreateProject: async function () {
+            await this.$refs.form.validate((valid) => {
+                if (valid) {
+                    console.log(valid);
+                    console.log(this.projectForm);
+                }
+            });
+            // this.projectForm.type_projects = "17560ffd-3c83-4fd7-b423-87b36657bccf";
+
+            const res = await ProjectService.create(this.projectForm);
+            console.log(res);
         },
     },
 };

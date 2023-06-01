@@ -5,7 +5,6 @@ import env from "../../env";
 // import { accessToken } from "@/helper/accessToken";
 // import { storeTokenToVuex } from "@/helper/storeTokenToVuex";
 
-// const Cookie = require("js-cookie");
 export default class Http {
     constructor(status) {
         this.handlerEnabled = status && status.handlerEnabled ? status.handlerEnabled : false;
@@ -29,12 +28,12 @@ export default class Http {
 
     requestHandler(request) {
         const store = require("@/store");
-        const tokenInfo = store ? store.default.getters["authentication/tokenInfo"] : null;
+        const tokenInfo = store ? store.default.getters["authentication/getTokenInfo"] : null;
         const authenticated = !request.url.startsWith("auth/login");
         if (authenticated && tokenInfo) {
-            const { access_token } = tokenInfo;
-            if (access_token && access_token.length !== 0) {
-                request.headers["Authorization"] = `Bearer ${tokenInfo.access_token}`;
+            const { access } = tokenInfo;
+            if (access && access.length !== 0) {
+                request.headers["Authorization"] = `Bearer ${access}`;
             }
         }
         return request;
