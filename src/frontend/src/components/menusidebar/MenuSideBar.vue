@@ -20,10 +20,10 @@
                 </li>
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#">
+                        <router-link to="/dashboard/projects" href="#">
                             <div class="bx bx-briefcase-alt-2 icon"></div>
                             <span class="text nav-text">Project</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-link">
                         <a href="#">

@@ -30,7 +30,7 @@ export default {
     position: relative;
     left: 250px;
     width: calc(100% - 250px);
-    padding: 0 3%;
+    // padding: 0 3%;
     color: var(--cs-color-contrast-900);
     // background: red;
 }

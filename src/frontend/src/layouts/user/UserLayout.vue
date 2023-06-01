@@ -26,10 +26,10 @@ export default {
 .wrapper {
     display: flex;
     flex-direction: column;
-    margin-top: 5rem;
+    margin-top: var(--cs-header-initial-height);
 }
 .main-panel {
-    margin-top: 4rem;
+    // margin-top: 4rem;
     color: var(--cs-color-contrast-900);
 }
 </style>

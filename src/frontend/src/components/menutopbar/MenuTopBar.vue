@@ -168,6 +168,7 @@ header {
     position: fixed;
     // transition: all 0.45s ease;
     width: 100%;
+    height: var(--cs-header-initial-height);
     top: 0;
     right: 0;
     z-index: 1000;

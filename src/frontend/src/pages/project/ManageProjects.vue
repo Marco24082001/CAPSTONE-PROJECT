@@ -70,7 +70,7 @@ export default {
     .cp-header {
         width: 100%;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         margin-bottom: 3rem;
         .button-create-wrapper {
             position: relative;

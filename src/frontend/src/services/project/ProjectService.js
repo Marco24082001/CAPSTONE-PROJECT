@@ -2,10 +2,12 @@ import BaseService from "../BaseService";
 import jwt_decode from "jwt-decode";
 
 import { storeTokenToVuex, storeCurrentUserToVuex } from "@/helper/storeHelper";
-class AuthenticationService extends BaseService {
+class ProjectService extends BaseService {
     get entity() {
-        return "api_auth";
+        return "api_project/projects";
     }
+
+    async create() {}
 
     async login(data) {
         const post_login = this.request()
@@ -28,24 +30,6 @@ class AuthenticationService extends BaseService {
         }
         return res;
     }
-
-    async logout() {
-        try {
-            localStorage.removeItem("vuex");
-            localStorage.clear();
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async getCurrentUser() {
-        try {
-            return await this.request().get(`/${this.entity}/getCurrentUser`);
-        } catch (error) {
-            console.log(error);
-        }
-    }
 }
 
-export default new AuthenticationService();
+export default new ProjectService();
