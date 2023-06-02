@@ -48,10 +48,10 @@
                             placeholder="Please select category"
                         >
                             <el-option
-                                v-for="item in default_type_projects"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                                v-for="item in listTypeProject"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"
                             />
                         </el-select>
                     </el-form-item>
@@ -81,6 +81,7 @@
 <script>
 import AppToolbar from "@/components/AppToolbar.vue";
 import ProjectService from "@/services/project/ProjectService";
+import TypeService from "@/services/project/TypeService";
 export default {
     name: "create-project",
     props: {
@@ -88,55 +89,24 @@ export default {
             type: String,
             default: "Create New Project",
         },
-        default_type_projects: {
-            type: Array,
-            default: () => {
-                return [
-                    {
-                        label: "Cộng đồng",
-                        value: "17560ffd-3c83-4fd7-b423-87b36657bccf",
-                    },
-                    {
-                        label: "Giáo dục",
-                        value: "73c86067-70cc-4e8f-bc54-eddeb0562cbc",
-                    },
-                    {
-                        label: "Y tế",
-                        value: "60bf7f49-96dd-44de-b809-624c409f92c6",
-                    },
-                ];
-            },
-        },
     },
     components: {
         AppToolbar,
     },
     data() {
         return {
+            listTypeProject: [],
             fileList: [],
             dialogImageUrl: "",
             dialogVisible: false,
             projectForm: {
-                // user: "c397deb0-a6a1-4f89-b621-0639c76edb57",
-                // title: "",
-                // image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ETPUM3G6l9Pe3VTHbMbx_yfLk5KqZ_kU9w&usqp=CAU",
-                // summary: "",
-                // description: "",
-                // type_projects: [],
-                // fund_goal: 0,
-                // fund_total: 0,
-                // fund_used: 0,
-                // status: 'PUBLISHED',
                 title: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
                 image_url: "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png",
                 summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
                 description: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-                fund_goal: 333333.0,
-                // fund_total: 0.0,
-                // fund_used: 0.0,
-                // status: "PUBLISHED",
-                user: "c397deb0-a6a1-4f89-b621-0639c76edb57",
-                type_projects: ["73c86067-70cc-4e8f-bc54-eddeb0562cbc"],
+                fund_goal: 333333,
+                user: "2848c2308e7447a7bbb62604f09e8ff  ",
+                type_projects: ["ffbcd896-e0cb-499c-a27c-759e31e9bf93"],
             },
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
@@ -151,6 +121,10 @@ export default {
                 fund_goal: [{ required: true, message: "Fund goal is required", trigger: "blur" }],
             },
         };
+    },
+    async created() {
+        this.listTypeProject = (await TypeService.getAll()).data.results;
+        console.log(this.listTypeProject);
     },
     methods: {
         handleRemove(uploadFile, uploadFiles) {
@@ -167,8 +141,6 @@ export default {
                     console.log(this.projectForm);
                 }
             });
-            // this.projectForm.type_projects = "17560ffd-3c83-4fd7-b423-87b36657bccf";
-
             const res = await ProjectService.create(this.projectForm);
             console.log(res);
         },

@@ -8,13 +8,12 @@ class ProjectSerializer(serializers.ModelSerializer):
     
     def to_internal_value(self, data):
         # context
-        print(self.context.get('request'))
+        data['user'] = self.context.get('request').user.id
         print("inside to internal value", data)
         return super().to_internal_value(data)
 
     def create(self, validated_data):
         print("in create", validated_data)
-        # print("user")
         return super().create(validated_data)
     
     def update(self, instance, validated_data):

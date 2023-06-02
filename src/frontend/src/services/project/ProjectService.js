@@ -6,7 +6,13 @@ class ProjectService extends BaseService {
     }
 
     async create(data) {
-        return await this.request().post(`/${this.entity}/`, data);
+        try {
+            const res = await this.request().post(`/${this.entity}/`, data);
+            return res;
+        } catch (error) {   
+            console.log("thanhvi");
+            return error;
+        }
     }
 
     // async login(data) {
