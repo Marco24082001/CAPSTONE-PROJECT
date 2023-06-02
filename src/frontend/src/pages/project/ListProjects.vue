@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="cp-projects">
-            <CardProject
+            <!-- <CardProject
                 project_img="project-0.jpg"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
             ></CardProject>
@@ -12,18 +12,31 @@
             <CardProject
                 project_img="project-2.png"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
+            ></CardProject> -->
+            <CardProject v-for="project in listProjects" :project="project" :key="project.id"></CardProject>
         </div>
     </div>
 </template>
 
 <script>
+import ProjectService from "@/services/project/ProjectService";
 import CardProject from "@/pages/project/cardProject.vue";
 export default {
     name: "List-Projects",
     components: {
         CardProject,
     },
+    data() {
+        return {
+            listProjects: []
+        }
+    },
+
+    async created() { 
+        this.listProjects = (await ProjectService.getAll()).data.results;
+        console.log(this.listProjects);
+    }
+
 };
 </script>
 

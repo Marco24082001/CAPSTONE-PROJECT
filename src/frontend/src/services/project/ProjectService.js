@@ -15,27 +15,16 @@ class ProjectService extends BaseService {
         }
     }
 
-    // async login(data) {
-    //     const post_login = this.request()
-    //         .post(`/${this.entity}/login/`, data)
-    //         .then(
-    //             (response) => {
-    //                 return response;
-    //             },
-    //             (error) => {
-    //                 return error.response;
-    //             }
-    //         );
-    //     const res = await post_login;
-
-    //     console.log(res);
-    //     if (res.status === 200) {
-    //         console.log(jwt_decode(res.data.access));
-    //         storeTokenToVuex(res.data);
-    //         storeCurrentUserToVuex(jwt_decode(res.data.access));
-    //     }
-    //     return res;
-    // }
+    async getAll() {
+        try {
+            const res = await this.request().get(`/${this.entity}/`);
+            console.log(res)
+            return res;
+        } catch (error) {
+            console.log(error)
+            return { error: error };
+        }
+    }
 }
 
 export default new ProjectService();

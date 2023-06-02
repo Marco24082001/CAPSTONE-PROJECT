@@ -19,7 +19,7 @@
                 </div>
             </div>
             <router-link :to="{ name: 'Projectdetail', params: { id: 123 } }" class="image-index">
-                <img :src="require('@/assets/project_img/' + project_img + '')" alt="" />
+                <img :src="project.image_url" alt="" />
             </router-link>
         </div>
 
@@ -46,7 +46,7 @@
             <div class="cp-details">
                 <div class="cp-details-data">
                     <a class="cp-author-avatar" href="#">
-                        <img :src="author_img" />
+                        <img :src="project.image_url" />
                     </a>
                     <div class="cp-details-meta">
                         <div class="cp-author-meta">
@@ -78,6 +78,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        project: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        }
     },
     data() {
         return {

@@ -7,7 +7,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def to_internal_value(self, data):
-        # context
         data['user'] = self.context.get('request').user.id
         print("inside to internal value", data)
         return super().to_internal_value(data)
@@ -19,3 +18,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print("in update", validated_data)
         return super().update(instance, validated_data)
+    
+    def to_representation(self, instance):
+        # print(super().to_representation(instance).description)
+        raise ValueError("That word is not allowed here")
+        return super().to_representation(instance)
+    

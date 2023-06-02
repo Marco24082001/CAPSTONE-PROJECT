@@ -105,8 +105,7 @@ export default {
                 summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
                 description: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
                 fund_goal: 333333,
-                user: "2848c2308e7447a7bbb62604f09e8ff  ",
-                type_projects: ["ffbcd896-e0cb-499c-a27c-759e31e9bf93"],
+                type_projects: ["60bf7f49-96dd-44de-b809-624c409f92c6"],
             },
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
