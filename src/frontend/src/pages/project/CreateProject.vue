@@ -69,7 +69,10 @@
                     </el-form-item>
                     <el-form-item label="Description" prop="description">
                         <!-- <el-input v-model="projectForm.description" type="textarea" /> -->
-                        <QuillEditor theme="snow" />
+                        <TextEditor
+                            :initial_content="projectForm.description"
+                            @input-description="updateDescription"
+                        />
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="handleCreateProject">Create</el-button>
@@ -87,6 +90,7 @@ import ProjectService from "@/services/project/ProjectService";
 import TypeService from "@/services/project/TypeService";
 import { ElMessage } from "element-plus";
 import { uploadImage } from "@/utils/cloudinaryUtils";
+import TextEditor from "@/components/TextEditor.vue";
 
 export default {
     name: "create-project",
@@ -98,6 +102,7 @@ export default {
     },
     components: {
         AppToolbar,
+        TextEditor,
     },
     data() {
         return {
@@ -110,9 +115,9 @@ export default {
                 title: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
                 image_url: "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png",
                 summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-                description: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                description: "",
                 fund_goal: 333333,
-                type_projects: ["0df76457-8985-4e24-820d-d1e58886efc5"],
+                type_projects: [],
             },
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
@@ -131,6 +136,7 @@ export default {
     async created() {
         this.listTypeProject = (await TypeService.getAll()).data.results;
         console.log(this.listTypeProject);
+        this.projectForm.type_projects.push(this.listTypeProject[0].id);
     },
     methods: {
         handleRemove(uploadFile, uploadFiles) {
@@ -152,9 +158,9 @@ export default {
                             ElMessage.error("Upload image fail!");
                             return;
                         }
-                        const res = await ProjectService.create(this.projectForm);
-                        console.log(res);
                     }
+                    const res = await ProjectService.create(this.projectForm);
+                    console.log(res);
                 }
             });
         },
@@ -166,11 +172,14 @@ export default {
             if (rawFile.type !== "image/jpeg" && rawFile.type !== "image/png") {
                 ElMessage.error("Avatar picture must be JPG|PNG format!");
                 return false;
-            } else if (rawFile.size / 1024 / 1024 > 2) {
+            } else if (rawFile.size / 1024 / 1024 > 5) {
                 ElMessage.error("Avatar picture size can not exceed 2MB!");
                 return false;
             }
             return true;
+        },
+        updateDescription: function (value) {
+            this.projectForm.description = value;
         },
     },
 };
@@ -189,7 +198,7 @@ export default {
 }
 
 .project-form {
-    width: 75%;
+    width: 100%;
 }
 
 .avatar-uploader .avatar {
