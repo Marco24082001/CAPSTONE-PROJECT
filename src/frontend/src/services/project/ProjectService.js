@@ -25,6 +25,17 @@ class ProjectService extends BaseService {
             return { error: error };
         }
     }
+
+    async getbyId(id) {
+        try {
+            const res = await this.request().get(`${this.entity}/${id}/`);
+            return res;
+            
+        } catch (error) {
+            console.log(error);
+            return { error: error }
+        }
+    }
 }
 
 export default new ProjectService();

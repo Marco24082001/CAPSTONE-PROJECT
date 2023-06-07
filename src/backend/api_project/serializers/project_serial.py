@@ -2,8 +2,10 @@ from rest_framework import serializers
 from api_project.models import Project
 from services import FabricService
 from django.conf import settings
+from api_project.serializers import TypeSerializer
 
 class ProjectSerializer(serializers.ModelSerializer):
+    type_projects = TypeSerializer(many=True)
     class Meta:
         model = Project
         fields = '__all__'

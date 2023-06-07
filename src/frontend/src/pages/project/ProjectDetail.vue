@@ -2,10 +2,10 @@
     <div class="container">
         <div class="project-header">
             <div class="project-media">
-                <img src="@/assets/project_img/project-2.png" />
+                <img :src="project.image_url" />
             </div>
             <div class="project-summary">
-                <h1 class="project-title">Tết tới chơi xuân</h1>
+                <h1 class="project-title">{{ project.title }}</h1>
                 <div class="project-main">
                     <div class="project-info">
                         <div class="project-session-1">
@@ -22,7 +22,7 @@
                         </div>
                         <div class="project-goal">
                             <span>Mục tiêu dự án</span>
-                            <span>22.000.000đ</span>
+                            <span>{{ project.fund_goal }}</span>
                         </div>
                         <div class="project-fund-raised">
                             <div class="neo-progressbar">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="fund-raised-number">
                                 <span>Đã đạt được</span>
-                                <span>575.000đ</span>
+                                <span>{{ project.fund_total }}</span>
                             </div>
                         </div>
                     </div>
@@ -47,29 +47,27 @@
                 </div>
             </div>
         </div>
-        <div class="project-content">
-            Danh Dĩ Khang sinh ra và lớn lên tại Kiên Giang, là người con của dân tộc thiểu số. Hiện
-            tại đang học tập và sinh sống tại Thủ Đức – Bình Dương. Với ước mơ theo học ngành Kiến
-            trúc nhưng vì hoàn cảnh khó khăn không đủ điều kiện nên em đang học ngành Đô thị Trường
-            Đại học Khoa học Xã hội và Nhân văn. Bản thân em hiểu được những khó khăn và nhọc nhằn
-            của gia đình, mẹ phải chạy đi mượn nợ và ba phải lao động không ngừng nghỉ vì để có tiền
-            cho em ăn học thành tài. Mỗi ngày mỗi giờ em luôn học tập không ngừng vì em nghĩ rằng
-            nếu như buông xuôi tất cả thì mình rất phụ lòng đến gia đình của mình.
-        </div>
+        <div class="project-content" v-html="project.description"></div>
     </div>
 </template>
 
 <script>
+import ProjectService from '@/services/project/ProjectService';
 export default {
     name: "project-detail",
-    mounted() {
-        console.log(this.$route.params.id);
-    },
     data() {
         return {
+            project: {},
             amount: 0,
         };
     },
+    mounted() {
+        console.log(this.$route.params.id);
+    },
+    async created() {
+        this.project = (await ProjectService.getbyId(this.$route.params.id)).data;
+        console.log(this.project)
+    }
 };
 </script>
 

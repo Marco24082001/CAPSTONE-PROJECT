@@ -18,19 +18,19 @@
                     </div>
                 </div>
             </div>
-            <router-link :to="{ name: 'Projectdetail', params: { id: 123 } }" class="image-index">
+            <router-link :to="{ name: 'Projectdetail', params: { id: project.id } }" class="image-index">
                 <img :src="project.image_url" alt="" />
             </router-link>
         </div>
 
         <div class="cp-content">
             <div class="cp-meta">
-                <a href="/#">Cộng đồng</a>
+                <a href="/#" v-for="type_project in project.type_projects" :key="type_project.id"> {{ type_project.name }}</a>
             </div>
             <h2 class="cp-title">
                 <a
                     href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
-                    >Chung tay hỗ trợ học</a
+                    >{{project.title}}</a
                 >
             </h2>
             <div class="cp-progressbar">
@@ -38,7 +38,7 @@
                     <div></div>
                 </div>
                 <div class="fund-raised">
-                    <div class="fund-raised-txt">40.000 đ</div>
+                    <div class="fund-raised-txt">{{project.fund_goal}} đ</div>
                     <div class="fund-raised-percent">40%</div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="cp-fund-goal"><span>100.000 đ</span></div>
+                <div class="cp-fund-goal"><span>{{ project.fund_total }} đ</span></div>
             </div>
         </div>
         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
