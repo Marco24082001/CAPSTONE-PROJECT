@@ -19,3 +19,13 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         print('to_representation_user')
         return super().to_representation(instance)
+
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'full_name', 'avatar', 'biology']
+
+    def to_representation(self, instance):
+        print('author representation')
+        return super().to_representation(instance)

@@ -32,7 +32,6 @@ class FabricService:
                 'hash_value': hash_asset
             })
             print(res.status_code)
-            # return res.status_code
     
     @classmethod
     def updateAsset(cls, asset):

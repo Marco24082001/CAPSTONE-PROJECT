@@ -1,17 +1,14 @@
 from rest_framework import serializers
-from api_base.models import BaseModel
-
-# from api_auth.services import AccountService
 from api_user.constants import Roles
-
 from api_user.models import  User
 
-class RegisterSerializer(BaseModel):
+class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)
     password = serializers.CharField(max_length=255)
     
     class Meta:
         model = User
+        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'full_name', 'role', 'avatar', 'biology', 'address', 'phone', 'birthday']
         extra_kwargs = {
             'avatar': {'required': False},
             'phone': {'required': False},
@@ -20,6 +17,9 @@ class RegisterSerializer(BaseModel):
         }
     
     def create(self, validated_data):
-        User.objects
-
-
+        print(validated_data)
+        return User.objects.create_user(**validated_data)
+    
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        return ret

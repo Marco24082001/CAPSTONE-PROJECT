@@ -1,1 +1,2 @@
 from .mytoken_serial import MyTokenObtainPairSerializer
+from .register_serial import RegisterSerializer

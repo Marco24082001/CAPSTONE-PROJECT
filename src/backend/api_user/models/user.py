@@ -16,7 +16,7 @@ class User(BaseModel, AbstractUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     biology = models.TextField(null=True)
-    address = models.CharField( max_length=250)
+    address = models.TextField(null=True, blank=True)
     avatar = models.CharField(max_length=250, default='https://res.cloudinary.com/h-b-ch-khoa/image/upload/v1640271647/riunwzwz8xgft7fwohmc.jpg')
     role = models.CharField(choices=Roles.choices(), default=Roles.USER.value, max_length=50)
     phone = models.CharField(max_length=20, null=True, blank=True)

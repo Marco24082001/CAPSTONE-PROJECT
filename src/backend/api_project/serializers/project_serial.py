@@ -3,11 +3,11 @@ from api_project.models import Project
 from services import FabricService
 from django.conf import settings
 from api_project.serializers import TypeSerializer
-from api_user.serializers import UserSerializer
+from api_user.serializers import AuthorSerializer
 
 class ProjectSerializer(serializers.ModelSerializer):
     type_projects = TypeSerializer(many=True)
-    user = UserSerializer()
+    user = AuthorSerializer()
     class Meta:
         model = Project
         fields = '__all__'
