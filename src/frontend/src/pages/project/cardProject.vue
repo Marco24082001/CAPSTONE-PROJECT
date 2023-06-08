@@ -38,7 +38,7 @@
                     <div></div>
                 </div>
                 <div class="fund-raised">
-                    <div class="fund-raised-txt">{{project.fund_goal}} đ</div>
+                    <div class="fund-raised-txt">{{project.fund_total}} đ</div>
                     <div class="fund-raised-percent">40%</div>
                 </div>
             </div>
@@ -50,14 +50,14 @@
                     </a>
                     <div class="cp-details-meta">
                         <div class="cp-author-meta">
-                            <a href="/#">Quỹ Xã hội Phan Anh</a>
+                            <a href="/#">{{ project.user.full_name }}</a>
                         </div>
                         <div class="cp-post-meta">
-                            <div class="cp-meta-date">Tháng 26, 2020</div>
+                            <div class="cp-meta-date">{{ (new Date(project.created_at)).toLocaleDateString() }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="cp-fund-goal"><span>{{ project.fund_total }} đ</span></div>
+                <div class="cp-fund-goal"><span>{{ project.fund_goal }} đ</span></div>
             </div>
         </div>
         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
@@ -89,6 +89,12 @@ export default {
         return {
             isToolOpen: false,
         };
+    },
+    created() {
+        // let dattime = this.project.create
+        var ts = new Date("2023-06-06T15:33:12.443664Z");
+        console.log(ts.toLocaleDateString());
+        // this.project.created = this.project;
     },
     methods: {
         toggleToolTip() {
@@ -293,6 +299,7 @@ export default {
                     text-transform: var(--cs-font-post-meta-text-transform);
                     .cp-author-meta a {
                         font-weight: 500;
+                        text-transform: capitalize;
                         color: var(--cs-color-meta-links, var(--cs-color-primary));
                         &:hover {
                             color: var(--cs-color-meta-links-hover, var(--cs-color-secondary));
@@ -322,7 +329,6 @@ export default {
                     text-decoration: none;
                     border: none;
                     border-radius: var(--cs-primary-border-radius);
-                    line-height: 1rem;
                     transition: 0.25s;
                     box-shadow: none;
                     cursor: pointer;

@@ -16,7 +16,8 @@ class TypeSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
     
     def to_representation(self, instance):
-        print('to_representation')
+        # print('type vothanvi')
+        print('to_representation_type')
         ret = super().to_representation(instance)
         action = self.context.get('view').action
         if action in ['create']:

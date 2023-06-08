@@ -3,9 +3,11 @@ from api_project.models import Project
 from services import FabricService
 from django.conf import settings
 from api_project.serializers import TypeSerializer
+from api_user.serializers import UserSerializer
 
 class ProjectSerializer(serializers.ModelSerializer):
     type_projects = TypeSerializer(many=True)
+    user = UserSerializer()
     class Meta:
         model = Project
         fields = '__all__'
@@ -24,19 +26,23 @@ class ProjectSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
     
     def to_representation(self, instance):
-        print('to_representation')
-        print(settings.USE_HYPERLEDGER_FABRIC)  
+        # print('to_representation')
+        # print(settings.USE_HYPERLEDGER_FABRIC)  
+        # print(instance.type_projects)
+        # print('=========================================')
         ret = super().to_representation(instance)
-        action = self.context.get('view').action
-        if action in ['create']:
-            FabricService.addAsset(ret)
-        # if action in ['list']:
+        print(ret)
+        # print(list(ret.items())[0])
+        # action = self.context.get('view').action
+        # if action in ['create']:
+        #     FabricService.addAsset(ret)
+        # # if action in ['list']:
+        # #     if not FabricService.isEqualHash(ret):
+        # #         ValueError("hash not match")
+        # elif action in ['update']:
+        #     FabricService.updateAsset(ret)
+        # elif action in ['retrieve']:
         #     if not FabricService.isEqualHash(ret):
         #         ValueError("hash not match")
-        elif action in ['update']:
-            FabricService.updateAsset(ret)
-        elif action in ['retrieve']:
-            if not FabricService.isEqualHash(ret):
-                ValueError("hash not match")
         return ret
     

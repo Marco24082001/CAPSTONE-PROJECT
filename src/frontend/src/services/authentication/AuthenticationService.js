@@ -39,6 +39,22 @@ class AuthenticationService extends BaseService {
         }
     }
 
+    async register(data) {
+        const post_register = this.request()
+            .post(`/${this.entity}/register/`, data)
+            .then(
+                (response) => {
+                    return response;
+                },
+                (error) => {
+                    return error.response;
+                }
+            );
+        const res = await post_register;
+        console.log(res);
+        return res
+    }
+
     async getCurrentUser() {
         try {
             return await this.request().get(`/${this.entity}/getCurrentUser`);

@@ -1,6 +1,7 @@
 import UserLayout from "@/layouts/user/UserLayout.vue";
 import DashBoardLayout from "@/layouts/dashboard/DashboardLayout.vue";
 import Login from "@/pages/login/index.vue";
+import Register from "@/pages/register/index.vue";
 import Home from "@/pages/home/index.vue";
 import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
@@ -57,6 +58,11 @@ const routes = [
         name: "login",
         component: Login,
     },
+    {
+        path: "/register",
+        name: "Register",   
+        component: Register,
+    }
 ];
 
 export default routes;

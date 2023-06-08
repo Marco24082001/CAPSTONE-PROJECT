@@ -15,3 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         instance = self.Meta.model.objects.create_user(**validated_data)
         return instance
+
+    def to_representation(self, instance):
+        print('to_representation_user')
+        return super().to_representation(instance)
