@@ -33,7 +33,7 @@ export default {
     },
 
     async created() { 
-        this.listProjects = (await ProjectService.getAll()).data.results;
+        this.listProjects = (await ProjectService.getAll()).data;
         console.log(this.listProjects);
     }
 

@@ -3,20 +3,22 @@
         <div class="image-project">
             <div class="tooltip" v-if="isManageProject">
                 <div class="bx bx-dots-horizontal tooltip-icon" @click="toggleToolTip"></div>
-                <div class="tooltip-menu" :class="{ 'open-tooltip': isToolOpen }">
-                    <div class="tooltip-menu-item">
-                        <div class="bx bx-detail tooltip-menu-icon"></div>
-                        <p>View Detail</p>
+                <OnClickOutside @trigger="dropdownHandler">
+                    <div class="tooltip-menu" :class="{ 'open-tooltip': isToolOpen }">
+                        <div class="tooltip-menu-item">
+                            <div class="bx bx-detail tooltip-menu-icon"></div>
+                            <p>View Detail</p>
+                        </div>
+                        <div class="tooltip-menu-item">
+                            <div class="bx bx-edit tooltip-menu-icon"></div>
+                            <p>Edit</p>
+                        </div>
+                        <div class="tooltip-menu-item">
+                            <div class="bx bx-trash tooltip-menu-icon"></div>
+                            <p>Delete</p>
+                        </div>
                     </div>
-                    <div class="tooltip-menu-item">
-                        <div class="bx bx-edit tooltip-menu-icon"></div>
-                        <p>Edit</p>
-                    </div>
-                    <div class="tooltip-menu-item">
-                        <div class="bx bx-trash tooltip-menu-icon"></div>
-                        <p>Delete</p>
-                    </div>
-                </div>
+                </OnClickOutside>
             </div>
             <router-link :to="{ name: 'Projectdetail', params: { id: project.id } }" class="image-index">
                 <img :src="project.image_url" alt="" />
@@ -65,8 +67,12 @@
 </template>
 
 <script>
+import { OnClickOutside } from "@vueuse/components";
 export default {
     name: "card-project",
+    components: {
+        OnClickOutside
+    },
     props: {
         project_img: {
             type: String,
@@ -100,6 +106,10 @@ export default {
         toggleToolTip() {
             this.isToolOpen = !this.isToolOpen;
             console.log("thanhvi");
+        },
+
+        dropdownHandler() {
+            this.isToolOpen = false;
         },
     },
 };

@@ -183,6 +183,13 @@ export default {
                     color: var(--wc-primary-text);
                 }
             }
+            &.active {
+                background: var(--cs-color-button-hover);
+                .icon,
+                .text {
+                    color: var(--wc-primary-text);
+                }
+            }
         }
     }
 

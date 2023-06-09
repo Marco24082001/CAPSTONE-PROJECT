@@ -18,37 +18,38 @@
         </ul>
 
         <div v-if="!user.currentUser.user_id" class="header-btn">
-            <router-link to="/register" class="sign-up"
-                >Sign Up</router-link
-            >
+            <router-link to="/register" class="sign-up">Sign Up</router-link>
             <router-link to="/login" class="sign-in">Sign In</router-link>
         </div>
         <div v-else class="profile-menu">
-            <img class="user-pic" src="@/assets/avatar1.jpg" @click="toggleSubMenu" />
-            <div class="sub-menu-wrap" :class="{ 'open-menu': isSubOpen }">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="@/assets/avatar1.jpg" />
-                        <h4>Marco</h4>
+            <img class="user-pic" src="@/assets/avatar1.jpg" @click.stop="isSubOpen = !isSubOpen" />
+
+            <OnClickOutside @trigger="dropdownHandler">
+                <div class="sub-menu-wrap" :class="{ 'open-menu': isSubOpen }">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img src="@/assets/avatar1.jpg" />
+                            <h4>Marco</h4>
+                        </div>
+                        <hr />
+                        <router-link to="/" class="sub-menu-link"
+                            ><div class="bx bxs-user sub-menu-icon"></div>
+                            <p>Your profile</p>
+                            <div class="bx bx-chevron-right"></div
+                        ></router-link>
+                        <router-link to="/dashboard/projects" class="sub-menu-link"
+                            ><div class="bx bx-briefcase-alt-2 sub-menu-icon"></div>
+                            <p>Dashboard</p>
+                            <div class="bx bx-chevron-right"></div>
+                        </router-link>
+                        <router-link to="/" @click="logout" class="sub-menu-link"
+                            ><div class="bx bx-log-out sub-menu-icon"></div>
+                            <p>Logout</p>
+                            <div class="bx bx-chevron-right"></div
+                        ></router-link>
                     </div>
-                    <hr />
-                    <router-link to="/" class="sub-menu-link"
-                        ><div class="bx bxs-user sub-menu-icon"></div>
-                        <p>Your profile</p>
-                        <div class="bx bx-chevron-right"></div
-                    ></router-link>
-                    <router-link to="/dashboard/projects" class="sub-menu-link"
-                        ><div class="bx bx-briefcase-alt-2 sub-menu-icon"></div>
-                        <p>Dashboard</p>
-                        <div class="bx bx-chevron-right"></div>
-                    </router-link>
-                    <router-link to="/" @click="logout" class="sub-menu-link"
-                        ><div class="bx bx-log-out sub-menu-icon"></div>
-                        <p>Logout</p>
-                        <div class="bx bx-chevron-right"></div
-                    ></router-link>
                 </div>
-            </div>
+            </OnClickOutside>
         </div>
 
         <div class="dark-mode-switch">
@@ -71,6 +72,8 @@
 <script>
 import MenuLink from "./MenuLink.vue";
 import { mapState } from "vuex";
+import { OnClickOutside } from "@vueuse/components";
+
 import AuthenticationService from "@/services/authentication/AuthenticationService.js";
 
 export default {
@@ -108,6 +111,7 @@ export default {
     },
     components: {
         MenuLink,
+        OnClickOutside,
     },
     data() {
         return {
@@ -139,9 +143,7 @@ export default {
         toggleMenu() {
             this.isOpen = !this.isOpen;
         },
-        toggleSubMenu() {
-            this.isSubOpen = !this.isSubOpen;
-        },
+
         onScroll() {
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
             if (currentScrollPosition < 0) {
@@ -155,9 +157,19 @@ export default {
             this.showMenu = currentScrollPosition < this.lastScrollPosition;
             this.lastScrollPosition = currentScrollPosition;
         },
+
         logout: async function () {
             await AuthenticationService.logout();
             this.$router.go();
+        },
+
+        dropdownHandler(event) {
+            console.log(event)
+            if (this.isSubOpen == true) {
+                this.isSubOpen = false;
+            } else if (this.isSubOpen == false) {
+                this.isSubOpen = true;
+            }
         },
     },
 };

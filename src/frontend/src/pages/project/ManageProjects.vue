@@ -13,32 +13,28 @@
             </div>
         </div>
         <div class="cp-projects">
-            <!-- <CardCreate></CardCreate> -->
-            <CardProject
-                isManageProject="true"
-                project_img="project-0.jpg"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
-            <CardProject
-                isManageProject="true"
-                project_img="project-1.jpg"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
-            <CardProject
-                isManageProject="true"
-                project_img="project-2.png"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
+            <CardProject v-for="project in listProjects" :project="project" :key="project.id" :isManageProject=Boolean(true)></CardProject>
         </div>
     </div>
 </template>
 
 <script>
 import CardProject from "@/pages/project/cardProject.vue";
+import ProjectService from "@/services/project/ProjectService";
 export default {
     name: "Manage-Projects",
     components: {
         CardProject,
+    },
+    data() {
+        return {
+            listProjects: [],
+        };
+    },
+    async created() {
+        //                 isManageProject="true"
+        this.listProjects = (await ProjectService.getProjectOwner()).data;
+        console.log(this.listProjects);
     },
 };
 </script>

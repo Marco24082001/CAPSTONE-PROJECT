@@ -9,7 +9,7 @@ class ProjectService extends BaseService {
         try {
             const res = await this.request().post(`/${this.entity}/`, data);
             return res;
-        } catch (error) {   
+        } catch (error) {
             console.log("thanhvi");
             return error;
         }
@@ -18,22 +18,33 @@ class ProjectService extends BaseService {
     async getAll() {
         try {
             const res = await this.request().get(`/${this.entity}/`);
-            console.log(res)
+            console.log(res);
             return res;
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return { error: error };
         }
     }
+
+    async getProjectOwner() {
+        try {
+            const res = await this.request().get(`/${this.entity}/get_project_owner/`);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    // async g
 
     async getbyId(id) {
         try {
             const res = await this.request().get(`${this.entity}/${id}/`);
             return res;
-            
         } catch (error) {
             console.log(error);
-            return { error: error }
+            return { error: error };
         }
     }
 }
