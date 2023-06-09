@@ -14,8 +14,12 @@ class ProjectViewSet(BaseViewSet):
     serializer_class = ProjectSerializer
     serializer_map = {}
     permission_map = {
-        'upload_image': [AllowAny]
+        'upload_image': [AllowAny],
+        'list': [AllowAny],
+        'retrieve': [AllowAny],
     }
+    # def get_queryset(self):
+    #     super().get_queryset()
     # def list(self, request, *args, **kwargs):
     #     queryset = self.filter_queryset(self.get_queryset())
     #     print('page')
