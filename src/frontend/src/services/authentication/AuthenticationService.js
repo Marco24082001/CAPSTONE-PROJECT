@@ -29,15 +29,7 @@ class AuthenticationService extends BaseService {
         return res;
     }
 
-    async logout() {
-        try {
-            localStorage.removeItem("vuex");
-            localStorage.clear();
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
+    
 
     async register(data) {
         const post_register = this.request()
@@ -60,6 +52,16 @@ class AuthenticationService extends BaseService {
             return await this.request().get(`/${this.entity}/getCurrentUser`);
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    async logout() {
+        try {
+            localStorage.removeItem("vuex");
+            localStorage.clear();
+            return true;
+        } catch (error) {
+            return false;
         }
     }
 }

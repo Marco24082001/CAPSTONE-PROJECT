@@ -10,10 +10,8 @@
                     <div class="project-info">
                         <div class="project-session-1">
                             <div class="project-author">
-                                <img
-                                    src="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-                                />
-                                <a href="#">Quỹ học bổng Huỳnh Tấn Phát</a>
+                                <img :src="project.author.avatar" />
+                                <a href="#">{{ project.author.full_name }}</a>
                             </div>
                             <div class="project-giver-number">
                                 <div class="bx bx-donate-blood"></div>
@@ -21,7 +19,7 @@
                             </div>
                         </div>
                         <div class="project-goal">
-                            <span>Mục tiêu dự án</span>
+                            <span>Project objectives</span>
                             <span>{{ project.fund_goal }}</span>
                         </div>
                         <div class="project-fund-raised">
@@ -29,45 +27,143 @@
                                 <div></div>
                             </div>
                             <div class="fund-raised-number">
-                                <span>Đã đạt được</span>
+                                <span>Achieved</span>
                                 <span>{{ project.fund_total }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-form-donation">
                         <el-input-number
-                            v-model="amount"
+                            v-model="transactionForm.amount"
                             :min="10000"
                             :step="1000"
                             controls-position="right"
                             size="large"
                         />
-                        <el-button type="primary" size="large"> Ủng hộ ngay </el-button>
+                        <el-button @click="checkoutVisible = true" type="primary" size="large">
+                            Support now
+                        </el-button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="project-content" v-html="project.description"></div>
+
+        <el-tabs type="border-card" class="demo-tabs">
+            <el-tab-pane label="Content" :lazy="true">
+                <div class="project-content" v-html="project.description"></div>
+            </el-tab-pane>
+            <el-tab-pane label="List of supporters" :lazy="true">
+                <el-table
+                    :data="transactions"
+                    style="width: 100%"
+                    height="300"
+                    :default-sort="{ prop: 'created_at', order: 'descending' }"
+                >
+                    <el-table-column fixed label="Date" prop="created_at" sortable>
+                        <template #default="scope">
+                            <span>{{ new Date(scope.row.created_at).toLocaleDateString() }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="supporter.full_name" label="Name" />
+                    <el-table-column prop="amount" label="Amount" />
+                    <el-table-column prop="description" label="Message" />
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="Comment">Comment</el-tab-pane>
+        </el-tabs>
+
+        <!--                    Check out dialog                       -->
+        <el-dialog v-model="checkoutVisible" title="Checkout" width="350px" draggable>
+            <el-form label-position="left" style="max-width: 460px">
+                <el-space fill>
+                    <!-- <el-form-item label="Supporter's name" label-position="top">
+                        <el-input v-model="transactionForm.full_name" />
+                    </el-form-item> -->
+
+                    <el-form-item label="Amount of support">
+                        <el-input-number
+                            v-model="transactionForm.amount"
+                            :min="10000"
+                            :step="1000"
+                            controls-position="right"
+                            size="large"
+                        />
+                    </el-form-item>
+                    <el-checkbox
+                        v-model="transactionForm.is_anonymous"
+                        label="I want to support anonymously"
+                        size="large"
+                    />
+                </el-space>
+                <!-- <el-space fill>
+                    <el-form-item label="Your Information">
+                        <el-row :gutter="20">
+                            <el-col :span="12">
+                                <el-input
+                                    v-model="formAccessibility.firstName"
+                                    label="First Name"
+                                    placeholder="First Name"
+                                />
+                            </el-col>
+                            <el-col :span="12">
+                                <el-input
+                                    v-model="formAccessibility.lastName"
+                                    label="Last Name"
+                                    placeholder="Last Name"
+                                />
+                            </el-col>
+                        </el-row>
+                    </el-form-item>
+                </el-space> -->
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="checkoutVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="checkoutVisible = false"> Confirm </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import ProjectService from '@/services/project/ProjectService';
+import { mapState } from "vuex";
+import TransactionService from "@/services/project/TransactionService";
+import ProjectService from "@/services/project/ProjectService";
 export default {
     name: "project-detail",
     data() {
         return {
-            project: {},
-            amount: 0,
+            project: {
+                author: {},
+            },
+            transactions: [],
+            checkoutVisible: false,
+            transactionForm: {
+                full_name: "",
+                phone_number: "",
+                address: "",
+                email: "",
+                is_anonymous: false,
+                amount: 0,
+                description: "",
+            },
         };
+    },
+    computed: {
+        ...mapState(["user"]),
     },
     mounted() {
         console.log(this.$route.params.id);
     },
     async created() {
         this.project = (await ProjectService.getbyId(this.$route.params.id)).data;
-        console.log(this.project)
-    }
+        console.log(this.project);
+        this.transactions = (
+            await TransactionService.getAllOfProject(this.project.id, "INCREASE")
+        ).data;
+        console.log(this.transactions);
+    },
 };
 </script>
 

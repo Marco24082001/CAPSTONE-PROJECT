@@ -31,5 +31,6 @@ export default {
 .main-panel {
     margin-top: 4rem;
     color: var(--cs-color-contrast-900);
+    margin-bottom: 4rem;
 }
 </style>

@@ -2,12 +2,19 @@
     <div class="cp-project">
         <div class="image-project">
             <div class="tooltip" v-if="isManageProject">
-                <div class="bx bx-dots-horizontal tooltip-icon" @click="toggleToolTip"></div>
+                <div
+                    ref="tooltip"
+                    class="bx bx-dots-horizontal tooltip-icon"
+                    @click="isToolOpen = !isToolOpen"
+                ></div>
                 <OnClickOutside @trigger="dropdownHandler">
                     <div class="tooltip-menu" :class="{ 'open-tooltip': isToolOpen }">
                         <div class="tooltip-menu-item">
                             <div class="bx bx-detail tooltip-menu-icon"></div>
-                            <p>View Detail</p>
+                            <router-link
+                                :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
+                                >View Detail</router-link
+                            >
                         </div>
                         <div class="tooltip-menu-item">
                             <div class="bx bx-edit tooltip-menu-icon"></div>
@@ -20,19 +27,24 @@
                     </div>
                 </OnClickOutside>
             </div>
-            <router-link :to="{ name: 'Projectdetail', params: { id: project.id } }" class="image-index">
+            <router-link
+                :to="{ name: 'Projectdetail', params: { id: project.id } }"
+                class="image-index"
+            >
                 <img :src="project.image_url" alt="" />
             </router-link>
         </div>
 
         <div class="cp-content">
             <div class="cp-meta">
-                <a href="/#" v-for="type_project in project.type_projects" :key="type_project.id"> {{ type_project.name }}</a>
+                <a href="/#" v-for="type_project in project.list_types" :key="type_project.id">
+                    {{ type_project.name }}</a
+                >
             </div>
             <h2 class="cp-title">
                 <a
                     href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
-                    >{{project.title}}</a
+                    >{{ project.title }}</a
                 >
             </h2>
             <div class="cp-progressbar">
@@ -40,7 +52,7 @@
                     <div></div>
                 </div>
                 <div class="fund-raised">
-                    <div class="fund-raised-txt">{{project.fund_total}} đ</div>
+                    <div class="fund-raised-txt">{{ project.fund_total }} đ</div>
                     <div class="fund-raised-percent">40%</div>
                 </div>
             </div>
@@ -52,14 +64,18 @@
                     </a>
                     <div class="cp-details-meta">
                         <div class="cp-author-meta">
-                            <a href="/#">{{ project.user.full_name }}</a>
+                            <a href="/#">{{ project.author.full_name }}</a>
                         </div>
                         <div class="cp-post-meta">
-                            <div class="cp-meta-date">{{ (new Date(project.created_at)).toLocaleDateString() }}</div>
+                            <div class="cp-meta-date">
+                                {{ new Date(project.created_at).toLocaleDateString() }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="cp-fund-goal"><span>{{ project.fund_goal }} đ</span></div>
+                <div class="cp-fund-goal">
+                    <span>{{ project.fund_goal }} đ</span>
+                </div>
             </div>
         </div>
         <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
@@ -71,7 +87,7 @@ import { OnClickOutside } from "@vueuse/components";
 export default {
     name: "card-project",
     components: {
-        OnClickOutside
+        OnClickOutside,
     },
     props: {
         project_img: {
@@ -87,9 +103,9 @@ export default {
         project: {
             type: Object,
             default: () => {
-                return {}
-            }
-        }
+                return {};
+            },
+        },
     },
     data() {
         return {
@@ -105,11 +121,12 @@ export default {
     methods: {
         toggleToolTip() {
             this.isToolOpen = !this.isToolOpen;
-            console.log("thanhvi");
         },
 
-        dropdownHandler() {
-            this.isToolOpen = false;
+        dropdownHandler(event) {
+            if (event.target !== this.$refs.tooltip) {
+                this.isToolOpen = false;
+            }
         },
     },
 };

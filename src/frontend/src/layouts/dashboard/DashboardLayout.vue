@@ -33,5 +33,6 @@ export default {
     // padding: 0 3%;
     color: var(--cs-color-contrast-900);
     // background: red;
+    margin-bottom: 4rem;
 }
 </style>

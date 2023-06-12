@@ -45,6 +45,11 @@ const routes = [
                         name: "CreateProject",
                         component: CreateProject,
                     },
+                    {
+                        path: "projects/:id",
+                        name: "OwnerProjectDetail",
+                        component: ProjectDetail,
+                    },
                 ],
             },
         ],
@@ -60,9 +65,9 @@ const routes = [
     },
     {
         path: "/register",
-        name: "Register",   
+        name: "Register",
         component: Register,
-    }
+    },
 ];
 
 export default routes;

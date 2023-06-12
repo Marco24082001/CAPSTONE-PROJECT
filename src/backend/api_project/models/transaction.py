@@ -15,3 +15,4 @@ class Transaction(BaseModel):
     class Meta:
         db_table = "transactions"
         ordering = ('-created_at',)
+    

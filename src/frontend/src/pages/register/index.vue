@@ -57,7 +57,8 @@
 
 <script>
 import { User, Lock } from "@element-plus/icons-vue";
-// import { ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
+import AuthenticationService from "@/services/authentication/AuthenticationService";
 export default {
     name: 'register-page',
     data() {
@@ -147,6 +148,26 @@ export default {
             Lock,
         };
     },
+
+    methods: {
+        simulateLogin() {
+            return new Promise((resolve) => {
+                setTimeout(resolve, 800);
+            });
+        },
+        async login() {
+            let valid = await this.$refs.form.validate();
+            if (!valid) {
+                return;
+            }
+            const res = await AuthenticationService.register(this.model);
+            if (res.status === 201) {
+                this.$router.push("/login");
+            } else {
+                ElMessage.error("Tài khoản mật khẩu không đúng!");
+            }
+        },
+    }
 }
 </script>
 

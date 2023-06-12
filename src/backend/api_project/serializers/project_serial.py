@@ -1,48 +1,32 @@
 from rest_framework import serializers
 from api_project.models import Project
 from services import FabricService
-from django.conf import settings
+# from rest_framework import reverse
 from api_project.serializers import TypeSerializer
-from api_user.serializers import AuthorSerializer
+from api_user.serializers import PublicUserSerializer
 
 class ProjectSerializer(serializers.ModelSerializer):
-    type_projects = TypeSerializer(many=True)
-    user = AuthorSerializer()
+    list_types = TypeSerializer(source="type_projects", many=True, read_only=True)
+    author = PublicUserSerializer(source='user', read_only=True)
+    # url = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Project
         fields = '__all__'
-    
+
     def to_internal_value(self, data):
-        data['user'] = self.context.get('request').user.id
+        # data['user'] = self.context.get('request').user.id
         print("inside to internal value", data)
         return super().to_internal_value(data)
 
-    def update(self, instance, validated_data):
-        print('in update')
-        return super().update(instance, validated_data)
-    
-    def create(self, validated_data):
-        print("in create")
-        return super().create(validated_data)
+    def save(self, **kwargs):
+        print('project serializer save')
+        instance = super().save(**kwargs)
+        FabricService.addAsset(self.data, Project.get_list_field_names())
+        return instance
     
     def to_representation(self, instance):
-        # print('to_representation')
-        # print(settings.USE_HYPERLEDGER_FABRIC)  
-        # print(instance.type_projects)
-        # print('=========================================')
+        print('to_representation')
         ret = super().to_representation(instance)
-        print(ret)
-        # print(list(ret.items())[0])
-        # action = self.context.get('view').action
-        # if action in ['create']:
-        #     FabricService.addAsset(ret)
-        # # if action in ['list']:
-        # #     if not FabricService.isEqualHash(ret):
-        # #         ValueError("hash not match")
-        # elif action in ['update']:
-        #     FabricService.updateAsset(ret)
-        # elif action in ['retrieve']:
-        #     if not FabricService.isEqualHash(ret):
-        #         ValueError("hash not match")
+        if not FabricService.isEqualHash(ret, Project.get_list_field_names()):
+                ValueError("hash not match")
         return ret
-    

@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
         return super().to_representation(instance)
 
 
-class AuthorSerializer(serializers.ModelSerializer):
+class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'full_name', 'avatar', 'biology']

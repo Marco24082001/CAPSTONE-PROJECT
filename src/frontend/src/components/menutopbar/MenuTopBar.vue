@@ -1,6 +1,6 @@
 <template>
     <header class="menu-topbar" :class="{ 'menu-topbar--hidden': !showMenu }">
-        <a href="#" class="logo"><img src="@/assets/logo.png" /></a>
+        <router-link to="/home" class="logo"><img src="@/assets/logo.png" /></router-link>
         <div
             id="menu-icon"
             class="bx bx-menu"
@@ -22,13 +22,18 @@
             <router-link to="/login" class="sign-in">Sign In</router-link>
         </div>
         <div v-else class="profile-menu">
-            <img class="user-pic" src="@/assets/avatar1.jpg" @click.stop="isSubOpen = !isSubOpen" />
+            <img
+                ref="submenu"
+                class="user-pic"
+                :src="user.currentUser.avatar"
+                @click="isSubOpen = !isSubOpen"
+            />
 
             <OnClickOutside @trigger="dropdownHandler">
                 <div class="sub-menu-wrap" :class="{ 'open-menu': isSubOpen }">
                     <div class="sub-menu">
                         <div class="user-info">
-                            <img src="@/assets/avatar1.jpg" />
+                            <img :src="user.currentUser.avatar" />
                             <h4>Marco</h4>
                         </div>
                         <hr />
@@ -164,11 +169,8 @@ export default {
         },
 
         dropdownHandler(event) {
-            console.log(event)
-            if (this.isSubOpen == true) {
+            if (event.target !== this.$refs.submenu) {
                 this.isSubOpen = false;
-            } else if (this.isSubOpen == false) {
-                this.isSubOpen = true;
             }
         },
     },

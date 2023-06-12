@@ -11,3 +11,9 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         abstract = True
+
+    @classmethod
+    def get_list_field_names(cls):
+        list_field_names = [f.name for f in cls._meta.get_fields()]
+        return list_field_names
+

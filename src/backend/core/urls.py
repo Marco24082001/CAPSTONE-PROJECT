@@ -37,7 +37,7 @@ urlpatterns = [
             include([
                 path('api_auth/', include('api_auth.urls')),
                 path('api_user/', include('api_user.urls')),
-                path('api_project/', include('api_project.urls')),
+                path('api_project/', include('api_project.urls', "API_PROJECT")),
                 path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-schema'),
                 path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-schema'),
             ])
