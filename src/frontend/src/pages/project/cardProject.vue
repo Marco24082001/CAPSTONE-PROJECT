@@ -112,12 +112,6 @@ export default {
             isToolOpen: false,
         };
     },
-    created() {
-        // let dattime = this.project.create
-        var ts = new Date("2023-06-06T15:33:12.443664Z");
-        console.log(ts.toLocaleDateString());
-        // this.project.created = this.project;
-    },
     methods: {
         toggleToolTip() {
             this.isToolOpen = !this.isToolOpen;

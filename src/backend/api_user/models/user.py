@@ -47,4 +47,5 @@ class User(BaseModel, AbstractUser):
 
     def __str__(self):
         return str(self.email)
+    
     # Abstractbaseuser has password, last_login, is_active by default
