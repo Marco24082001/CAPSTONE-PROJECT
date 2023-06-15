@@ -13,7 +13,12 @@
             </div>
         </div>
         <div class="cp-projects">
-            <CardProject v-for="project in listProjects" :project="project" :key="project.id" :isManageProject=Boolean(true)></CardProject>
+            <CardProject
+                v-for="project in listProjects"
+                :project="project"
+                :key="project.id"
+                :isManageProject="Boolean(true)"
+            ></CardProject>
         </div>
     </div>
 </template>
@@ -56,7 +61,7 @@ export default {
     .cp-projects {
         width: 100%;
         align-self: center;
-        // height: 65vh;
+        height: 65vh;
         display: inline-flex;
         justify-content: center;
         flex-wrap: wrap;

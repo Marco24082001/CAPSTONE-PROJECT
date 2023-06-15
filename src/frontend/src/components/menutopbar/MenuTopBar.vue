@@ -34,7 +34,9 @@
                     <div class="sub-menu">
                         <div class="user-info">
                             <img :src="user.currentUser.avatar" />
-                            <h4>Marco</h4>
+                            <h4>
+                                {{ user.currentUser.full_name }}
+                            </h4>
                         </div>
                         <hr />
                         <router-link to="/" class="sub-menu-link"

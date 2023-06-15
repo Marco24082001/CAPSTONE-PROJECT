@@ -14,9 +14,13 @@ class Project(BaseModel):
     fund_goal = models.FloatField(default=0)
     fund_total = models.FloatField(default=0)
     fund_used = models.FloatField(default=0)
-    status = models.CharField(choices=ProjectStatus.choices(), default=ProjectStatus.DRAFT.value, max_length=50)
-
+    status = models.CharField(choices=ProjectStatus.choices(), default=ProjectStatus.ACTIVE.value, max_length=50)
+    likes = models.ManyToManyField(
+            User,
+            related_name='user_likes',
+            blank=True,
+        )
+    
     class Meta:
         db_table = "projects"
         ordering = ('-created_at',)
-

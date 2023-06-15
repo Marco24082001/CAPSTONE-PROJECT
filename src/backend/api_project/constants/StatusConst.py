@@ -1,8 +1,8 @@
 from enum import Enum
 
 class ProjectStatus(Enum):
-    DRAFT = "DRAFT"
-    PUBLISHED = "PUBLISHED"
+    ACTIVE = "ACTIVE"
+    FINISH = "FINISH"
     DEACTIVATED = "DEACTIVATED"
 
     @classmethod

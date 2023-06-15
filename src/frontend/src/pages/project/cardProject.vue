@@ -49,18 +49,18 @@
             </h2>
             <div class="cp-progressbar">
                 <div class="neo-progressbar">
-                    <div></div>
+                    <div v-bind:style="{ width: project.percent }"></div>
                 </div>
                 <div class="fund-raised">
                     <div class="fund-raised-txt">{{ project.fund_total }} đ</div>
-                    <div class="fund-raised-percent">40%</div>
+                    <div class="fund-raised-percent">{{ project.percent }}%</div>
                 </div>
             </div>
             <!-- <span>$ 15.99</span> -->
             <div class="cp-details">
                 <div class="cp-details-data">
                     <a class="cp-author-avatar" href="#">
-                        <img :src="project.image_url" />
+                        <img :src="project.author.avatar" />
                     </a>
                     <div class="cp-details-meta">
                         <div class="cp-author-meta">
@@ -132,15 +132,13 @@ export default {
     width: 20rem;
     display: flex;
     flex-direction: column;
+    height: 100%;
     transition: 0.3s;
-    // &:hover {
-    //     transform: translateY(-15px);
-    //     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    // }
     &:hover {
         box-shadow: var(--cs-box-shadow-menu);
     }
     .image-project {
+        flex: 1;
         display: flex;
         flex-direction: column;
         .tooltip {
@@ -211,10 +209,12 @@ export default {
     .image-index {
         display: grid;
         overflow: hidden;
-        place-content: center;
         width: 100%;
+        height: 100%;
         img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             -webkit-transform: scale(1);
             transform: scale(1);
             -webkit-transition: 0.3s ease-in-out;
@@ -228,8 +228,6 @@ export default {
     .cp-content {
         margin-top: 1.2rem;
         width: 100%;
-        // display: flex;
-        // justify-content: space-between;
         .cp-meta {
             font-family: var(--cs-font-category-family), sans-serif;
             font-size: var(--cs-font-category-size);
@@ -272,7 +270,6 @@ export default {
                 div {
                     height: 0.4rem;
                     border-radius: 6px;
-                    width: 40px;
                     background-color: #ff2e5b;
                     z-index: 11111;
                 }

@@ -15,7 +15,7 @@
                             </div>
                             <div class="project-giver-number">
                                 <div class="bx bx-donate-blood"></div>
-                                100
+                                sdf
                             </div>
                         </div>
                         <div class="project-goal">
@@ -64,21 +64,32 @@
                             <span>{{ new Date(scope.row.created_at).toLocaleDateString() }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="supporter.full_name" label="Name" />
+                    <el-table-column prop="full_name" label="Name" />
                     <el-table-column prop="amount" label="Amount" />
-                    <el-table-column prop="description" label="Message" />
+                    <el-table-column prop="message" label="Message" />
+                    <el-table-column align="right">
+                        <template #header>
+                            <el-input v-model="search" size="small" placeholder="Search name" />
+                        </template>
+                    </el-table-column>
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="Comment">Comment</el-tab-pane>
         </el-tabs>
 
         <!--                    Check out dialog                       -->
-        <el-dialog v-model="checkoutVisible" title="Checkout" width="350px" draggable>
-            <el-form label-position="left" style="max-width: 460px">
+        <el-dialog v-model="checkoutVisible" title="Checkout" width="370px" draggable>
+            <el-form label-position="left" style="max-width: 460px" label-width="130px">
                 <el-space fill>
-                    <!-- <el-form-item label="Supporter's name" label-position="top">
+                    <el-form-item
+                        v-if="user.currentUser.full_name == null"
+                        label="Supporter's name"
+                    >
                         <el-input v-model="transactionForm.full_name" />
-                    </el-form-item> -->
+                    </el-form-item>
+                    <el-form-item label="Message">
+                        <el-input v-model="transactionForm.message" />
+                    </el-form-item>
 
                     <el-form-item label="Amount of support">
                         <el-input-number
@@ -95,31 +106,11 @@
                         size="large"
                     />
                 </el-space>
-                <!-- <el-space fill>
-                    <el-form-item label="Your Information">
-                        <el-row :gutter="20">
-                            <el-col :span="12">
-                                <el-input
-                                    v-model="formAccessibility.firstName"
-                                    label="First Name"
-                                    placeholder="First Name"
-                                />
-                            </el-col>
-                            <el-col :span="12">
-                                <el-input
-                                    v-model="formAccessibility.lastName"
-                                    label="Last Name"
-                                    placeholder="Last Name"
-                                />
-                            </el-col>
-                        </el-row>
-                    </el-form-item>
-                </el-space> -->
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="checkoutVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="checkoutVisible = false"> Confirm </el-button>
+                    <el-button type="primary" @click="executeDonation"> Confirm </el-button>
                 </span>
             </template>
         </el-dialog>
@@ -140,18 +131,30 @@ export default {
             transactions: [],
             checkoutVisible: false,
             transactionForm: {
+                project: "",
                 full_name: "",
                 phone_number: "",
                 address: "",
                 email: "",
                 is_anonymous: false,
                 amount: 0,
-                description: "",
+                message: "",
             },
+            searchQuery: "",
         };
     },
     computed: {
         ...mapState(["user"]),
+        resultQuery() {
+            if (this.searchQuery) {
+                this.transactions.filter((item) => {
+                    return item;
+                });
+            } else {
+                return this.transactions;
+            }
+            return "dfs";
+        },
     },
     mounted() {
         console.log(this.$route.params.id);
@@ -163,6 +166,14 @@ export default {
             await TransactionService.getAllOfProject(this.project.id, "INCREASE")
         ).data;
         console.log(this.transactions);
+    },
+    methods: {
+        async executeDonation() {
+            this.transactionForm.project = this.project.id;
+            const res = await TransactionService.create(this.transactionForm);
+            console.log(res);
+            this.checkoutVisible = false;
+        },
     },
 };
 </script>

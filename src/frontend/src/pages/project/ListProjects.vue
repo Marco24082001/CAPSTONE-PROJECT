@@ -13,7 +13,11 @@
                 project_img="project-2.png"
                 author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
             ></CardProject> -->
-            <CardProject v-for="project in listProjects" :project="project" :key="project.id"></CardProject>
+            <CardProject
+                v-for="project in listProjects"
+                :project="project"
+                :key="project.id"
+            ></CardProject>
         </div>
     </div>
 </template>
@@ -28,15 +32,14 @@ export default {
     },
     data() {
         return {
-            listProjects: []
-        }
+            listProjects: [],
+        };
     },
 
-    async created() { 
+    async created() {
         this.listProjects = (await ProjectService.getAll()).data;
         console.log(this.listProjects);
-    }
-
+    },
 };
 </script>
 
@@ -57,7 +60,7 @@ export default {
     .cp-projects {
         width: 100%;
         align-self: center;
-        // height: 65vh;
+        height: 65vh;
         display: inline-flex;
         // justify-content: center;
         flex-wrap: wrap;

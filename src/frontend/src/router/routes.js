@@ -7,6 +7,10 @@ import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
 import ManageProject from "@/pages/project/ManageProjects.vue";
 import CreateProject from "@/pages/project/CreateProject.vue";
+import NotFound from "@/pages/notfound/NotFoundPage.vue";
+
+import { Authenticate } from "./middleware/auth";
+
 const routes = [
     {
         path: "/",
@@ -30,10 +34,17 @@ const routes = [
                 component: ProjectDetail,
             },
             {
+                path: "/:user",
+                name: "",
+            },
+            {
                 path: "dashboard",
                 name: "Dashboard",
                 component: DashBoardLayout,
                 redirect: "dashboard/projects",
+                meta: {
+                    middleware: [Authenticate],
+                },
                 children: [
                     {
                         path: "projects",
@@ -55,10 +66,6 @@ const routes = [
         ],
     },
     {
-        path: "/:user",
-        name: "",
-    },
-    {
         path: "/login",
         name: "login",
         component: Login,
@@ -67,6 +74,11 @@ const routes = [
         path: "/register",
         name: "Register",
         component: Register,
+    },
+    {
+        path: "/:catchAll(.*)",
+        name: "notfound",
+        component: NotFound,
     },
 ];
 

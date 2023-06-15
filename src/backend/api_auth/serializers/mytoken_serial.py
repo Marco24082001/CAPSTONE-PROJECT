@@ -8,6 +8,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['phone'] = user.phone
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
+        token['full_name'] = user.full_name
         token['avatar'] = user.avatar
         token['role'] = user.role
         token['biology'] = user.biology

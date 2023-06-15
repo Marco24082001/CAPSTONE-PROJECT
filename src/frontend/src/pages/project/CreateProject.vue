@@ -112,11 +112,11 @@ export default {
             dialogVisible: false,
             rawFileImage: "",
             projectForm: {
-                title: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-                image_url: "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png",
-                summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                title: "",
+                image_url: "",
+                summary: "",
                 description: "",
-                fund_goal: 333333,
+                fund_goal: 100000,
                 type_projects: [],
             },
             projectFromRules: {
@@ -134,7 +134,7 @@ export default {
         };
     },
     async created() {
-        this.listTypeProject = (await TypeService.getAll()).data.results;
+        this.listTypeProject = (await TypeService.getAll()).data;
         console.log(this.listTypeProject);
         this.projectForm.type_projects.push(this.listTypeProject[0].id);
     },
@@ -161,6 +161,14 @@ export default {
                     }
                     const res = await ProjectService.create(this.projectForm);
                     console.log(res);
+                    if (res.status == 201) {
+                        this.$router.push({
+                            name: "Projectdetail",
+                            params: { id: res.data },
+                        });
+                    } else {
+                        ElMessage.error("Create project fail!");
+                    }
                 }
             });
         },
@@ -207,13 +215,15 @@ export default {
     display: block;
 }
 
-.avatar-uploader .el-upload {
-    border: 1px dashed var(--el-border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
+.avatar-uploader {
+    :deep(.el-upload) {
+        border: 1px dashed var(--el-border-color);
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: var(--el-transition-duration-fast);
+    }
 }
 
 .avatar-uploader .el-upload:hover {

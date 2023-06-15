@@ -17,6 +17,16 @@ class TransactionSerializer(serializers.ModelSerializer):
         FabricService.addAsset(self.data, Transaction.get_list_field_names())
         return instance
     
+    
+    def to_internal_value(self, data):
+        is_anonymous = data['is_anonymous']
+        if not is_anonymous:
+            user = self.context.get('request').user
+            data['user'] = user.id if user else None
+        else:
+            data['full_name'] = "Anonymous"
+        return super().to_internal_value(data)
+    
     def create(self, validated_data):
         instance = super().create(validated_data)
         # Update total in project
@@ -34,17 +44,9 @@ class TransactionSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         if not FabricService.isEqualHash(ret, Transaction.get_list_field_names()):
                 ValueError("hash not match")
-
+        print(ret)
+        if ret['user']:
+            ret['full_name'] = ret['supporter']['full_name']
         # action = self.context.get('view').action
-        # if action in ['create']:
-        #     FabricService.addAsset(ret)
-        # if action in ['list']:
-        #     if not FabricService.isEqualHash(ret):
-        #         ValueError("hash not match")
-        # elif action in ['update']:
-        #     FabricService.updateAsset(ret)
-        # elif action in ['retrieve']:
-        #     if not FabricService.isEqualHash(ret):
-        #         ValueError("hash not match")
         return ret
 
