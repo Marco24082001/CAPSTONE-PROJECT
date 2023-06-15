@@ -160,11 +160,10 @@ export default {
                         }
                     }
                     const res = await ProjectService.create(this.projectForm);
-                    console.log(res);
                     if (res.status == 201) {
                         this.$router.push({
                             name: "Projectdetail",
-                            params: { id: res.data },
+                            params: { id: res.data.id },
                         });
                     } else {
                         ElMessage.error("Create project fail!");

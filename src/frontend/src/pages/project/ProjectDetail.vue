@@ -15,7 +15,7 @@
                             </div>
                             <div class="project-giver-number">
                                 <div class="bx bx-donate-blood"></div>
-                                sdf
+                                {{ transactions.length }}
                             </div>
                         </div>
                         <div class="project-goal">
@@ -54,7 +54,7 @@
             </el-tab-pane>
             <el-tab-pane label="List of supporters" :lazy="true">
                 <el-table
-                    :data="transactions"
+                    :data="resultQuery"
                     style="width: 100%"
                     height="300"
                     :default-sort="{ prop: 'created_at', order: 'descending' }"
@@ -69,7 +69,11 @@
                     <el-table-column prop="message" label="Message" />
                     <el-table-column align="right">
                         <template #header>
-                            <el-input v-model="search" size="small" placeholder="Search name" />
+                            <el-input
+                                v-model="searchQuery"
+                                size="small"
+                                placeholder="Search name"
+                            />
                         </template>
                     </el-table-column>
                 </el-table>
@@ -146,14 +150,13 @@ export default {
     computed: {
         ...mapState(["user"]),
         resultQuery() {
-            if (this.searchQuery) {
-                this.transactions.filter((item) => {
-                    return item;
+            if (this.searchQuery != "") {
+                return this.transactions.filter((item) => {
+                    return item.full_name.toLowerCase().includes(this.searchQuery.toLowerCase());
                 });
             } else {
                 return this.transactions;
             }
-            return "dfs";
         },
     },
     mounted() {
@@ -171,6 +174,8 @@ export default {
         async executeDonation() {
             this.transactionForm.project = this.project.id;
             const res = await TransactionService.create(this.transactionForm);
+            this.transactions.push(res.data);
+
             console.log(res);
             this.checkoutVisible = false;
         },

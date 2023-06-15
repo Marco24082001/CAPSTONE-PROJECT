@@ -226,6 +226,7 @@ export default {
         }
     }
     .cp-content {
+        // flex: 1;
         margin-top: 1.2rem;
         width: 100%;
         .cp-meta {

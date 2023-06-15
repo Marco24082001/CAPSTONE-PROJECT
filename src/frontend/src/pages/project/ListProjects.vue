@@ -60,7 +60,7 @@ export default {
     .cp-projects {
         width: 100%;
         align-self: center;
-        height: 65vh;
+        height: 50vh;
         display: inline-flex;
         // justify-content: center;
         flex-wrap: wrap;
