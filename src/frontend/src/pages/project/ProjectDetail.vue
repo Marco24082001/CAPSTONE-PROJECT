@@ -111,12 +111,12 @@
                     />
                 </el-space>
             </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="checkoutVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="executeDonation"> Confirm </el-button>
-                </span>
-            </template>
+            <div class="footer-dialog">
+                <PaypalButton
+                    :amount="transactionForm.amount"
+                    :message="transactionForm.message"
+                ></PaypalButton>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -125,8 +125,12 @@
 import { mapState } from "vuex";
 import TransactionService from "@/services/project/TransactionService";
 import ProjectService from "@/services/project/ProjectService";
+import PaypalButton from "@/components/checkout/PaypalButton.vue";
 export default {
     name: "project-detail",
+    components: {
+        PaypalButton,
+    },
     data() {
         return {
             project: {
@@ -271,8 +275,6 @@ export default {
                 }
             }
         }
-    }
-    .project {
     }
 }
 

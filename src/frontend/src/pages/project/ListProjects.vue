@@ -1,18 +1,6 @@
 <template>
     <div class="container">
         <div class="cp-projects">
-            <!-- <CardProject
-                project_img="project-0.jpg"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
-            <CardProject
-                project_img="project-1.jpg"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject>
-            <CardProject
-                project_img="project-2.png"
-                author_img="https://givenow.vn/wp-content/uploads/2022/08/_resampled/File-Anh-Logo-Quy-Phan-Anh-fit-60-60.jpg"
-            ></CardProject> -->
             <CardProject
                 v-for="project in listProjects"
                 :project="project"
@@ -58,9 +46,10 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     .cp-projects {
+        position: relative;
         width: 100%;
         align-self: center;
-        height: 50vh;
+        height: 28rem;
         display: inline-flex;
         // justify-content: center;
         flex-wrap: wrap;
