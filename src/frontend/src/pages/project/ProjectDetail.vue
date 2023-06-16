@@ -35,8 +35,8 @@
                     <div class="project-form-donation">
                         <el-input-number
                             v-model="transactionForm.amount"
-                            :min="10000"
-                            :step="1000"
+                            :min="1"
+                            :step="1"
                             controls-position="right"
                             size="large"
                         />
@@ -82,7 +82,13 @@
         </el-tabs>
 
         <!--                    Check out dialog                       -->
-        <el-dialog v-model="checkoutVisible" title="Checkout" width="370px" draggable>
+        <el-dialog
+            v-model="checkoutVisible"
+            class="checkout-dialog"
+            title="Checkout"
+            width="370px"
+            draggable
+        >
             <el-form label-position="left" style="max-width: 460px" label-width="130px">
                 <el-space fill>
                     <el-form-item
@@ -98,8 +104,8 @@
                     <el-form-item label="Amount of support">
                         <el-input-number
                             v-model="transactionForm.amount"
-                            :min="10000"
-                            :step="1000"
+                            :min="1"
+                            :step="1"
                             controls-position="right"
                             size="large"
                         />
@@ -115,6 +121,7 @@
                 <PaypalButton
                     :amount="transactionForm.amount"
                     :message="transactionForm.message"
+                    @execute-transaction="executeTransaction"
                 ></PaypalButton>
             </div>
         </el-dialog>
@@ -126,6 +133,7 @@ import { mapState } from "vuex";
 import TransactionService from "@/services/project/TransactionService";
 import ProjectService from "@/services/project/ProjectService";
 import PaypalButton from "@/components/checkout/PaypalButton.vue";
+import { ElMessage } from "element-plus";
 export default {
     name: "project-detail",
     components: {
@@ -175,12 +183,17 @@ export default {
         console.log(this.transactions);
     },
     methods: {
-        async executeDonation() {
+        async executeTransaction() {
             this.transactionForm.project = this.project.id;
+            this.$store.commit("decoration/setFullscreenLoading", true);
             const res = await TransactionService.create(this.transactionForm);
-            this.transactions.push(res.data);
-
-            console.log(res);
+            this.$store.commit("decoration/setFullscreenLoading", false);
+            if (res.status === 201) {
+                this.transactions.push(res.data);
+                ElMessage.success("Transaction Successful!")
+            } else {
+                ElMessage.error("transaction failed!")
+            }
             this.checkoutVisible = false;
         },
     },
@@ -274,6 +287,12 @@ export default {
                     justify-content: space-between;
                 }
             }
+        }
+    }
+
+    :deep(.checkout-dialog) {
+        .el-input-number {
+            width: 100% !important;
         }
     }
 }

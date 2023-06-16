@@ -1,5 +1,5 @@
 <template>
-    <div :data-site-scheme="decoration.themeMode" :data-scheme="decoration.themeMode" class="body">
+    <div :data-site-scheme="decoration.themeMode" :data-scheme="decoration.themeMode" v-loading.fullscreen.lock="decoration.fullscreenLoading" class="body">
         <router-view></router-view>
     </div>
 </template>
@@ -11,6 +11,9 @@ export default {
     computed: {
         ...mapState(["decoration"]),
     },
+    created() {
+        this.$store.commit("decoration/setFullscreenLoading", false);
+    }
 };
 </script>
 

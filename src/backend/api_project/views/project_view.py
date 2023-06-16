@@ -4,11 +4,8 @@ from api_project.serializers import ProjectSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from api_project.constants import ProjectStatus
-
-
-
 
 class ProjectViewSet(BaseViewSet):
     queryset = Project.objects.all()
@@ -19,6 +16,7 @@ class ProjectViewSet(BaseViewSet):
         'list': [AllowAny],
         'retrieve': [AllowAny],
     }
+    filterset_fields = ['status']
     # def get_queryset(self):
     #     super().get_queryset()
     
@@ -49,4 +47,3 @@ class ProjectViewSet(BaseViewSet):
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
         return Response(serializer.data)
-

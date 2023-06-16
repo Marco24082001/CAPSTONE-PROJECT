@@ -18,9 +18,11 @@
                         </div>
                         <div class="tooltip-menu-item">
                             <div class="bx bx-edit tooltip-menu-icon"></div>
-                            <p>Edit</p>
+                            <route-link :to="{ name: 'EditProject', params: { id: project.id } }"
+                                >Edit</route-link
+                            >
                         </div>
-                        <div class="tooltip-menu-item">
+                        <div class="tooltip-menu-item" @click="actionDelete">
                             <div class="bx bx-trash tooltip-menu-icon"></div>
                             <p>Delete</p>
                         </div>
@@ -74,16 +76,16 @@
                     </div>
                 </div>
                 <div class="cp-fund-goal">
-                    <span>{{ project.fund_goal }} đ</span>
+                    <span>{{ project.fund_goal }} $</span>
                 </div>
             </div>
         </div>
-        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit..</p> -->
     </div>
 </template>
 
 <script>
 import { OnClickOutside } from "@vueuse/components";
+import ProjectService from "@/services/project/ProjectService";
 export default {
     name: "card-project",
     components: {
@@ -116,7 +118,10 @@ export default {
         toggleToolTip() {
             this.isToolOpen = !this.isToolOpen;
         },
-
+        async actionDelete() {
+            const res = ProjectService.deactivate(this.project.id);
+            console.log(res);
+        },
         dropdownHandler(event) {
             if (event.target !== this.$refs.tooltip) {
                 this.isToolOpen = false;

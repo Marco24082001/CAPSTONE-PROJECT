@@ -36,7 +36,15 @@ class ProjectService extends BaseService {
         }
     }
 
-    // async g
+    async deactivate(id) {
+        try {
+            const res = await this.request().put(`/${this.entity}/${id}/deactivate/`);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
 
     async getbyId(id) {
         try {

@@ -7,6 +7,7 @@ import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
 import ManageProject from "@/pages/project/ManageProjects.vue";
 import CreateProject from "@/pages/project/CreateProject.vue";
+import EditProject from "@/pages/project/EditProject.vue";
 import NotFound from "@/pages/notfound/NotFoundPage.vue";
 
 import { Authenticate } from "./middleware/auth";
@@ -55,6 +56,11 @@ const routes = [
                         path: "projects/create",
                         name: "CreateProject",
                         component: CreateProject,
+                    },
+                    {
+                        path: "projects/:id/edit",
+                        name: "EditProject", 
+                        component: EditProject,
                     },
                     {
                         path: "projects/:id",
