@@ -9,22 +9,34 @@
                 ></div>
                 <OnClickOutside @trigger="dropdownHandler">
                     <div class="tooltip-menu" :class="{ 'open-tooltip': isToolOpen }">
-                        <div class="tooltip-menu-item">
+                        <router-link
+                            class="tooltip-menu-item"
+                            :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
+                        >
                             <div class="bx bx-detail tooltip-menu-icon"></div>
-                            <router-link
-                                :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
-                                >View Detail</router-link
-                            >
-                        </div>
-                        <div class="tooltip-menu-item">
-                            <div class="bx bx-edit tooltip-menu-icon"></div>
-                            <route-link :to="{ name: 'EditProject', params: { id: project.id } }"
-                                >Edit</route-link
-                            >
-                        </div>
-                        <div class="tooltip-menu-item" @click="actionDelete">
+                            View Detail</router-link
+                        >
+                        <router-link
+                            class="tooltip-menu-item"
+                            :to="{ name: 'EditProject', params: { id: project.id } }"
+                            ><div class="bx bx-edit tooltip-menu-icon"></div>
+                            Edit</router-link
+                        >
+                        <div
+                            v-if="project.status == 'ACTIVE'"
+                            class="tooltip-menu-item"
+                            @click="deactivate"
+                        >
                             <div class="bx bx-trash tooltip-menu-icon"></div>
-                            <p>Delete</p>
+                            <p>Deactivate</p>
+                        </div>
+                        <div
+                            v-else-if="project.status == 'INACTIVE'"
+                            class="tooltip-menu-item"
+                            @click="activate"
+                        >
+                            <div class="bx bx-bolt-circle tooltip-menu-icon"></div>
+                            <p>Activate</p>
                         </div>
                     </div>
                 </OnClickOutside>
@@ -51,7 +63,7 @@
             </h2>
             <div class="cp-progressbar">
                 <div class="neo-progressbar">
-                    <div v-bind:style="{ width: project.percent }"></div>
+                    <div v-bind:style="{ width: project.percent + '%' }"></div>
                 </div>
                 <div class="fund-raised">
                     <div class="fund-raised-txt">{{ project.fund_total }} đ</div>
@@ -86,6 +98,7 @@
 <script>
 import { OnClickOutside } from "@vueuse/components";
 import ProjectService from "@/services/project/ProjectService";
+import { ElMessage } from "element-plus";
 export default {
     name: "card-project",
     components: {
@@ -118,10 +131,26 @@ export default {
         toggleToolTip() {
             this.isToolOpen = !this.isToolOpen;
         },
-        async actionDelete() {
-            const res = ProjectService.deactivate(this.project.id);
+        async deactivate() {
+            const res = await ProjectService.deactivate(this.project.id);
+            if (res.status === 200) {
+                ElMessage.success("Deactivate Successful!");
+            } else {
+                ElMessage.error("Deactivate failed!");
+            }
             console.log(res);
         },
+
+        async activate() {
+            const res = await ProjectService.activate(this.project.id);
+            if (res.status === 200) {
+                ElMessage.success("Activate Successful!");
+            } else {
+                ElMessage.error("Activate failed!");
+            }
+            console.log(res);
+        },
+
         dropdownHandler(event) {
             if (event.target !== this.$refs.tooltip) {
                 this.isToolOpen = false;
@@ -133,7 +162,8 @@ export default {
 <style scoped lang="scss">
 .cp-project {
     position: relative;
-    background-color: var(--sectionBack);
+    // background-color: var(--sectionBack);
+    background-color: white;
     width: 20rem;
     display: flex;
     flex-direction: column;
@@ -169,7 +199,7 @@ export default {
                 position: absolute;
                 padding: 0.5rem 0;
                 top: 100%;
-                right: 1.1rem;
+                right: 0rem;
                 width: 105px;
                 max-height: 0px;
                 opacity: 0;
@@ -220,6 +250,7 @@ export default {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center center center;
             -webkit-transform: scale(1);
             transform: scale(1);
             -webkit-transition: 0.3s ease-in-out;
@@ -260,6 +291,9 @@ export default {
             a {
                 display: block;
                 text-decoration: none;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 color: var(--cs-color-title, var(--cs-color-primary));
                 transition: 0.25s;
                 &:hover {
@@ -273,6 +307,7 @@ export default {
             .neo-progressbar {
                 border-radius: 6px;
                 background-color: #ff2e5b1a;
+                overflow: hidden;
                 div {
                     height: 0.4rem;
                     border-radius: 6px;

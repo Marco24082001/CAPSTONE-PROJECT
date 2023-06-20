@@ -1,6 +1,20 @@
 <template>
     <div class="container">
-        <AppToolbar :title="title_page"></AppToolbar>
+        <AppToolbar>
+            <template #content>
+                <el-breadcrumb :separator-icon="ArrowRight">
+                    <el-breadcrumb-item>
+                        <router-link to="/home">Home</router-link>
+                    </el-breadcrumb-item>
+                    <el-breadcrumb-item
+                        ><router-link to="/dashboard/projects"
+                            >Project</router-link
+                        ></el-breadcrumb-item
+                    >
+                    <el-breadcrumb-item>Create Project</el-breadcrumb-item>
+                </el-breadcrumb>
+            </template>
+        </AppToolbar>
         <div class="main-container">
             <div class="project-form">
                 <el-form
@@ -60,8 +74,8 @@
                     <el-form-item label="Fund goal" prop="fund_goal">
                         <el-input-number
                             v-model="projectForm.fund_goal"
-                            :step="1000"
-                            :min="10000"
+                            :step="1"
+                            :min="1"
                         />
                     </el-form-item>
                     <el-form-item label="Summary" prop="summary">
@@ -116,7 +130,7 @@ export default {
                 image_url: "",
                 summary: "",
                 description: "",
-                fund_goal: 100000,
+                fund_goal: 1,
                 type_projects: [],
             },
             projectFromRules: {
@@ -135,8 +149,6 @@ export default {
     },
     async created() {
         this.listTypeProject = (await TypeService.getAll()).data;
-        console.log(this.listTypeProject);
-        this.projectForm.type_projects.push(this.listTypeProject[0].id);
     },
     methods: {
         handleRemove(uploadFile, uploadFiles) {
@@ -149,17 +161,19 @@ export default {
         handleCreateProject: async function () {
             await this.$refs.form.validate(async (valid) => {
                 if (valid) {
-                    console.log(this.projectForm);
+                    this.$store.commit("decoration/setFullscreenLoading", true);
                     if (this.rawFileImage !== "") {
                         try {
                             const { url } = await uploadImage(this.rawFileImage);
                             this.projectForm.image_url = url;
                         } catch (error) {
+                            this.$store.commit("decoration/setFullscreenLoading", false);
                             ElMessage.error("Upload image fail!");
                             return;
                         }
                     }
                     const res = await ProjectService.create(this.projectForm);
+                    this.$store.commit("decoration/setFullscreenLoading", false);
                     if (res.status == 201) {
                         this.$router.push({
                             name: "Projectdetail",
@@ -198,6 +212,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    gap: 2rem;
+    padding: var(--cs-main-panel-pading);
 }
 
 .main-container {

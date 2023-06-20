@@ -12,6 +12,8 @@ class Transaction(BaseModel):
     type_transaction = models.CharField(choices=TypeTransaction.choices(), default=TypeTransaction.INCREASE.value, max_length=50)
     is_anonymous = models.BooleanField(default=False)
     full_name = models.CharField(max_length=255, default="Anonymous", blank=True)
+
+    fields_save_in_fabric = ['id', 'user', 'project', 'amount', 'type_transaction', 'is_anonymous', 'message']
     
     class Meta:
         db_table = "transactions"

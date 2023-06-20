@@ -22,7 +22,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         view = self.context.get('view')
         if view:
             data['user'] = self.context.get('request').user.id
-        print("inside to internal value", data)
+        # print("inside to internal value", data)
         return super().to_internal_value(data)
 
     def get_percent(self, obj):

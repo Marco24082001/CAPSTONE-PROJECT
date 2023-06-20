@@ -1,5 +1,18 @@
 <template>
     <div class="container">
+        <AppToolbar>
+            <template #content>
+                <el-breadcrumb :separator-icon="ArrowRight">
+                    <el-breadcrumb-item>
+                        <router-link to="/home">Home</router-link>
+                    </el-breadcrumb-item>
+                    <el-breadcrumb-item
+                        ><router-link to="/projects">Project</router-link></el-breadcrumb-item
+                    >
+                    <el-breadcrumb-item>Detail </el-breadcrumb-item>
+                </el-breadcrumb>
+            </template>
+        </AppToolbar>
         <div class="project-header">
             <div class="project-media">
                 <img :src="project.image_url" />
@@ -24,7 +37,7 @@
                         </div>
                         <div class="project-fund-raised">
                             <div class="neo-progressbar">
-                                <div></div>
+                                <div v-bind:style="{ width: project.percent + '%' }"></div>
                             </div>
                             <div class="fund-raised-number">
                                 <span>Achieved</span>
@@ -40,9 +53,18 @@
                             controls-position="right"
                             size="large"
                         />
-                        <el-button @click="checkoutVisible = true" type="primary" size="large">
+
+                        <el-button
+                            v-if="project.status == 'ACTIVE'"
+                            @click="checkoutVisible = true"
+                            type="primary"
+                            size="large"
+                        >
                             Support now
                         </el-button>
+                        <el-button v-else type="primary" size="large" disabled
+                            >Support now</el-button
+                        >
                     </div>
                 </div>
             </div>
@@ -78,7 +100,7 @@
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane label="Comment">Comment</el-tab-pane>
+            <!-- <el-tab-pane label="Comment">Comment</el-tab-pane> -->
         </el-tabs>
 
         <!--                    Check out dialog                       -->
@@ -131,6 +153,8 @@
 <script>
 import { mapState } from "vuex";
 import TransactionService from "@/services/project/TransactionService";
+import AppToolbar from "@/components/AppToolbar.vue";
+
 import ProjectService from "@/services/project/ProjectService";
 import PaypalButton from "@/components/checkout/PaypalButton.vue";
 import { ElMessage } from "element-plus";
@@ -138,6 +162,7 @@ export default {
     name: "project-detail",
     components: {
         PaypalButton,
+        AppToolbar,
     },
     data() {
         return {
@@ -171,18 +196,17 @@ export default {
             }
         },
     },
-    mounted() {
-        console.log(this.$route.params.id);
-    },
     async created() {
-        this.project = (await ProjectService.getbyId(this.$route.params.id)).data;
-        console.log(this.project);
+        this.getProjectDetail()
         this.transactions = (
             await TransactionService.getAllOfProject(this.project.id, "INCREASE")
         ).data;
         console.log(this.transactions);
     },
     methods: {
+        async getProjectDetail() {
+            this.project = (await ProjectService.getbyId(this.$route.params.id)).data;
+        },
         async executeTransaction() {
             this.transactionForm.project = this.project.id;
             this.$store.commit("decoration/setFullscreenLoading", true);
@@ -190,9 +214,10 @@ export default {
             this.$store.commit("decoration/setFullscreenLoading", false);
             if (res.status === 201) {
                 this.transactions.push(res.data);
-                ElMessage.success("Transaction Successful!")
+                ElMessage.success("Transaction Successful!");
+                this.getProjectDetail();
             } else {
-                ElMessage.error("transaction failed!")
+                ElMessage.error("transaction failed!");
             }
             this.checkoutVisible = false;
         },
@@ -206,16 +231,20 @@ export default {
     display: flex;
     flex-direction: column;
     padding: var(--cs-main-panel-pading);
-    gap: 3rem;
+    gap: 2rem;
 
     .project-header {
         display: flex;
         width: 100%;
         gap: 2rem;
         .project-media {
+            overflow: hidden;
+            border-radius: 1.5rem;
+            height: 18rem;
             flex: 46%;
             img {
-                border-radius: 1.5rem;
+                object-fit: cover;
+                object-position: center center center;
                 width: 100%;
             }
         }
@@ -267,6 +296,7 @@ export default {
                             margin: 0.5rem 0;
                             border-radius: 6px;
                             background-color: #ff2e5b1a;
+                            overflow: hidden;
                             div {
                                 height: 0.4rem;
                                 border-radius: 6px;

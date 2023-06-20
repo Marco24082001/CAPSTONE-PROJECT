@@ -21,10 +21,12 @@ export default {
     created() {
         this.content = this.initial_content;
     },
-
     watch: {
         content: function (val) {
             this.$emit("input-description", val);
+        },
+        initial_content: function (val) {
+            this.content = val;
         },
     },
 };

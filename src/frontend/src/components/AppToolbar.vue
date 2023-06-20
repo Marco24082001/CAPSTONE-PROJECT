@@ -1,18 +1,12 @@
 <template>
     <nav class="app-toolbar">
-        <div class="title-page">{{ title }}</div>
+        <slot name="content"> </slot>
     </nav>
 </template>
 
 <script>
 export default {
     name: "app-toolbar",
-    props: {
-        title: {
-            type: String,
-            default: "Watting",
-        },
-    },
 };
 </script>
 
@@ -21,7 +15,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem 0;
     margin-bottom: 2rem;
     border-bottom: var(--cs-header-border-width) solid var(--cs-color-contrast-200);
 }

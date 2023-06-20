@@ -1,6 +1,20 @@
 <template>
     <div class="container">
-        <AppToolbar :title="title_page"></AppToolbar>
+        <AppToolbar>
+            <template #content>
+                <el-breadcrumb :separator-icon="ArrowRight">
+                    <el-breadcrumb-item>
+                        <router-link to="/home">Home</router-link>
+                    </el-breadcrumb-item>
+                    <el-breadcrumb-item
+                        ><router-link to="/dashboard/projects"
+                            >Project</router-link
+                        ></el-breadcrumb-item
+                    >
+                    <el-breadcrumb-item>Edit Project</el-breadcrumb-item>
+                </el-breadcrumb>
+            </template>
+        </AppToolbar>
         <div class="main-container">
             <div class="project-form">
                 <el-form
@@ -58,11 +72,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Fund goal" prop="fund_goal">
-                        <el-input-number
-                            v-model="projectForm.fund_goal"
-                            :step="1000"
-                            :min="10000"
-                        />
+                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" />
                     </el-form-item>
                     <el-form-item label="Summary" prop="summary">
                         <el-input v-model="projectForm.summary"></el-input>
@@ -75,7 +85,7 @@
                         />
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="handleCreateProject">Create</el-button>
+                        <el-button type="primary" @click="handleEditProject">Update</el-button>
                         <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
@@ -99,12 +109,6 @@ export default {
             type: String,
             default: "Edit Project",
         },
-        project: {
-            type: Object,
-            default: () => {
-                return {};
-            },
-        },
     },
     components: {
         AppToolbar,
@@ -118,11 +122,11 @@ export default {
             dialogVisible: false,
             rawFileImage: "",
             projectForm: {
-                title: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-                image_url: "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png",
-                summary: "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
+                title: "",
+                image_url: "",
+                summary: "",
                 description: "",
-                fund_goal: 333333,
+                fund_goal: 100000,
                 type_projects: [],
             },
             projectFromRules: {
@@ -139,9 +143,19 @@ export default {
             },
         };
     },
+
     async created() {
-        this.listTypeProject = (await TypeService.getAll()).data.results;
-        this.projectForm.type_projects.push(this.listTypeProject[0].id);
+        this.listTypeProject = (await TypeService.getAll()).data;
+        const project = (await ProjectService.getbyId(this.$route.params.id)).data;
+        this.projectForm = {
+            id: project.id,
+            title: project.title,
+            image_url: project.image_url,
+            summary: project.summary,
+            description: project.description,
+            type_projects: project.type_projects,
+            fund_goal: project.fund_goal,
+        };
     },
     methods: {
         handleRemove(uploadFile, uploadFiles) {
@@ -151,21 +165,28 @@ export default {
             this.dialogImageUrl = uploadFile.url;
             this.dialogVisible = true;
         },
-        handleCreateProject: async function () {
+        handleEditProject: async function () {
             await this.$refs.form.validate(async (valid) => {
                 if (valid) {
-                    console.log(this.projectForm);
+                    this.$store.commit("decoration/setFullscreenLoading", true);
                     if (this.rawFileImage !== "") {
                         try {
                             const { url } = await uploadImage(this.rawFileImage);
                             this.projectForm.image_url = url;
                         } catch (error) {
-                            ElMessage.error("Upload image fail!");
+                            this.$store.commit("decoration/setFullscreenLoading", false);
+                            ElMessage.error("Upload image failed!");
                             return;
                         }
                     }
-                    const res = await ProjectService.create(this.projectForm);
-                    console.log(res);
+                    const res = await ProjectService.edit(this.projectForm);
+                    this.$store.commit("decoration/setFullscreenLoading", false);
+
+                    if (res.status === 200) {
+                        ElMessage.success("Edit Successful!");
+                    } else {
+                        ElMessage.error("Edit failed!");
+                    }
                 }
             });
         },
@@ -196,6 +217,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: var(--cs-main-panel-pading);
+    gap: 2rem;
 }
 
 .main-container {
@@ -212,13 +235,15 @@ export default {
     display: block;
 }
 
-.avatar-uploader .el-upload {
-    border: 1px dashed var(--el-border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
+.avatar-uploader {
+    :deep(.el-upload) {
+        border: 1px dashed var(--el-border-color);
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: var(--el-transition-duration-fast);
+    }
 }
 
 .avatar-uploader .el-upload:hover {

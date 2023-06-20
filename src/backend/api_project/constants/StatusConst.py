@@ -2,8 +2,8 @@ from enum import Enum
 
 class ProjectStatus(Enum):
     ACTIVE = "ACTIVE"
-    FINISH = "FINISH"
-    DEACTIVATED = "DEACTIVATED"
+    FINISHED = "FINISHED"
+    INACTIVE = "INACTIVE"
 
     @classmethod
     def choices(cls):

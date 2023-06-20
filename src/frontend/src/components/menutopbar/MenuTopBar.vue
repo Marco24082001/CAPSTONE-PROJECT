@@ -1,6 +1,8 @@
 <template>
     <header class="menu-topbar" :class="{ 'menu-topbar--hidden': !showMenu }">
-        <router-link to="/home" class="logo"><img src="@/assets/logo.png" /></router-link>
+        <router-link to="/home" class="logo"
+            ><img v-if="$route.path.indexOf('dashboard') != 1" src="@/assets/logo.png"
+        /></router-link>
         <div
             id="menu-icon"
             class="bx bx-menu"
@@ -39,12 +41,15 @@
                             </h4>
                         </div>
                         <hr />
-                        <router-link to="/" class="sub-menu-link"
+                        <router-link to="/" class="sub-menu-link" @click="isSubOpen = false"
                             ><div class="bx bxs-user sub-menu-icon"></div>
                             <p>Your profile</p>
                             <div class="bx bx-chevron-right"></div
                         ></router-link>
-                        <router-link to="/dashboard/projects" class="sub-menu-link"
+                        <router-link
+                            to="/dashboard/projects"
+                            class="sub-menu-link"
+                            @click="isSubOpen = false"
                             ><div class="bx bx-briefcase-alt-2 sub-menu-icon"></div>
                             <p>Dashboard</p>
                             <div class="bx bx-chevron-right"></div>
@@ -59,7 +64,7 @@
             </OnClickOutside>
         </div>
 
-        <div class="dark-mode-switch">
+        <!-- <div class="dark-mode-switch">
             <el-switch
                 v-model="themeMode"
                 class="mb-2"
@@ -73,7 +78,7 @@
                 "
                 size="small"
             />
-        </div>
+        </div> -->
     </header>
 </template>
 <script>
@@ -101,18 +106,18 @@ export default {
                     path: "/projects",
                     name: "Project",
                 },
-                {
-                    path: "/about",
-                    name: "About",
-                },
-                {
-                    path: "/faqs",
-                    name: "FAQs",
-                },
-                {
-                    path: "/donate-us",
-                    name: "Donate Us",
-                },
+                // {
+                //     path: "/about",
+                //     name: "About",
+                // },
+                // {
+                //     path: "/faqs",
+                //     name: "FAQs",
+                // },
+                // {
+                //     path: "/donate-us",
+                //     name: "Donate Us",
+                // },
             ],
         },
     },

@@ -17,7 +17,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         FabricService.addAsset(self.data, Transaction.get_list_field_names())
         return instance
     
-    
     def to_internal_value(self, data):
         is_anonymous = data['is_anonymous']
         if not is_anonymous:
@@ -29,12 +28,21 @@ class TransactionSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         instance = super().create(validated_data)
-        # Update total in project
+        # Update total, likes, status in project
         project = instance.project
         fund_total = project.fund_total + instance.amount
-        project_serial = ProjectSerializer(project, data= {
-             'fund_total': fund_total, 
-        }, partial=True)
+        print(project.likes)
+        likes = []
+        for like in project.likes.all():
+            likes.append(str(like.id))
+        if instance.user: likes.append(str(instance.user.id))
+        data = {
+            'fund_total': fund_total,
+            'likes': likes,
+        }
+        if fund_total >= project.fund_goal:
+            data['status'] = 'FINISHED'
+        project_serial = ProjectSerializer(project, data=data, partial=True)
         if project_serial.is_valid():
             project_serial.save()
         return instance
@@ -44,7 +52,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         if not FabricService.isEqualHash(ret, Transaction.get_list_field_names()):
                 ValueError("hash not match")
-        print(ret)
         if ret['user']:
             ret['full_name'] = ret['supporter']['full_name']
         # action = self.context.get('view').action

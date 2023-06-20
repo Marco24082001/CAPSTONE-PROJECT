@@ -21,6 +21,9 @@ class Project(BaseModel):
             blank=True,
         )
     
+    fields_save_in_fabric = ['id', 'title', 'image_url', 'description', 'user', 'fund_goal', 'fund_total', 'fund_used', 'status']
+
+    
     class Meta:
         db_table = "projects"
         ordering = ('-created_at',)

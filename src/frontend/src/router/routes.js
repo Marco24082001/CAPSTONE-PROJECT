@@ -2,15 +2,17 @@ import UserLayout from "@/layouts/user/UserLayout.vue";
 import DashBoardLayout from "@/layouts/dashboard/DashboardLayout.vue";
 import Login from "@/pages/login/index.vue";
 import Register from "@/pages/register/index.vue";
-import Home from "@/pages/home/index.vue";
+import Home from "@/pages/home/HomePage.vue";
 import ListProjects from "@/pages/project/ListProjects.vue";
 import ProjectDetail from "@/pages/project/ProjectDetail.vue";
 import ManageProject from "@/pages/project/ManageProjects.vue";
 import CreateProject from "@/pages/project/CreateProject.vue";
 import EditProject from "@/pages/project/EditProject.vue";
+import TypeProject from "@/pages/project/TypeProject.vue";
+import LikeProject from "@/pages/project/LikeProject.vue";
 import NotFound from "@/pages/notfound/NotFoundPage.vue";
 
-import { Authenticate } from "./middleware/auth";
+import { Authenticate, AuthorizeAdmin } from "./middleware/auth";
 
 const routes = [
     {
@@ -59,13 +61,26 @@ const routes = [
                     },
                     {
                         path: "projects/:id/edit",
-                        name: "EditProject", 
+                        name: "EditProject",
                         component: EditProject,
                     },
                     {
                         path: "projects/:id",
                         name: "OwnerProjectDetail",
                         component: ProjectDetail,
+                    },
+                    {
+                        path: "likes",
+                        name: "LikeProject",
+                        component: LikeProject,
+                    },
+                    {
+                        path: "types",
+                        name: "ManageType",
+                        component: TypeProject,
+                        meta: {
+                            middleware: [AuthorizeAdmin],
+                        },
                     },
                 ],
             },

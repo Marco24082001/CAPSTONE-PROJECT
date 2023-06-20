@@ -1,9 +1,0 @@
-{
-    "title": "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-    "summary": "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
-    "user": "2848c230-8e74-47a7-bbb6-2604f09e8ff8",
-    "description": "Hãy chung tay giúp đỡ, quyên góp, làm từ thiện trao học bổng cho các em học sinh nghèo giúp các em được tiếp tục đến trường, được học cái chữ … \nMảnh đất sứ nghệ vốn là mảnh đất nghèo và phải chịu đựng biết bao gian truân trong quá khứ: Chiến tranh dịch bên, thiên tai. Nhưng ngược lai đây là mảnh đất có truyền thống hiếu học và đã tạo ra biết bao những danh nhân, hào kiệt trong suốt dòng chảy của dân tộc Việt Nam",
-    "type_projects": ["ffbcd896-e0cb-499c-a27c-759e31e9bf93"],
-    "fund_goal": "2000000",
-    "image_url": "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png"
-}

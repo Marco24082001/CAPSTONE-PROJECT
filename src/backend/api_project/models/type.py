@@ -4,9 +4,8 @@ from api_base.models import BaseModel
 class Type(BaseModel):
     name = models.CharField(default='', max_length=255)
     description = models.TextField()
-    
-    # def __str__(self):
-    #     return self.name
+
+    fields_save_in_fabric = ['id', 'name', 'description']
     
     class Meta:
         db_table = "types"

@@ -15,5 +15,4 @@ class BaseViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         print(self.action)
-        # print('thanhviiiiii')
         return [permission() for permission in self.permission_map.get(self.action, self.permission_classes)]

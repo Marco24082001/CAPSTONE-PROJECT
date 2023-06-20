@@ -29,7 +29,7 @@ export default {
     margin-top: var(--cs-header-initial-height);
 }
 .main-panel {
-    margin-top: 4rem;
+    margin-top: 2rem;
     color: var(--cs-color-contrast-900);
     margin-bottom: 4rem;
 }

@@ -6,7 +6,7 @@
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item>Project</el-breadcrumb-item>
+                    <el-breadcrumb-item>Like</el-breadcrumb-item>
                 </el-breadcrumb></template
             >
         </AppToolbar>
@@ -35,7 +35,6 @@
                 v-for="project in resultQuery"
                 :project="project"
                 :key="project.id"
-                :isManageProject="Boolean(true)"
             ></CardProject>
         </div>
     </div>
@@ -47,7 +46,7 @@ import ProjectService from "@/services/project/ProjectService";
 import AppToolbar from "@/components/AppToolbar.vue";
 
 export default {
-    name: "Manage-Projects",
+    name: "Like-Projects",
     components: {
         CardProject,
         AppToolbar,
@@ -60,7 +59,7 @@ export default {
         };
     },
     async created() {
-        this.listProjects = (await ProjectService.getProjectOwner()).data;
+        this.listProjects = (await ProjectService.getLikeProjects()).data;
         console.log(this.listProjects);
     },
     computed: {

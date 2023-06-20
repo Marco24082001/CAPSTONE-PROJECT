@@ -20,23 +20,31 @@
                 </li>
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <router-link to="/dashboard/projects" href="#">
+                        <router-link to="/dashboard/projects">
                             <div class="bx bx-briefcase-alt-2 icon"></div>
                             <span class="text nav-text">Project</span>
                         </router-link>
                     </li>
-                    <li class="nav-link">
+                    <!-- <li class="nav-link">
                         <a href="#">
                             <div class="bx bx-chart icon"></div>
                             <span class="text nav-text">Analytic</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-link">
-                        <a href="#">
+                        <router-link to="/dashboard/likes">
                             <div class="bx bx-heart icon"></div>
                             <span class="text nav-text">Like</span>
-                        </a>
+                        </router-link>
                     </li>
+                    <RestrictedView :roles="['ADMIN']">
+                        <li class="nav-link">
+                            <router-link to="/dashboard/types">
+                                <div class="bx bx-category-alt icon"></div>
+                                <span class="text nav-text">Type</span>
+                            </router-link>
+                        </li>
+                    </RestrictedView>
                 </ul>
             </div>
         </div>
@@ -45,8 +53,12 @@
 </template>
 
 <script>
+import RestrictedView from "../RestrictedView.vue";
 export default {
     name: "menu-sidebar",
+    components: {
+        RestrictedView,
+    },
     data() {
         return {
             showMenu: true,

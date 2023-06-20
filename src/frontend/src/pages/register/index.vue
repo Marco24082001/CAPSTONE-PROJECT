@@ -9,18 +9,27 @@
                 ref="form"
                 @submit.enter.prevent="login"
             >
-                <el-form-item prop="first_name">
-                    <el-input v-model="model.first_name" placeholder="First name" :prefix-icon="ICONS.User">
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="last_name">
-                    <el-input v-model="model.last_name" placeholder="Last name" :prefix-icon="ICONS.User">
-                    </el-input>
-                </el-form-item>
                 <el-form-item prop="email">
                     <el-input v-model="model.email" placeholder="Email" :prefix-icon="ICONS.User">
                     </el-input>
                 </el-form-item>
+                <el-form-item prop="first_name">
+                    <el-input
+                        v-model="model.first_name"
+                        placeholder="First name"
+                        :prefix-icon="ICONS.EditPen"
+                    >
+                    </el-input>
+                </el-form-item>
+                <el-form-item prop="last_name">
+                    <el-input
+                        v-model="model.last_name"
+                        placeholder="Last name"
+                        :prefix-icon="ICONS.EditPen"
+                    >
+                    </el-input>
+                </el-form-item>
+
                 <el-form-item prop="password">
                     <el-input
                         v-model="model.password"
@@ -37,7 +46,7 @@
                         :prefix-icon="ICONS.Lock"
                     ></el-input>
                 </el-form-item>
-                <el-form-item>  
+                <el-form-item>
                     <el-button
                         :loading="loading"
                         class="login-button"
@@ -56,11 +65,11 @@
 </template>
 
 <script>
-import { User, Lock } from "@element-plus/icons-vue";
+import { User, Lock, EditPen } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 import AuthenticationService from "@/services/authentication/AuthenticationService";
 export default {
-    name: 'register-page',
+    name: "register-page",
     data() {
         return {
             validCredentials: {
@@ -146,6 +155,7 @@ export default {
         this.ICONS = {
             User,
             Lock,
+            EditPen,
         };
     },
 
@@ -167,8 +177,8 @@ export default {
                 ElMessage.error("Tài khoản mật khẩu không đúng!");
             }
         },
-    }
-}
+    },
+};
 </script>
 
 <style lang="scss" scoped>

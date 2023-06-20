@@ -10,14 +10,48 @@ class ProjectService extends BaseService {
             const res = await this.request().post(`/${this.entity}/`, data);
             return res;
         } catch (error) {
-            console.log("thanhvi");
-            return error;
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    async edit(data) {
+        try {
+            const { id, ...dataWithoutKey } = data;
+            const res = await this.request().patch(`/${this.entity}/${id}/`, dataWithoutKey);
+            console.log(res);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
         }
     }
 
     async getAll() {
         try {
             const res = await this.request().get(`/${this.entity}/`);
+            console.log(res);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    async getActiveProjects() {
+        try {
+            const res = await this.request().get(`/${this.entity}?status=ACTIVE`);
+            console.log(res);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    async getLikeProjects() {
+        try {
+            const res = await this.request().get(`/${this.entity}/getLikeProjects/`);
             console.log(res);
             return res;
         } catch (error) {
@@ -39,6 +73,16 @@ class ProjectService extends BaseService {
     async deactivate(id) {
         try {
             const res = await this.request().put(`/${this.entity}/${id}/deactivate/`);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    async activate(id) {
+        try {
+            const res = await this.request().put(`/${this.entity}/${id}/activate/`);
             return res;
         } catch (error) {
             console.log(error);

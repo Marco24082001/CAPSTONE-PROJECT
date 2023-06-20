@@ -12,9 +12,16 @@ class TypeSerializer(serializers.ModelSerializer):
         FabricService.addAsset(self.data, Type.get_list_field_names())
         return instance
     
+    def destroy(self, **kwargs):
+        id = str(self.instance.id)
+        self.instance.delete()
+        FabricService.deleteAsset(id)
+    
     def to_representation(self, instance):
-        print('to_representation')
+        print('type to_representation')
+        view = self.context.get('view')
         ret = super().to_representation(instance)
-        if not FabricService.isEqualHash(ret, Type.get_list_field_names()):
+        if view and view.action in ['list', 'retrieve']:
+            if not FabricService.isEqualHash(ret, Type.get_list_field_names()):
                 ValueError("hash not match")
         return ret

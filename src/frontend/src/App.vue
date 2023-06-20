@@ -1,5 +1,10 @@
 <template>
-    <div :data-site-scheme="decoration.themeMode" :data-scheme="decoration.themeMode" v-loading.fullscreen.lock="decoration.fullscreenLoading" class="body">
+    <div
+        :data-site-scheme="decoration.themeMode"
+        :data-scheme="decoration.themeMode"
+        v-loading.fullscreen.lock="decoration.fullscreenLoading"
+        class="main"
+    >
         <router-view></router-view>
     </div>
 </template>
@@ -13,7 +18,7 @@ export default {
     },
     created() {
         this.$store.commit("decoration/setFullscreenLoading", false);
-    }
+    },
 };
 </script>
 
@@ -45,7 +50,7 @@ a {
     flex-direction: column;
     transition: background 0.3s ease-in-out;
     font-family: Roboto, sans-serif;
-    .body {
+    .main {
         min-height: 100vh;
         background-color: var(--cs-color-site-background);
         font-family: var(--cs-font-base-family), sans-serif;
@@ -61,5 +66,8 @@ body {
     // background-image: url(assets/bg1.jpg);
     background-size: cover;
     background-position: 15% 20%;
+    &::-webkit-scrollbar {
+        width: 0px !important;
+    }
 }
 </style>

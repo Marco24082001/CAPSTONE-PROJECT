@@ -75,9 +75,11 @@ export default {
                         const order = await actions.order.capture();
                         this.$emit("execute-transaction");
                         console.log(order);
+                        this.togglePayPalButton();
                     },
                     onError: (err) => {
                         console.log(err);
+                        this.togglePayPalButton();
                     },
                 })
                 .render("#paypal-button-container");

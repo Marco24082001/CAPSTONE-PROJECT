@@ -3,7 +3,6 @@ from api_user.serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from drf_yasg import openapi
-from drf_yasg.views import get_schema_view as swagger_get_schema_view
 from drf_yasg.utils import swagger_auto_schema
 
 from rest_framework.decorators import (
