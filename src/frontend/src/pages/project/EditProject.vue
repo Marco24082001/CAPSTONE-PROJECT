@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content>
-                <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb>
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>
@@ -64,7 +64,7 @@
                             placeholder="Please select category"
                         >
                             <el-option
-                                v-for="item in listTypeProject"
+                                v-for="item in listTypes"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id"
@@ -116,7 +116,7 @@ export default {
     },
     data() {
         return {
-            listTypeProject: [],
+            listTypes: [],
             fileList: [],
             dialogImageUrl: "",
             dialogVisible: false,
@@ -145,19 +145,39 @@ export default {
     },
 
     async created() {
-        this.listTypeProject = (await TypeService.getAll()).data;
-        const project = (await ProjectService.getbyId(this.$route.params.id)).data;
-        this.projectForm = {
-            id: project.id,
-            title: project.title,
-            image_url: project.image_url,
-            summary: project.summary,
-            description: project.description,
-            type_projects: project.type_projects,
-            fund_goal: project.fund_goal,
-        };
+        this.getAllTypes();
+        this.getProjectDetail();
     },
     methods: {
+        async getProjectDetail() {
+            const res = await ProjectService.getbyId(this.$route.params.id);
+            if (!res.error) {
+                const project = res.data;
+                this.projectForm = {
+                    id: project.id,
+                    title: project.title,
+                    image_url: project.image_url,
+                    summary: project.summary,
+                    description: project.description,
+                    type_projects: project.type_projects,
+                    fund_goal: project.fund_goal,
+                };
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
+            }
+        },
+        async getAllTypes() {
+            const res = await TypeService.getAll();
+            if (!res.error) {
+                this.listTypes = res.data;
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
+            }
+        },
         handleRemove(uploadFile, uploadFiles) {
             console.log(uploadFile, uploadFiles);
         },

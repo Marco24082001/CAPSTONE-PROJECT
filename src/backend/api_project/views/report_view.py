@@ -1,22 +1,25 @@
 from api_base.views import BaseViewSet
 from api_base.exceptions import DataNotMatchHash
-from api_project.models import Transaction
-from api_project.serializers import TransactionSerializer
-from api_project.serializers import ProjectSerializer
+from api_project.models import Report
+from api_project.serializers import ReportSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
-class TransactionViewSet(BaseViewSet):
-    queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer
+class ReportViewSet(BaseViewSet):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
     permission_map = {
         'list': [AllowAny],
         'retrieve': [AllowAny],
         'create': [AllowAny]
     }
-    filterset_fields = ['project', 'type_transaction']
-
+    # filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    # ordering_fields = ['created_at']
+    # ordering = ['created_at']
+    filterset_fields = ['project']
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -33,6 +36,8 @@ class TransactionViewSet(BaseViewSet):
         except DataNotMatchHash as matchError:
             return Response(data= str(matchError), status=status.HTTP_302_FOUND)
         return Response(serializer.data)
+
+
     
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)

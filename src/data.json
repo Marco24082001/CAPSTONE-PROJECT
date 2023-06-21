@@ -6,8 +6,26 @@
             "summary": "Chung tay hỗ trợ học bổng cho 12 em học sinh nghèo",
             "user": "2848c230-8e74-47a7-bbb6-2604f09e8ff8",
             "description": "Hãy chung tay giúp đỡ, quyên góp, làm từ thiện trao học bổng cho các em học sinh nghèo giúp các em được tiếp tục đến trường, được học cái chữ … \nMảnh đất sứ nghệ vốn là mảnh đất nghèo và phải chịu đựng biết bao gian truân trong quá khứ: Chiến tranh dịch bên, thiên tai. Nhưng ngược lai đây là mảnh đất có truyền thống hiếu học và đã tạo ra biết bao những danh nhân, hào kiệt trong suốt dòng chảy của dân tộc Việt Nam",
-            "type_projects": ["ffbcd896-e0cb-499c-a27c-759e31e9bf93"],
-            "fund_goal": "2000000",
+            "type_projects": ["Community support"],
+            "fund_goal": "200",
+            "image_url": "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png"
+        },
+        {
+            "title": "Spring hair braiding",
+            "summary": "Spring hair braiding",
+            "user": "2848c230-8e74-47a7-bbb6-2604f09e8ff8",
+            "description": "To make a beautiful wig for cancer patients, the factories will filter the lengths of hair, hand-sewn each real hair into the hair net, and then cut and style it. This whole process requires one day of work by craftsmen, and requires an average budget of about 3.5 million VND.",
+            "type_projects": ["Children"],
+            "fund_goal": "200",
+            "image_url": "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png"
+        },
+        {
+            "title": "Join hands to take care of the health of 200 children",
+            "summary": "Join hands to take care of the health of 200 children",
+            "user": "2848c230-8e74-47a7-bbb6-2604f09e8ff8",
+            "description": "That is the confide from the bottom of her heart of Ms. Xuan Thu - Principal of Ai Linh School of Love (District 9), currently the 'second home' of more than 200 disadvantaged children studying in elementary school. study here. Most of the children's parents are poor migrant workers who do manual jobs, such as workers, assistants, etc. with meager and unstable wages. Therefore, most of the children do not have identification documents to enjoy the same benefits as other normal children.",
+            "type_projects": ["Children"],
+            "fund_goal": "300",
             "image_url": "https://givenow.vn/wp-content/uploads/2023/03/Cover-2-800x600.png"
         }
     ],

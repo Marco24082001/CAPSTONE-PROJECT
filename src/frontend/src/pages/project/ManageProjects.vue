@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content
-                ><el-breadcrumb :separator-icon="ArrowRight">
+                ><el-breadcrumb>
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>
@@ -45,6 +45,7 @@
 import CardProject from "@/pages/project/CardProject.vue";
 import ProjectService from "@/services/project/ProjectService";
 import AppToolbar from "@/components/AppToolbar.vue";
+import { ElMessage } from "element-plus";
 
 export default {
     name: "Manage-Projects",
@@ -60,8 +61,7 @@ export default {
         };
     },
     async created() {
-        this.listProjects = (await ProjectService.getProjectOwner()).data;
-        console.log(this.listProjects);
+        this.getAllProjects();
     },
     computed: {
         resultQuery() {
@@ -76,6 +76,18 @@ export default {
                 return this.listProjects.filter((item) => {
                     return item.status === this.statusFilter;
                 });
+            }
+        },
+    },
+    methods: {
+        async getAllProjects() {
+            const res = await ProjectService.getProjectOwner();
+            if (!res.error) {
+                this.listProjects = res.data;
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
             }
         },
     },
@@ -124,7 +136,6 @@ export default {
     .cp-projects {
         width: 100%;
         align-self: center;
-        height: 28rem;
         display: inline-flex;
         flex-wrap: wrap;
         gap: 4rem;

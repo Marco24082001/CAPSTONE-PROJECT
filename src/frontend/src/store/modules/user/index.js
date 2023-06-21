@@ -2,7 +2,7 @@ export default {
     namespaced: true,
     state: {
         currentUser: {
-            user_id: null,
+            id: null,
             fist_name: null,
             last_name: null,
             full_name: null,

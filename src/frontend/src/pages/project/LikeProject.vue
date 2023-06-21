@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content
-                ><el-breadcrumb :separator-icon="ArrowRight">
+                ><el-breadcrumb>
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>
@@ -44,6 +44,7 @@
 import CardProject from "@/pages/project/CardProject.vue";
 import ProjectService from "@/services/project/ProjectService";
 import AppToolbar from "@/components/AppToolbar.vue";
+import { ElMessage } from "element-plus";
 
 export default {
     name: "Like-Projects",
@@ -59,8 +60,7 @@ export default {
         };
     },
     async created() {
-        this.listProjects = (await ProjectService.getLikeProjects()).data;
-        console.log(this.listProjects);
+        this.getAllProjects();
     },
     computed: {
         resultQuery() {
@@ -75,6 +75,18 @@ export default {
                 return this.listProjects.filter((item) => {
                     return item.status === this.statusFilter;
                 });
+            }
+        },
+    },
+    methods: {
+        async getAllProjects() {
+            const res = await ProjectService.getLikeProjects();
+            if (!res.error) {
+                this.listProjects = res.data;
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
             }
         },
     },
@@ -100,7 +112,7 @@ export default {
     .filter-group {
         .finished {
             :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-                background: rgb(103, 194, 58) !important;
+                background-color: rgb(103, 194, 58) !important;
                 border-color: rgb(103, 194, 58) !important;
                 box-shadow: -1px 0 0 0 rgb(103, 194, 58) !important;
             }
@@ -110,7 +122,7 @@ export default {
         }
         .inactive {
             :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
-                background: rgb(245, 108, 108) !important;
+                background-color: rgb(245, 108, 108) !important;
                 border-color: rgb(245, 108, 108) !important;
                 box-shadow: -1px 0 0 0 rgb(245, 108, 108) !important;
             }

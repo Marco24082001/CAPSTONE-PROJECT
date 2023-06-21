@@ -4,7 +4,7 @@ from api_project.models import Project
 from services import FabricService
 from api_user.serializers import PublicUserSerializer
 from api_project.serializers.project_serial import ProjectSerializer
-
+from api_base.exceptions import DataNotMatchHash
 
 class TransactionSerializer(serializers.ModelSerializer):
     supporter = PublicUserSerializer(source='user', read_only=True)
@@ -49,11 +49,11 @@ class TransactionSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         print('to_representation')
+        view = self.context.get('view')
         ret = super().to_representation(instance)
-        if not FabricService.isEqualHash(ret, Transaction.get_list_field_names()):
-                ValueError("hash not match")
+        if view and view.action in ['list', 'retrieve']:
+            if not FabricService.isEqualHash(ret, Transaction.get_list_field_names()):
+                raise DataNotMatchHash(instance.id, 'Transaction')
         if ret['user']:
             ret['full_name'] = ret['supporter']['full_name']
-        # action = self.context.get('view').action
         return ret
-

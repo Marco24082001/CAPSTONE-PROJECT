@@ -66,8 +66,8 @@
                     <div v-bind:style="{ width: project.percent + '%' }"></div>
                 </div>
                 <div class="fund-raised">
-                    <div class="fund-raised-txt">{{ project.fund_total }} đ</div>
-                    <div class="fund-raised-percent">{{ project.percent }}%</div>
+                    <div class="fund-raised-txt">{{ project.fund_total }} $</div>
+                    <div class="fund-raised-percent">{{ project.percent }} %</div>
                 </div>
             </div>
             <!-- <span>$ 15.99</span> -->
@@ -162,12 +162,11 @@ export default {
 <style scoped lang="scss">
 .cp-project {
     position: relative;
-    // background-color: var(--sectionBack);
     background-color: white;
     width: 20rem;
+    height: 29rem;
     display: flex;
     flex-direction: column;
-    height: 100%;
     transition: 0.3s;
     &:hover {
         box-shadow: var(--cs-box-shadow-menu);

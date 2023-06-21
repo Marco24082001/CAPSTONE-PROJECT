@@ -14,5 +14,6 @@ class BaseViewSet(viewsets.ModelViewSet):
         return self.serializer_map.get(self.action, self.serializer_class)
 
     def get_permissions(self):
+        print('thanhvi')
         print(self.action)
         return [permission() for permission in self.permission_map.get(self.action, self.permission_classes)]

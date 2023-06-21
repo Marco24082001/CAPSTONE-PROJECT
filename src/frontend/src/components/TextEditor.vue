@@ -34,9 +34,9 @@ export default {
 
 <style lang="scss" scoped>
 .editor-container {
-    min-height: 300px;
+    // min-height: 300px;
     max-height: fit-content;
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
     border-radius: 20px;
 
     :deep(.ql-toolbar) {
@@ -49,7 +49,7 @@ export default {
     }
 
     :deep(.ql-editor) {
-        min-height: 400px !important;
+        min-height: 300px !important;
         max-height: 70vh !important;
         overflow: auto;
         color: black;

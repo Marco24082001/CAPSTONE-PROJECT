@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content
-                ><el-breadcrumb :separator-icon="ArrowRight">
+                ><el-breadcrumb>
                     <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
                     <el-breadcrumb-item :to="{ path: '/projects' }">Project</el-breadcrumb-item>
                 </el-breadcrumb></template
@@ -30,6 +30,7 @@
 import ProjectService from "@/services/project/ProjectService";
 import AppToolbar from "@/components/AppToolbar.vue";
 import CardProject from "@/pages/project/CardProject.vue";
+import { ElMessage } from "element-plus";
 export default {
     name: "List-Projects",
     components: {
@@ -62,8 +63,20 @@ export default {
     },
 
     async created() {
-        this.listProjects = (await ProjectService.getAll()).data;
-        console.log(this.listProjects);
+        this.getAllProjects();
+    },
+
+    methods: {
+        async getAllProjects() {
+            const res = await ProjectService.getAll();
+            if (!res.error) {
+                this.listProjects = res.data;
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
+            }
+        },
     },
 };
 </script>

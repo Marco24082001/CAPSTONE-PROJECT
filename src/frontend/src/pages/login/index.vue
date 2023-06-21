@@ -105,7 +105,9 @@ export default {
             if (!valid) {
                 return;
             }
+            this.$store.commit("decoration/setFullscreenLoading", true);
             const res = await AuthenticationService.login(this.model);
+            this.$store.commit("decoration/setFullscreenLoading", false);
             if (res.status === 200) {
                 this.$router.push("/");
             } else {

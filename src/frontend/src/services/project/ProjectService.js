@@ -34,7 +34,7 @@ class ProjectService extends BaseService {
             return res;
         } catch (error) {
             console.log(error);
-            return { error: error };
+            return { error: error.response };
         }
     }
 

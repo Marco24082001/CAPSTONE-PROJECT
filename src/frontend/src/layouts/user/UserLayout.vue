@@ -7,17 +7,20 @@
         <div class="main-panel">
             <layout-content></layout-content>
         </div>
+        <BaseFooter></BaseFooter>
     </div>
 </template>
 <style lang="scss"></style>
 <script>
 import LayoutContent from "./Content.vue";
+import BaseFooter from "../BaseFooter.vue";
 import MenuTopBar from "@/components/menutopbar/MenuTopBar.vue";
 export default {
     name: "user-layout",
     components: {
         MenuTopBar,
         LayoutContent,
+        BaseFooter,
     },
 };
 </script>
@@ -32,5 +35,7 @@ export default {
     margin-top: 2rem;
     color: var(--cs-color-contrast-900);
     margin-bottom: 4rem;
+    width: 100vw;
+    min-height: 100vh;
 }
 </style>

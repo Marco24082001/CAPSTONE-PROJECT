@@ -1,14 +1,13 @@
 from rest_framework import serializers
 from api_project.models import Project
 from services import FabricService
-# from rest_framework import reverse
 from api_project.serializers import TypeSerializer
 from api_user.serializers import PublicUserSerializer
+from api_base.exceptions import DataNotMatchHash
 
 class ProjectSerializer(serializers.ModelSerializer):
-    list_types = TypeSerializer(source="type_projects", many=True, read_only=True)
+    list_types = TypeSerializer(source='type_projects', many=True, read_only=True)
     author = PublicUserSerializer(source='user', read_only=True)
-    # url = serializers.SerializerMethodField(read_only=True)
     percent = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Project
@@ -22,7 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         view = self.context.get('view')
         if view:
             data['user'] = self.context.get('request').user.id
-        # print("inside to internal value", data)
+        # print('inside to internal value', data)
         return super().to_internal_value(data)
 
     def get_percent(self, obj):
@@ -36,7 +35,10 @@ class ProjectSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         print('to_representation')
+        print(type(instance.id))
+        view = self.context.get('view')
         ret = super().to_representation(instance)
-        if not FabricService.isEqualHash(ret, Project.get_list_field_names()):
-                ValueError("hash not match")
+        if view and view.action in ['list', 'retrieve']:
+            if not FabricService.isEqualHash(ret, Project.get_list_field_names()):
+                raise DataNotMatchHash(instance.id, 'Project')
         return ret

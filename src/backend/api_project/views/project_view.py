@@ -1,4 +1,5 @@
 from api_base.views import BaseViewSet
+from api_base.exceptions import DataNotMatchHash
 from api_project.models import Project
 from api_project.serializers import ProjectSerializer
 from rest_framework.response import Response
@@ -21,6 +22,22 @@ class ProjectViewSet(BaseViewSet):
     filterset_fields = ['status']
     # def get_queryset(self):
     #     super().get_queryset()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(queryset, many=True)
+        # call serializer.data to get data and check match in blockchain
+        try:
+            serializer.data
+        except DataNotMatchHash as matchError:
+            return Response(data= str(matchError), status=status.HTTP_302_FOUND)
+        return Response(serializer.data)
     
     @action(detail=False, methods=['POST'])
     def upload_image(self, request, *args):

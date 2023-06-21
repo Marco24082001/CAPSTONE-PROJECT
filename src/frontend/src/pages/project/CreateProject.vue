@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content>
-                <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb>
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>
@@ -25,16 +25,6 @@
                     ref="form"
                 >
                     <el-form-item label="Pictures" prop="image_url">
-                        <!-- <el-upload
-                            v-model:file-list="fileList"
-                            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                            list-type="picture-card"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove"
-                            limit="2"
-                        >
-                            <el-icon><Plus /></el-icon>
-                        </el-upload> -->
                         <el-upload
                             class="avatar-uploader"
                             action="http://localhost:8000/api/v1/api_project/projects/upload_image/"
@@ -64,7 +54,7 @@
                             placeholder="Please select category"
                         >
                             <el-option
-                                v-for="item in listTypeProject"
+                                v-for="item in listTypes"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id"
@@ -72,17 +62,12 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Fund goal" prop="fund_goal">
-                        <el-input-number
-                            v-model="projectForm.fund_goal"
-                            :step="1"
-                            :min="1"
-                        />
+                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" />
                     </el-form-item>
                     <el-form-item label="Summary" prop="summary">
                         <el-input v-model="projectForm.summary"></el-input>
                     </el-form-item>
                     <el-form-item label="Description" prop="description">
-                        <!-- <el-input v-model="projectForm.description" type="textarea" /> -->
                         <TextEditor
                             :initial_content="projectForm.description"
                             @input-description="updateDescription"
@@ -90,7 +75,6 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="handleCreateProject">Create</el-button>
-                        <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -120,7 +104,7 @@ export default {
     },
     data() {
         return {
-            listTypeProject: [],
+            listTypes: [],
             fileList: [],
             dialogImageUrl: "",
             dialogVisible: false,
@@ -148,11 +132,18 @@ export default {
         };
     },
     async created() {
-        this.listTypeProject = (await TypeService.getAll()).data;
+        this.getAllTypes();
     },
     methods: {
-        handleRemove(uploadFile, uploadFiles) {
-            console.log(uploadFile, uploadFiles);
+        async getAllTypes() {
+            const res = await TypeService.getAll();
+            if (!res.error) {
+                this.listTypes = res.data;
+            } else {
+                if (res.error.status === 302) {
+                    ElMessage.error(res.error.data);
+                }
+            }
         },
         handlePictureCardPreview(uploadFile) {
             this.dialogImageUrl = uploadFile.url;

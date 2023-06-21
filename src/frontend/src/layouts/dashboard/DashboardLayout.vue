@@ -12,6 +12,7 @@
 <style lang="scss"></style>
 <script>
 import DashboardContent from "@/layouts/dashboard/Content.vue";
+
 import MenuSideBar from "@/components/menusidebar/MenuSideBar.vue";
 export default {
     name: "dashboard-layout",

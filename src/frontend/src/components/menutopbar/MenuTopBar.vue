@@ -19,7 +19,7 @@
             </menu-link>
         </ul>
 
-        <div v-if="!user.currentUser.user_id" class="header-btn">
+        <div v-if="!user.currentUser.id" class="header-btn">
             <router-link to="/register" class="sign-up">Sign Up</router-link>
             <router-link to="/login" class="sign-in">Sign In</router-link>
         </div>

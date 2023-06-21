@@ -2,7 +2,7 @@
     <div class="container">
         <AppToolbar>
             <template #content>
-                <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb>
                     <el-breadcrumb-item>
                         <router-link to="/home">Home</router-link>
                     </el-breadcrumb-item>

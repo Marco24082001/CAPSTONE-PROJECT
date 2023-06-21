@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api_project.models import Type
 from services import FabricService
+from api_base.exceptions import DataNotMatchHash
 
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,5 +24,5 @@ class TypeSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         if view and view.action in ['list', 'retrieve']:
             if not FabricService.isEqualHash(ret, Type.get_list_field_names()):
-                ValueError("hash not match")
+                raise DataNotMatchHash(instance.id, 'Transaction')
         return ret

@@ -53,6 +53,7 @@ export default {
 
     header {
         width: 100vw;
+        position: relative;
         height: 80vh;
         background-image: url("../../assets/bg1.jpg");
         background-position: center;
@@ -62,7 +63,25 @@ export default {
         justify-content: center;
     }
 
+    header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+            0,
+            0,
+            0,
+            0.4
+        ); /* Adjust the alpha value (0.5) to control the darkness */
+        z-index: 1;
+    }
+
     .header-content {
+        position: relative;
+        z-index: 2;
         font-family: Serif;
         color: rgb(255, 255, 255);
         text-align: center;
@@ -94,8 +113,7 @@ export default {
     }
     .title {
         text-align: center;
-        font-size: 4vmin;
-        color: #49497e;
+        font-size: 3vmin;
     }
 
     .section-content {
@@ -103,8 +121,6 @@ export default {
     }
     .el-carousel__item {
         color: #475669;
-        // opacity: 0.75;
-        // line-height: 200px;
         margin: 0;
         display: flex;
         justify-content: center;
