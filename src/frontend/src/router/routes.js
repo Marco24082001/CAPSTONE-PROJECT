@@ -10,6 +10,9 @@ import CreateProject from "@/pages/project/CreateProject.vue";
 import EditProject from "@/pages/project/EditProject.vue";
 import TypeProject from "@/pages/project/TypeProject.vue";
 import LikeProject from "@/pages/project/LikeProject.vue";
+import Author from "@/pages/author/AuthorPage.vue";
+import ManageUser from "@/pages/manageruser/ManageUser.vue";
+import EditProfile from "@/pages/editprofile/EditProfile.vue";
 import NotFound from "@/pages/notfound/NotFoundPage.vue";
 
 import { Authenticate, AuthorizeAdmin } from "./middleware/auth";
@@ -37,8 +40,17 @@ const routes = [
                 component: ProjectDetail,
             },
             {
-                path: "/:user",
-                name: "",
+                path: "author/:id",
+                name: "Author",
+                component: Author,
+            },
+            {
+                path: "user/edit-profile",
+                name: "EditProfile",
+                component: EditProfile,
+                meta: {
+                    middleware: [Authenticate],
+                },
             },
             {
                 path: "dashboard",
@@ -78,6 +90,14 @@ const routes = [
                         path: "types",
                         name: "ManageType",
                         component: TypeProject,
+                        meta: {
+                            middleware: [AuthorizeAdmin],
+                        },
+                    },
+                    {
+                        path: "users",
+                        name: "ManageUser",
+                        component: ManageUser,
                         meta: {
                             middleware: [AuthorizeAdmin],
                         },

@@ -62,10 +62,17 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Fund goal" prop="fund_goal">
-                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" />
+                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" /> <span class="usd-currency">$</span>
                     </el-form-item>
-                    <el-form-item label="Summary" prop="summary">
-                        <el-input v-model="projectForm.summary"></el-input>
+                    <el-form-item label="End date" prop="end_date">
+                            <el-date-picker
+                                v-model="projectForm.end_date"
+                                type="date"
+                                placeholder="Pick a day"
+                                :disabled-date="disabledDate"
+                                :shortcuts="shortcuts"
+                                :size="size"
+                            />
                     </el-form-item>
                     <el-form-item label="Description" prop="description">
                         <TextEditor
@@ -73,7 +80,7 @@
                             @input-description="updateDescription"
                         />
                     </el-form-item>
-                    <el-form-item>
+                    <el-form-item class="footer-button">
                         <el-button type="primary" @click="handleCreateProject">Create</el-button>
                     </el-form-item>
                 </el-form>
@@ -112,7 +119,7 @@ export default {
             projectForm: {
                 title: "",
                 image_url: "",
-                summary: "",
+                end_date: "",
                 description: "",
                 fund_goal: 1,
                 type_projects: [],
@@ -120,7 +127,7 @@ export default {
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
                 image_url: [{ required: true, message: "Image is required", trigger: "blur" }],
-                summary: [{ required: true, message: "Summary is required", trigger: "blur" }],
+                end_date: [{ required: true, message: "Summary is required", trigger: "blur" }],
                 description: [
                     { required: true, message: "Description is required", trigger: "blur" },
                 ],
@@ -205,6 +212,11 @@ export default {
     justify-content: space-around;
     gap: 2rem;
     padding: var(--cs-main-panel-pading);
+    .usd-currency {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: 0.8rem;
+    }
 }
 
 .main-container {
@@ -213,6 +225,11 @@ export default {
 
 .project-form {
     width: 100%;
+    .footer-button {
+        :deep(.el-form-item__content) {
+            justify-content: flex-end;
+        }
+    }
 }
 
 .avatar-uploader .avatar {

@@ -52,7 +52,7 @@ export default {
                 this.buttonText = "Cancel";
             } else {
                 this.isPayPalButtonVisible = false;
-                this.text = "Pay Now";
+                this.buttonText = "Pay Now";
             }
         },
         initializePayPalButton() {

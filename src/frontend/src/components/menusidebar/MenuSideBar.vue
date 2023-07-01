@@ -45,6 +45,14 @@
                             </router-link>
                         </li>
                     </RestrictedView>
+                    <RestrictedView :roles="['ADMIN']">
+                        <li class="nav-link">
+                            <router-link to="/dashboard/users">
+                                <div class="bx bxs-user-account icon"></div>
+                                <span class="text nav-text">User</span>
+                            </router-link>
+                        </li>
+                    </RestrictedView>
                 </ul>
             </div>
         </div>

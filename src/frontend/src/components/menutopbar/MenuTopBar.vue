@@ -36,12 +36,12 @@
                     <div class="sub-menu">
                         <div class="user-info">
                             <img :src="user.currentUser.avatar" />
-                            <h4>
-                                {{ user.currentUser.full_name }}
-                            </h4>
+                            <div class="user-name">
+                                {{ user.currentUser.last_name }}
+                            </div>
                         </div>
                         <hr />
-                        <router-link to="/" class="sub-menu-link" @click="isSubOpen = false"
+                        <router-link :to="{ name: 'Author', params: { id: user.currentUser.id }}" class="sub-menu-link" @click="isSubOpen = false"
                             ><div class="bx bxs-user sub-menu-icon"></div>
                             <p>Your profile</p>
                             <div class="bx bx-chevron-right"></div
@@ -72,7 +72,7 @@
                 active-value="dark"
                 inactive-value="default"
                 active-color="var(--cs-color-secondary)"
-                style="
+                style=" 
                     --el-switch-on-color: var(--cs-color-contrast-400);
                     --el-switch-off-color: var(--cs-color-contrast-400);
                 "
@@ -106,18 +106,6 @@ export default {
                     path: "/projects",
                     name: "Project",
                 },
-                // {
-                //     path: "/about",
-                //     name: "About",
-                // },
-                // {
-                //     path: "/faqs",
-                //     name: "FAQs",
-                // },
-                // {
-                //     path: "/donate-us",
-                //     name: "Donate Us",
-                // },
             ],
         },
     },
@@ -333,16 +321,19 @@ header {
                 .user-info {
                     display: flex;
                     align-items: center;
+                    width: 100%;
+                    word-break: break-all;
                     img {
                         width: 2.6rem;
                         height: 2.6rem;
                         border-radius: 50%;
                         margin-right: 15px;
                     }
-                    h4 {
+                    .user-name {
                         font-weight: 500;
                         font-size: 0.8rem;
                         color: var(--cs-color-primary);
+                        // word-break: break-all;
                     }
                 }
                 hr {

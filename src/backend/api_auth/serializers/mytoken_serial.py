@@ -13,5 +13,4 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['avatar'] = user.avatar
         token['role'] = user.role
         token['biology'] = user.biology
-        token['address'] = user.address
         return token

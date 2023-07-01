@@ -1,5 +1,5 @@
 <template>
-    <div id="home-page-section">
+    <div class="container-homepage">
         <header>
             <div class="header-content">
                 <h2>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#home-page-section {
+.container-homepage {
     margin-top: calc(var(--cs-header-initial-height) * -1);
     font-size: 4vmin;
 
@@ -75,7 +75,7 @@ export default {
             0,
             0,
             0.4
-        ); /* Adjust the alpha value (0.5) to control the darkness */
+        ); /* Adjust the alpha value (0.4) to control the darkness */
         z-index: 1;
     }
 

@@ -4,7 +4,7 @@ from api_user.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'full_name', 'role', 'avatar', 'biology', 'address', 'phone', 'birthday']
+        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'full_name', 'role', 'avatar', 'biology', 'phone', 'created_at', 'is_active']
         extra_kwargs = {
             'full_name': {'required': False},
             'avatar': {'required': False},
@@ -17,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def to_representation(self, instance):
-        print('to_representation_user')
         return super().to_representation(instance)
 
 
@@ -27,5 +26,4 @@ class PublicUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'full_name', 'avatar', 'biology']
 
     def to_representation(self, instance):
-        print('author representation')
         return super().to_representation(instance)

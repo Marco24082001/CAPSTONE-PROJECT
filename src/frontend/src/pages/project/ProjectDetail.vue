@@ -26,37 +26,38 @@
                                 <img :src="project.author.avatar" />
                                 <a href="#">{{ project.author.full_name }}</a>
                             </div>
-                            <div class="project-giver-number">
-                                <div class="bx bx-donate-blood"></div>
-                                {{ transactions.length }}
-                            </div>
                         </div>
-                        <div class="project-goal">
-                            <span>Project objectives</span>
-                            <span>{{ project.fund_goal }}</span>
-                        </div>
-                        <div class="project-fund-raised">
-                            <div class="neo-progressbar">
+                        <div class="neo-progressbar">
                                 <div v-bind:style="{ width: project.percent + '%' }"></div>
                             </div>
-                            <div class="fund-raised-number">
-                                <span>Achieved</span>
-                                <span>{{ project.fund_total }}</span>
+                        
+                        <div class="project-fund-info">
+                            <div class="project-goal">
+                                <span class="total"><span>&#36;</span>{{ project.fund_total }}</span>
+                                <span class="goal">The goal set is ${{ project.fund_goal}}</span>
                             </div>
-                            <div class="fund-raised-number">
-                                <span>Amount spent </span>
-                                <span>{{ project.fund_used }}</span>
+                            <div class="fund-item-info">
+                                <span class="number"> {{ transactions.length }}</span>
+                                <span class="detail">backers</span>
+                            </div>
+                            <div class="fund-item-info">
+                                <span class="number">{{ project.day_to_go }}</span>
+                                <span class="detail">days to go</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-form-donation">
-                        <el-input-number
-                            v-model="transactionForm.amount"
-                            :min="1"
-                            :step="1"
-                            controls-position="right"
-                            size="large"
-                        />
+                        <div class="amount-input-wrap">
+                            <span class="usd-currency">USD</span>
+                            <el-input-number
+                                v-model="transactionForm.amount"
+                                :min="1"
+                                :step="1"
+                                controls-position="right"
+                                size="large"
+                                label="dsfsdf"
+                            />
+                        </div>
 
                         <el-button
                             v-if="project.status == 'ACTIVE'"
@@ -73,96 +74,109 @@
                 </div>
             </div>
         </div>
-
-        <el-tabs type="border-card" class="demo-tabs">
-            <el-tab-pane label="Content" :lazy="true">
-                <div class="project-content" v-html="project.description"></div>
-            </el-tab-pane>
-            <el-tab-pane label="List of supporters" :lazy="true">
-                <el-table
-                    :data="resultQuery"
-                    style="width: 100%"
-                    height="300"
-                    :default-sort="{ prop: 'created_at', order: 'descending' }"
-                >
-                    <el-table-column fixed label="Date" prop="created_at" sortable>
-                        <template #default="scope">
-                            <span>{{ new Date(scope.row.created_at).toLocaleDateString() }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="full_name" label="Name" />
-                    <el-table-column prop="amount" label="Amount" />
-                    <el-table-column prop="message" label="Message" />
-                    <el-table-column align="right">
-                        <template #header>
-                            <el-input
-                                v-model="searchQuery"
-                                size="small"
-                                placeholder="Search name"
-                            />
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="Report" @click="getAllReports">
-                <div class="report-form-container" v-if="isOwner()">
-                    <el-tooltip
-                        :content="isOpenReportForm ? 'Close report' : 'Make a report'"
-                        placement="top"
-                        effect="dark"
-                    >
-                        <el-button type="info" @click="toogleReport"
-                            ><i
-                                class="bx"
-                                :class="isOpenReportForm ? 'bx-chevrons-up' : 'bx-chevrons-down'"
-                            ></i
-                        ></el-button>
-                    </el-tooltip>
-                    <div class="report-form" :class="{ close: !isOpenReportForm }">
-                        <el-form
-                            label-width="140px"
-                            label-position="left"
-                            :model="reportForm"
-                            :rules="reportFormRules"
-                            ref="form"
-                        >
-                            <el-form-item label="Title" prop="title">
-                                <el-input v-model="reportForm.title"></el-input>
-                            </el-form-item>
-                            <el-form-item label="Amount spent" prop="amount">
-                                <el-input-number v-model="reportForm.amount" :step="1" :min="0" />
-                            </el-form-item>
-                            <el-form-item label="Description" prop="description">
-                                <!-- <el-input v-model="projectForm.description" type="textarea" /> -->
-                                <TextEditor
-                                    :initial_content="reportForm.description"
-                                    @input-description="updateDescription"
+        <div class="main-content">
+            <el-tabs type="border-card" class="demo-tabs">
+                <el-tab-pane label="Content" :lazy="true" class="tab-pane-container">
+                    <div class="tab-container">
+                        <TextEditor
+                                    :initial_content="project.description"
+                                    :preview="true"
                                 />
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="handleCreateReport"
-                                    >Create</el-button
-                                >
-                            </el-form-item>
-                        </el-form>
                     </div>
-                </div>
-                <el-timeline>
-                    <el-timeline-item
-                        v-for="report in reports"
-                        :key="report.id"
-                        :timestamp="new Date(report.created_at).toLocaleDateString()"
-                        placement="top"
-                    >
-                        <el-card>
-                            <h4>{{ report.title }}</h4>
-                            <div v-html="report.description"></div>
-                            <p class="report-spent">Spent: {{ report.amount }} $</p>
-                        </el-card>
-                    </el-timeline-item>
-                </el-timeline></el-tab-pane
-            >
-        </el-tabs>
+                </el-tab-pane>
+                <el-tab-pane label="List of supporters" :lazy="true" >
+                    <div >
+                        <el-table
+                            :data="resultQuery"
+                            style="width: 100%"
+                            height="300"
+                            :default-sort="{ prop: 'created_at', order: 'descending' }"
+                        >
+                            <el-table-column fixed label="Date" prop="created_at" sortable>
+                                <template #default="scope">
+                                    <span>{{ new Date(scope.row.created_at).toLocaleDateString() }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="full_name" label="Name" />
+                            <el-table-column prop="amount" label="Amount" />
+                            <el-table-column prop="message" label="Message" />
+                            <el-table-column align="right">
+                                <template #header>
+                                    <el-input
+                                        v-model="searchQuery"
+                                        size="small"
+                                        placeholder="Search name"
+                                    />
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Report" @click="getAllReports" class="tab-pane-container">
+                    <div class="tab-container">
+                        <div class="report-form-container" v-if="isOwner()">
+                            <el-tooltip
+                                :content="isOpenReportForm ? 'Close report' : 'Make a report'"
+                                placement="top"
+                                effect="dark"
+                            >
+                                <el-button type="info" @click="toogleReport"
+                                    ><i
+                                        class="bx"
+                                        :class="isOpenReportForm ? 'bx-chevrons-up' : 'bx-chevrons-down'"
+                                    ></i
+                                ></el-button>
+                            </el-tooltip>
+                            <div class="report-form" :class="{ close: !isOpenReportForm }">
+                                <el-form
+                                    label-width="140px"
+                                    label-position="left"
+                                    :model="reportForm"
+                                    :rules="reportFormRules"
+                                    ref="form"
+                                >
+                                    <el-form-item label="Title" prop="title">
+                                        <el-input v-model="reportForm.title"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Amount spent" prop="amount">
+                                        <el-input-number v-model="reportForm.amount" :step="1" :min="0" />
+                                    </el-form-item>
+                                    <el-form-item label="Description" prop="description">
+                                        <TextEditor
+                                            :initial_content="reportForm.description"
+                                            @input-description="updateDescription"
+                                        />
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="handleCreateReport"
+                                            >Create</el-button
+                                        >
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                        </div>
+                        <el-timeline>
+                            <el-timeline-item
+                                v-for="report in reports"
+                                :key="report.id"
+                                :timestamp="new Date(report.created_at).toLocaleDateString()"
+                                placement="top"
+                            >
+                                <el-card>
+                                    <h4>{{ report.title }}</h4>
+                                    <div v-html="report.description"></div>
+                                    <p class="report-spent">Spent: {{ report.amount }} $</p>
+                                </el-card>
+                            </el-timeline-item>
+                        </el-timeline>
+                    </div>
+                    </el-tab-pane
+                >
+            </el-tabs>
+            <div class="campaign-rigt-tab">
+
+            </div>
+        </div>
 
         <!--                    Check out dialog                       -->
         <el-dialog
@@ -281,11 +295,12 @@ export default {
     methods: {
         async getProjectDetail() {
             const res = await ProjectService.getbyId(this.$route.params.id);
+            console.log(res);
             if (!res.error) {
                 this.project = res.data;
             } else {
-                if (res.error.status === 302) {
-                    ElMessage.error(res.error.data);
+                if (res.error.response.status === 302) {
+                    ElMessage.error(res.error.response.data);
                 }
             }
         },
@@ -295,8 +310,8 @@ export default {
             if (!res.error) {
                 this.transactions = res.data;
             } else {
-                if (res.error.status === 302) {
-                    ElMessage.error(res.error.data);
+                if (res.error.response.status === 302) {
+                    ElMessage.error(res.error.response.data);
                 }
             }
         },
@@ -306,8 +321,8 @@ export default {
             if (!res.error) {
                 this.reports = res.data;
             } else {
-                if (res.error.status === 302) {
-                    ElMessage.error(res.error.data);
+                if (res.error.response.status === 302) {
+                    ElMessage.error(res.error.response.data);
                 }
             }
         },
@@ -381,16 +396,19 @@ export default {
         .project-media {
             overflow: hidden;
             border-radius: 1.5rem;
-            height: 18rem;
-            flex: 46%;
+            height: 25rem;
+            flex: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             img {
                 object-fit: cover;
-                object-position: center center center;
+                object-position: center;
                 width: 100%;
             }
         }
         .project-summary {
-            flex: 54%;
+            flex: 40%;
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
@@ -423,17 +441,13 @@ export default {
                             align-items: center;
                             img {
                                 width: 2.5rem;
+                                height: 2.5rem;
                                 border-radius: 50%;
                             }
                         }
                     }
-                    .project-goal {
-                        margin-top: 1rem;
-                        display: flex;
-                        justify-content: space-between;
-                    }
-                    .project-fund-raised {
-                        .neo-progressbar {
+                    
+                    .neo-progressbar {
                             margin: 0.5rem 0;
                             border-radius: 6px;
                             background-color: #ff2e5b1a;
@@ -446,9 +460,43 @@ export default {
                                 z-index: 11111;
                             }
                         }
-                        .fund-raised-number {
+                    .project-fund-info {
+                        gap: 1rem;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.8rem;
+                        .project-goal {
                             display: flex;
                             justify-content: space-between;
+                            flex-direction: column;
+                            .total {
+                                font-weight: 700;
+                                font-size: 2.8rem;
+                                line-height: 2.8rem;
+                                color: #037362;
+                            }
+                            .goal {
+                                line-height: 0.9rem;
+                                color: #656969;
+                                font-size: 0.9rem;
+                            }
+                        }
+
+                        .fund-item-info {
+                            display: flex;
+                            justify-content: space-between;
+                            flex-direction: column;
+                            .number {
+                                font-size: 2.2rem;
+                                line-height: 2rem;
+                                color: #656969;
+                                font-weight: 700;
+                            }
+                            .detail {
+                                line-height: 1.1rem;
+                                color: #656969;
+                                font-size: 0.9rem;
+                            }
                         }
                     }
                 }
@@ -456,6 +504,19 @@ export default {
                     // margin-top: 3rem;
                     display: flex;
                     justify-content: space-between;
+                    .amount-input-wrap {
+                        .usd-currency {
+                            font-family: Roboto;
+                            color: #7A7A7A;
+                            font-weight: 500;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+                        justify-content: center;
+                        align-items: center;
+                        display:flex;
+                        gap: 0.4rem;
+                    }
                 }
             }
         }
@@ -484,12 +545,12 @@ export default {
             align-items: center;
             overflow: hidden;
             transition: all 0.3s ease-in-out;
-            max-height: 700px;
+            max-height: 800px;
             :deep(form) {
                 width: 90%;
                 .ql-container {
                     // min-height: 250px;
-                    max-height: 34vh !important;
+                    max-height: 42vh !important;
                 }
             }
             &.close {
@@ -497,6 +558,13 @@ export default {
                 opacity: 0;
                 padding: 0;
             }
+        }
+    }
+    .tab-pane-container {
+        display: flex;
+        justify-content: center;
+        .tab-container {
+            max-width: 55rem;
         }
     }
 
@@ -509,6 +577,6 @@ export default {
     .project-header {
         display: flex;
         flex-direction: column;
-    }
+    }    
 }
 </style>

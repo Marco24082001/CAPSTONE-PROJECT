@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 from api_project.constants import ProjectStatus
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from datetime import datetime, date
 
 class ProjectViewSet(BaseViewSet):
     queryset = Project.objects.all()
@@ -18,10 +19,26 @@ class ProjectViewSet(BaseViewSet):
         'upload_image': [AllowAny],
         'list': [AllowAny],
         'retrieve': [AllowAny],
+        'get_project_owner': [AllowAny]
     }
     filterset_fields = ['status']
-    # def get_queryset(self):
-    #     super().get_queryset()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # logic change active to finish
+        if instance.status == ProjectStatus.ACTIVE.value:
+            diff = instance.end_date - date.today()
+            if diff.days <= 0:
+                serializer = self.get_serializer(instance, data={'status': ProjectStatus.FINISHED.value}, partial=True)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+                return Response(serializer.data)
+        serializer = self.get_serializer(instance)
+        try:
+            serializer.data
+        except DataNotMatchHash as matchError:
+            return Response(data= str(matchError), status=status.HTTP_302_FOUND)
+        return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -45,8 +62,12 @@ class ProjectViewSet(BaseViewSet):
     
     @action(detail=False, methods=['GET'])
     def get_project_owner(self, request, *args):
-        owner = self.request.user
-        queryset = Project.objects.filter(user=owner)
+        user_id = request.query_params.get('user_id', None)
+        print(user_id)
+        if not user_id:
+            return Response(data=status.HTTP_400_BAD_REQUEST)
+        # owner = self.request.user
+        queryset = Project.objects.filter(user=user_id)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

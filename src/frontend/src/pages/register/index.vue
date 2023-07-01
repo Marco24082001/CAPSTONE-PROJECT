@@ -56,9 +56,6 @@
                         >Register</el-button
                     >
                 </el-form-item>
-                <a class="forgot-password" href="https://oxfordinformatics.com/"
-                    >Forgot password ?</a
-                >
             </el-form>
         </el-card>
     </div>

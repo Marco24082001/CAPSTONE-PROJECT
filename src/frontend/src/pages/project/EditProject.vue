@@ -25,16 +25,6 @@
                     ref="form"
                 >
                     <el-form-item label="Pictures" prop="image_url">
-                        <!-- <el-upload
-                            v-model:file-list="fileList"
-                            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                            list-type="picture-card"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove"
-                            limit="2"
-                        >
-                            <el-icon><Plus /></el-icon>
-                        </el-upload> -->
                         <el-upload
                             class="avatar-uploader"
                             action="http://localhost:8000/api/v1/api_project/projects/upload_image/"
@@ -72,13 +62,19 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Fund goal" prop="fund_goal">
-                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" />
+                        <el-input-number v-model="projectForm.fund_goal" :step="1" :min="1" /> <span class="usd-currency">$</span>
                     </el-form-item>
-                    <el-form-item label="Summary" prop="summary">
-                        <el-input v-model="projectForm.summary"></el-input>
+                    <el-form-item label="End date" prop="end_date">
+                            <el-date-picker
+                                v-model="projectForm.end_date"
+                                type="date"
+                                placeholder="Pick a day"
+                                :disabled-date="disabledDate"
+                                :shortcuts="shortcuts"
+                                :size="size"
+                            />
                     </el-form-item>
                     <el-form-item label="Description" prop="description">
-                        <!-- <el-input v-model="projectForm.description" type="textarea" /> -->
                         <TextEditor
                             :initial_content="projectForm.description"
                             @input-description="updateDescription"
@@ -117,22 +113,19 @@ export default {
     data() {
         return {
             listTypes: [],
-            fileList: [],
-            dialogImageUrl: "",
-            dialogVisible: false,
             rawFileImage: "",
             projectForm: {
                 title: "",
                 image_url: "",
-                summary: "",
                 description: "",
                 fund_goal: 100000,
                 type_projects: [],
+                end_date: "",
             },
             projectFromRules: {
                 title: [{ required: true, message: "Title is required", trigger: "blur" }],
                 image_url: [{ required: true, message: "Image is required", trigger: "blur" }],
-                summary: [{ required: true, message: "Summary is required", trigger: "blur" }],
+                end_date: [{ required: true, message: "Summary is required", trigger: "blur" }],
                 description: [
                     { required: true, message: "Description is required", trigger: "blur" },
                 ],
@@ -146,10 +139,10 @@ export default {
 
     async created() {
         this.getAllTypes();
-        this.getProjectDetail();
+        this.getProject();
     },
     methods: {
-        async getProjectDetail() {
+        async getProject() {
             const res = await ProjectService.getbyId(this.$route.params.id);
             if (!res.error) {
                 const project = res.data;
@@ -157,7 +150,7 @@ export default {
                     id: project.id,
                     title: project.title,
                     image_url: project.image_url,
-                    summary: project.summary,
+                    end_date: project.end_date,
                     description: project.description,
                     type_projects: project.type_projects,
                     fund_goal: project.fund_goal,
@@ -177,13 +170,6 @@ export default {
                     ElMessage.error(res.error.data);
                 }
             }
-        },
-        handleRemove(uploadFile, uploadFiles) {
-            console.log(uploadFile, uploadFiles);
-        },
-        handlePictureCardPreview(uploadFile) {
-            this.dialogImageUrl = uploadFile.url;
-            this.dialogVisible = true;
         },
         handleEditProject: async function () {
             await this.$refs.form.validate(async (valid) => {
@@ -239,6 +225,11 @@ export default {
     justify-content: space-around;
     padding: var(--cs-main-panel-pading);
     gap: 2rem;
+    .usd-currency {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: 0.8rem;
+    }
 }
 
 .main-container {

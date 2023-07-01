@@ -29,7 +29,6 @@ class ReportSerializer(serializers.ModelSerializer):
             ValueError
 
     def to_representation(self, instance):
-        print('report to_representation')
         view = self.context.get('view')
         ret = super().to_representation(instance)
         if view and view.action in ['list', 'retrieve']:

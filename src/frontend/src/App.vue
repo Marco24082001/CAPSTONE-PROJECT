@@ -67,7 +67,6 @@ a {
 }
 
 body {
-    // background-image: url(assets/bg1.jpg);
     background-size: cover;
     background-position: 15% 20%;
     &::-webkit-scrollbar {

@@ -34,7 +34,7 @@ class ProjectService extends BaseService {
             return res;
         } catch (error) {
             console.log(error);
-            return { error: error.response };
+            return { error: error };
         }
     }
 
@@ -60,9 +60,11 @@ class ProjectService extends BaseService {
         }
     }
 
-    async getProjectOwner() {
+    async getProjectOwner(id) {
         try {
-            const res = await this.request().get(`/${this.entity}/get_project_owner/`);
+            const res = await this.request().get(
+                `/${this.entity}/get_project_owner/?user_id=${id}`
+            );
             return res;
         } catch (error) {
             console.log(error);

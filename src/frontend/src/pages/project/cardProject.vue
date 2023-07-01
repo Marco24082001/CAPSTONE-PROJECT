@@ -16,7 +16,7 @@
                             <div class="bx bx-detail tooltip-menu-icon"></div>
                             View Detail</router-link
                         >
-                        <router-link
+                        <router-link v-if="user.currentUser.role === 'USER'"
                             class="tooltip-menu-item"
                             :to="{ name: 'EditProject', params: { id: project.id } }"
                             ><div class="bx bx-edit tooltip-menu-icon"></div>
@@ -31,7 +31,7 @@
                             <p>Deactivate</p>
                         </div>
                         <div
-                            v-else-if="project.status == 'INACTIVE'"
+                            v-else-if="project.status == 'INACTIVE' || project.status == 'FINISHED'"
                             class="tooltip-menu-item"
                             @click="activate"
                         >
@@ -56,29 +56,37 @@
                 >
             </div>
             <h2 class="cp-title">
-                <a
-                    href="https://givenow.vn/du-an/chung-tay-cham-soc-suc-khoe-cho-200-tre-nhap-cu-tai-truong-tinh-thuong-ai-linh/"
-                    >{{ project.title }}</a
-                >
+                <router-link
+                            class="tooltip-menu-item"
+                            :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
+                        >
+                            {{ project.title }}</router-link
+                        >
             </h2>
             <div class="cp-progressbar">
                 <div class="neo-progressbar">
                     <div v-bind:style="{ width: project.percent + '%' }"></div>
                 </div>
                 <div class="fund-raised">
-                    <div class="fund-raised-txt">{{ project.fund_total }} $</div>
+                    <div class="fund-raised-txt">{{ project.fund_total }} USD</div>
                     <div class="fund-raised-percent">{{ project.percent }} %</div>
                 </div>
             </div>
             <!-- <span>$ 15.99</span> -->
             <div class="cp-details">
                 <div class="cp-details-data">
-                    <a class="cp-author-avatar" href="#">
+                    <router-link
+                        :to="{ name: 'Author', params: { id: project.author.id } }"
+                        class="cp-author-avatar"
+                    >
                         <img :src="project.author.avatar" />
-                    </a>
+                    </router-link>
                     <div class="cp-details-meta">
                         <div class="cp-author-meta">
-                            <a href="/#">{{ project.author.full_name }}</a>
+                            <router-link
+                                :to="{ name: 'Author', params: { id: project.author.id } }"
+                                >{{ project.author.full_name }}</router-link
+                            >
                         </div>
                         <div class="cp-post-meta">
                             <div class="cp-meta-date">
@@ -88,7 +96,7 @@
                     </div>
                 </div>
                 <div class="cp-fund-goal">
-                    <span>{{ project.fund_goal }} $</span>
+                    <span>${{ project.fund_goal }}</span>
                 </div>
             </div>
         </div>
@@ -99,6 +107,8 @@
 import { OnClickOutside } from "@vueuse/components";
 import ProjectService from "@/services/project/ProjectService";
 import { ElMessage } from "element-plus";
+import { mapState } from "vuex";
+
 export default {
     name: "card-project",
     components: {
@@ -126,6 +136,9 @@ export default {
         return {
             isToolOpen: false,
         };
+    },
+    computed: {
+        ...mapState(["user"]),
     },
     methods: {
         toggleToolTip() {
@@ -265,6 +278,7 @@ export default {
         margin-top: 1.2rem;
         width: 100%;
         .cp-meta {
+            padding: 0 0.5rem;
             font-family: var(--cs-font-category-family), sans-serif;
             font-size: var(--cs-font-category-size);
             font-weight: var(--cs-font-category-weight);
@@ -287,6 +301,7 @@ export default {
             letter-spacing: var(--cs-font-headings-letter-spacing);
             font-size: 1.25rem;
             margin-top: 0.5rem;
+            padding: 0 0.5rem;
             a {
                 display: block;
                 text-decoration: none;
@@ -315,6 +330,7 @@ export default {
                 }
             }
             .fund-raised {
+                padding: 0 0.5rem;
                 margin-top: 0.5rem;
                 display: flex;
                 justify-content: space-between;

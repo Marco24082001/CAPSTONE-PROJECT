@@ -35,4 +35,3 @@ class TypeViewSet(BaseViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_409_CONFLICT, data={ 'error': "This type is used" })
-    

@@ -16,9 +16,9 @@ class ReportViewSet(BaseViewSet):
         'retrieve': [AllowAny],
         'create': [AllowAny]
     }
-    # filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    # ordering_fields = ['created_at']
-    # ordering = ['created_at']
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = ['created_at']
+    ordering = ['created_at']
     filterset_fields = ['project']
 
     def list(self, request, *args, **kwargs):
@@ -36,15 +36,3 @@ class ReportViewSet(BaseViewSet):
         except DataNotMatchHash as matchError:
             return Response(data= str(matchError), status=status.HTTP_302_FOUND)
         return Response(serializer.data)
-
-
-    
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     # update fund_total and fund_used project
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
-    # def all_transactions_project

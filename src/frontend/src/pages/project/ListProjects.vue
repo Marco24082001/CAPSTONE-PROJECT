@@ -69,11 +69,12 @@ export default {
     methods: {
         async getAllProjects() {
             const res = await ProjectService.getAll();
+            console.log(res)
             if (!res.error) {
                 this.listProjects = res.data;
             } else {
-                if (res.error.status === 302) {
-                    ElMessage.error(res.error.data);
+                if (res.error.response.status === 302) {
+                    ElMessage.error(res.error.response.data);
                 }
             }
         },
@@ -126,7 +127,6 @@ export default {
         position: relative;
         width: 100%;
         align-self: center;
-        height: 28rem;
         display: inline-flex;
         justify-content: center;
         flex-wrap: wrap;

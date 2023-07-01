@@ -18,7 +18,7 @@
                     <el-radio-button label="INACTIVE" class="inactive">INACTIVE</el-radio-button>
                 </el-radio-group>
             </div>
-            <div class="button-create-wrapper">
+            <div class="button-create-wrapper" v-if="user.currentUser.role === 'USER'">
                 <RouterLink to="/dashboard/projects/create">Start Project!</RouterLink>
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
@@ -45,6 +45,7 @@
 import CardProject from "@/pages/project/CardProject.vue";
 import ProjectService from "@/services/project/ProjectService";
 import AppToolbar from "@/components/AppToolbar.vue";
+import { mapState } from "vuex";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -64,6 +65,7 @@ export default {
         this.getAllProjects();
     },
     computed: {
+        ...mapState(["user"]),
         resultQuery() {
             if (this.searchQuery != "") {
                 return this.listProjects.filter((item) => {
@@ -81,7 +83,12 @@ export default {
     },
     methods: {
         async getAllProjects() {
-            const res = await ProjectService.getProjectOwner();
+            let res = null; 
+            if(this.user.currentUser.role === 'ADMIN') {
+                res = await ProjectService.getAll();
+            }else {
+                res = await ProjectService.getProjectOwner(this.user.currentUser.id);
+            }
             if (!res.error) {
                 this.listProjects = res.data;
             } else {

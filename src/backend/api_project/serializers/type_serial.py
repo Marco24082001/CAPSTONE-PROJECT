@@ -19,7 +19,6 @@ class TypeSerializer(serializers.ModelSerializer):
         FabricService.deleteAsset(id)
     
     def to_representation(self, instance):
-        print('type to_representation')
         view = self.context.get('view')
         ret = super().to_representation(instance)
         if view and view.action in ['list', 'retrieve']:
