@@ -92,6 +92,16 @@ class ProjectService extends BaseService {
         }
     }
 
+    async verify(id) {
+        try {
+            const res = await this.request().put(`/${this.entity}/${id}/verify/`);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
     async getbyId(id) {
         try {
             const res = await this.request().get(`${this.entity}/${id}/`);

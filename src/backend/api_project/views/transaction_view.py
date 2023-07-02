@@ -6,6 +6,8 @@ from api_project.serializers import ProjectSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import action
+
 
 class TransactionViewSet(BaseViewSet):
     queryset = Transaction.objects.all()
@@ -13,8 +15,13 @@ class TransactionViewSet(BaseViewSet):
     permission_map = {
         'list': [AllowAny],
         'retrieve': [AllowAny],
-        'create': [AllowAny]
+        'create': [AllowAny],
+        'number_user_support': [AllowAny]
     }
+
+    # serializer_map = {
+    #     ''
+    # }
     filterset_fields = ['project', 'type_transaction']
 
 
@@ -33,3 +40,10 @@ class TransactionViewSet(BaseViewSet):
         except DataNotMatchHash as matchError:
             return Response(data= str(matchError), status=status.HTTP_302_FOUND)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'])
+    def number_user_support(self, request, *args):
+        user_id = request.query_params.get('user_id', None)
+        x = Transaction.objects.filter(project__user=user_id).values('user').distinct()
+        print(x)
+        return Response(data=None, status=status.HTTP_200_OK)

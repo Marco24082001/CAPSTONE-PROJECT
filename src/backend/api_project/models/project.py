@@ -15,6 +15,7 @@ class Project(BaseModel):
     fund_total = models.FloatField(default=0)
     fund_used = models.FloatField(default=0)
     status = models.CharField(choices=ProjectStatus.choices(), default=ProjectStatus.ACTIVE.value, max_length=50)
+    is_verified = models.BooleanField(default=False)
     end_date = models.DateField()
     likes = models.ManyToManyField(
             User,

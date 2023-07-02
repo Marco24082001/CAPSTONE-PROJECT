@@ -58,12 +58,19 @@
                     <el-form-item label="Phone">
                         <el-input v-model="profileForm.phone" label="Phone" placeholder="Phone" />
                     </el-form-item>
-                    <el-form-item label="Biology">
+                    <el-form-item label="Address">
                         <el-input
-                            v-model="profileForm.biology"
+                            v-model="profileForm.address"
+                            label="Address"
+                            placeholder="Address"
+                        />
+                    </el-form-item>
+                    <el-form-item label="Biography">
+                        <el-input
+                            v-model="profileForm.biography"
                             :rows="8"
                             type="textarea"
-                            placeholder="Biology"
+                            placeholder="Biography"
                         ></el-input>
                     </el-form-item>
                     <el-form-item class="group-button">
@@ -96,8 +103,9 @@ export default {
                 last_name: "",
                 email: "",
                 avatar: "",
-                biology: "",
+                biography: "",
                 phone: "",
+                address: "",
             },
             profileFormRule: {
                 first_name: [
@@ -127,8 +135,9 @@ export default {
                     last_name: profile.last_name,
                     email: profile.email,
                     phone: profile.phone,
-                    biology: profile.biology,
+                    biography: profile.biography,
                     avatar: profile.avatar,
+                    address: profile.address,
                 };
             } else {
                 if (res.error.status === 302) {

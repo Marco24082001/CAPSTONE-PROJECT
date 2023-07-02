@@ -16,7 +16,6 @@ class TransactionService extends BaseService {
 
     async getAllOfProject(id = "", type = "") {
         try {
-            console.log(id, type);
             const res = await this.request().get(
                 `/${this.entity}?project=${id}&type_transaction=${type}`
             );
@@ -31,6 +30,18 @@ class TransactionService extends BaseService {
     async getbyId(id) {
         try {
             const res = await this.request().get(`${this.entity}/${id}/`);
+            return res;
+        } catch (error) {
+            console.log(error);
+            return { error: error };
+        }
+    }
+
+    async getNumberOfSupport(user_id) {
+        try {
+            const res = await this.request().get(
+                `${this.entity}/number_user_support/?user_id=${user_id}`
+            );
             return res;
         } catch (error) {
             console.log(error);

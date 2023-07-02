@@ -13,7 +13,7 @@
             <el-radio-group v-model="statusFilter">
                 <el-radio-button label="ACTIVE">ACTIVE</el-radio-button>
                 <el-radio-button label="FINISHED" class="finished">FINISHED</el-radio-button>
-                <el-radio-button label="INACTIVE" class="inactive">INACTIVE</el-radio-button>
+                <!-- <el-radio-button label="INACTIVE" class="inactive">INACTIVE</el-radio-button> -->
             </el-radio-group>
         </div>
         <div class="cp-projects">
@@ -69,7 +69,7 @@ export default {
     methods: {
         async getAllProjects() {
             const res = await ProjectService.getAll();
-            console.log(res)
+            console.log(res);
             if (!res.error) {
                 this.listProjects = res.data;
             } else {

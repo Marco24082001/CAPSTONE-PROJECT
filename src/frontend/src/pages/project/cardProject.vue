@@ -16,7 +16,8 @@
                             <div class="bx bx-detail tooltip-menu-icon"></div>
                             View Detail</router-link
                         >
-                        <router-link v-if="user.currentUser.role === 'USER'"
+                        <router-link
+                            v-if="user.currentUser.role === 'USER'"
                             class="tooltip-menu-item"
                             :to="{ name: 'EditProject', params: { id: project.id } }"
                             ><div class="bx bx-edit tooltip-menu-icon"></div>
@@ -38,6 +39,15 @@
                             <div class="bx bx-bolt-circle tooltip-menu-icon"></div>
                             <p>Activate</p>
                         </div>
+
+                        <div
+                            v-if="project.is_verified == false && user.currentUser.role === 'ADMIN'"
+                            class="tooltip-menu-item"
+                            @click="verify"
+                        >
+                            <div class="bx bxs-check-circle tooltip-menu-icon"></div>
+                            <p>Verify</p>
+                        </div>
                     </div>
                 </OnClickOutside>
             </div>
@@ -57,11 +67,11 @@
             </div>
             <h2 class="cp-title">
                 <router-link
-                            class="tooltip-menu-item"
-                            :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
-                        >
-                            {{ project.title }}</router-link
-                        >
+                    class="tooltip-menu-item"
+                    :to="{ name: 'OwnerProjectDetail', params: { id: project.id } }"
+                >
+                    {{ project.title }}</router-link
+                >
             </h2>
             <div class="cp-progressbar">
                 <div class="neo-progressbar">
@@ -160,6 +170,16 @@ export default {
                 ElMessage.success("Activate Successful!");
             } else {
                 ElMessage.error("Activate failed!");
+            }
+            console.log(res);
+        },
+
+        async verify() {
+            const res = await ProjectService.verify(this.project.id);
+            if (res.status === 200) {
+                ElMessage.success("Verify Successful!");
+            } else {
+                ElMessage.error("Verify failed!");
             }
             console.log(res);
         },

@@ -177,4 +177,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Hyperledger Fabric
-USE_HYPERLEDGER_FABRIC = True
+USE_HYPERLEDGER_FABRIC = False

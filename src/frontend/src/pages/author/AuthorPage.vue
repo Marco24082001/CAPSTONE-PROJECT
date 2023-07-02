@@ -93,6 +93,7 @@ import UserService from "@/services/user/UserService";
 import ProjectService from "@/services/project/ProjectService";
 import { mapState } from "vuex";
 import CardProject from "@/pages/project/CardProject.vue";
+import TransactionService from "@/services/project/TransactionService";
 
 export default {
     name: "author-page",
@@ -105,6 +106,7 @@ export default {
             listProjects: [],
             statusFilter: "ACTIVE",
             searchQuery: "",
+            numberPersonSupport: 0,
         };
     },
     computed: {
@@ -127,6 +129,7 @@ export default {
     async created() {
         this.getAuthor();
         this.getAllProjects();
+        this.getNumberPersonSupport();
     },
 
     methods: {
@@ -152,6 +155,14 @@ export default {
                     ElMessage.error(res.error.data);
                 }
             }
+        },
+
+        async getNumberPersonSupport() {
+            const res = await TransactionService.getNumberOfSupport(this.$route.params.id);
+            console.log(res);
+            // if(!res.error) {
+
+            // }
         },
 
         isOwner() {

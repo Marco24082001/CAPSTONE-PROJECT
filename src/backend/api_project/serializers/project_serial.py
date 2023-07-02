@@ -46,7 +46,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         print(type(instance.id))
         view = self.context.get('view')
         ret = super().to_representation(instance)
-        if view and view.action in ['list', 'retrieve']:
+        if view and view.action in ['retrieve']:
             if not FabricService.isEqualHash(ret, Project.get_list_field_names()):
                 raise DataNotMatchHash(instance.id, 'Project')
         return ret

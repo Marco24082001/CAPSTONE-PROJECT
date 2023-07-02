@@ -106,6 +106,18 @@ class ProjectViewSet(BaseViewSet):
             instance._prefetched_objects_cache = {}
         return Response(serializer.data)
     
+    @action(detail=True, methods=['PUT'])
+    def verify(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data={ 'is_verified' : True}, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+        return Response(serializer.data)
+    
     @action(detail=False, methods=['GET'])
     def getLikeProjects(self, request, *args, **kwargs):
         user = self.request.user

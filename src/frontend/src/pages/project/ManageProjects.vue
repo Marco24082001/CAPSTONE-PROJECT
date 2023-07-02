@@ -16,6 +16,9 @@
                     <el-radio-button label="ACTIVE">ACTIVE</el-radio-button>
                     <el-radio-button label="FINISHED" class="finished">FINISHED</el-radio-button>
                     <el-radio-button label="INACTIVE" class="inactive">INACTIVE</el-radio-button>
+                    <el-radio-button label="UNVERIFIED" class="unverified"
+                        >UNVERIFIED</el-radio-button
+                    >
                 </el-radio-group>
             </div>
             <div class="button-create-wrapper" v-if="user.currentUser.role === 'USER'">
@@ -69,6 +72,9 @@ export default {
         resultQuery() {
             if (this.searchQuery != "") {
                 return this.listProjects.filter((item) => {
+                    if (this.statusFilter === "UNVERIFIED") {
+                        return item.is_verified;
+                    }
                     return (
                         item.status === this.statusFilter &&
                         item.title.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -76,6 +82,9 @@ export default {
                 });
             } else {
                 return this.listProjects.filter((item) => {
+                    if (this.statusFilter === "UNVERIFIED") {
+                        return !item.is_verified;
+                    }
                     return item.status === this.statusFilter;
                 });
             }
@@ -83,10 +92,10 @@ export default {
     },
     methods: {
         async getAllProjects() {
-            let res = null; 
-            if(this.user.currentUser.role === 'ADMIN') {
+            let res = null;
+            if (this.user.currentUser.role === "ADMIN") {
                 res = await ProjectService.getAll();
-            }else {
+            } else {
                 res = await ProjectService.getProjectOwner(this.user.currentUser.id);
             }
             if (!res.error) {
@@ -136,6 +145,17 @@ export default {
             }
             :deep(.el-radio-button__inner:hover) {
                 color: rgb(245, 108, 108);
+            }
+        }
+
+        .unverified {
+            :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
+                background: rgb(133, 119, 119) !important;
+                border-color: rgb(133, 119, 119) !important;
+                box-shadow: -1px 0 0 0 rgb(133, 119, 119) !important;
+            }
+            :deep(.el-radio-button__inner:hover) {
+                color: rgb(133, 119, 119);
             }
         }
     }

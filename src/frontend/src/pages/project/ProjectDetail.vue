@@ -22,19 +22,28 @@
                 <div class="project-main">
                     <div class="project-info">
                         <div class="project-session-1">
-                            <div class="project-author">
+                            <router-link
+                                :to="{ name: 'Author', params: { id: project.author.id } }"
+                                class="project-author"
+                            >
                                 <img :src="project.author.avatar" />
-                                <a href="#">{{ project.author.full_name }}</a>
-                            </div>
+                                <span>{{ project.author.full_name }}</span>
+                            </router-link>
+                            <div
+                                class="bx bxs-check-circle"
+                                :class="{ verified: project.is_verified }"
+                            ></div>
                         </div>
                         <div class="neo-progressbar">
-                                <div v-bind:style="{ width: project.percent + '%' }"></div>
-                            </div>
-                        
+                            <div v-bind:style="{ width: project.percent + '%' }"></div>
+                        </div>
+
                         <div class="project-fund-info">
                             <div class="project-goal">
-                                <span class="total"><span>&#36;</span>{{ project.fund_total }}</span>
-                                <span class="goal">The goal set is ${{ project.fund_goal}}</span>
+                                <span class="total"
+                                    ><span>&#36;</span>{{ project.fund_total }}</span
+                                >
+                                <span class="goal">The goal set is ${{ project.fund_goal }}</span>
                             </div>
                             <div class="fund-item-info">
                                 <span class="number"> {{ transactions.length }}</span>
@@ -46,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-form-donation">
+                    <div class="project-form-donation" v-if="project.status == 'ACTIVE'">
                         <div class="amount-input-wrap">
                             <span class="usd-currency">USD</span>
                             <el-input-number
@@ -71,6 +80,12 @@
                             >Support now</el-button
                         >
                     </div>
+                    <div class="project-status" v-else>
+                        <p class="text-alert" v-if="project.percent < 100">
+                            Fundraising period ends
+                        </p>
+                        <p class="text-alert" v-else>Fundraising complete</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,14 +93,11 @@
             <el-tabs type="border-card" class="demo-tabs">
                 <el-tab-pane label="Content" :lazy="true" class="tab-pane-container">
                     <div class="tab-container">
-                        <TextEditor
-                                    :initial_content="project.description"
-                                    :preview="true"
-                                />
+                        <TextEditor :initial_content="project.description" :preview="true" />
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="List of supporters" :lazy="true" >
-                    <div >
+                <el-tab-pane label="List of supporters" :lazy="true">
+                    <div>
                         <el-table
                             :data="resultQuery"
                             style="width: 100%"
@@ -94,7 +106,9 @@
                         >
                             <el-table-column fixed label="Date" prop="created_at" sortable>
                                 <template #default="scope">
-                                    <span>{{ new Date(scope.row.created_at).toLocaleDateString() }}</span>
+                                    <span>{{
+                                        new Date(scope.row.created_at).toLocaleDateString()
+                                    }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="full_name" label="Name" />
@@ -123,7 +137,9 @@
                                 <el-button type="info" @click="toogleReport"
                                     ><i
                                         class="bx"
-                                        :class="isOpenReportForm ? 'bx-chevrons-up' : 'bx-chevrons-down'"
+                                        :class="
+                                            isOpenReportForm ? 'bx-chevrons-up' : 'bx-chevrons-down'
+                                        "
                                     ></i
                                 ></el-button>
                             </el-tooltip>
@@ -139,7 +155,11 @@
                                         <el-input v-model="reportForm.title"></el-input>
                                     </el-form-item>
                                     <el-form-item label="Amount spent" prop="amount">
-                                        <el-input-number v-model="reportForm.amount" :step="1" :min="0" />
+                                        <el-input-number
+                                            v-model="reportForm.amount"
+                                            :step="1"
+                                            :min="0"
+                                        />
                                     </el-form-item>
                                     <el-form-item label="Description" prop="description">
                                         <TextEditor
@@ -170,12 +190,9 @@
                             </el-timeline-item>
                         </el-timeline>
                     </div>
-                    </el-tab-pane
-                >
+                </el-tab-pane>
             </el-tabs>
-            <div class="campaign-rigt-tab">
-
-            </div>
+            <div class="campaign-rigt-tab"></div>
         </div>
 
         <!--                    Check out dialog                       -->
@@ -244,7 +261,9 @@ export default {
     data() {
         return {
             project: {
-                author: {},
+                author: {
+                    id: "___",
+                },
             },
             reports: [],
             transactions: [],
@@ -288,7 +307,7 @@ export default {
         },
     },
     async created() {
-        this.getProjectDetail();
+        await this.getProjectDetail();
         this.getAllTransactions();
         this.getAllReports();
     },
@@ -445,21 +464,26 @@ export default {
                                 border-radius: 50%;
                             }
                         }
-                    }
-                    
-                    .neo-progressbar {
-                            margin: 0.5rem 0;
-                            border-radius: 6px;
-                            background-color: #ff2e5b1a;
-                            overflow: hidden;
-                            div {
-                                height: 0.4rem;
-                                border-radius: 6px;
-                                width: 40%;
-                                background-color: #ff2e5b;
-                                z-index: 11111;
-                            }
+                        .verified {
+                            color: green;
+                            font-size: 1.5rem;
+                            cursor: pointer;
                         }
+                    }
+
+                    .neo-progressbar {
+                        margin: 0.5rem 0;
+                        border-radius: 6px;
+                        background-color: #ff2e5b1a;
+                        overflow: hidden;
+                        div {
+                            height: 0.4rem;
+                            border-radius: 6px;
+                            width: 40%;
+                            background-color: #ff2e5b;
+                            z-index: 11111;
+                        }
+                    }
                     .project-fund-info {
                         gap: 1rem;
                         display: flex;
@@ -507,15 +531,30 @@ export default {
                     .amount-input-wrap {
                         .usd-currency {
                             font-family: Roboto;
-                            color: #7A7A7A;
+                            color: #7a7a7a;
                             font-weight: 500;
                             font-size: 16px;
                             line-height: 24px;
                         }
                         justify-content: center;
                         align-items: center;
-                        display:flex;
+                        display: flex;
                         gap: 0.4rem;
+                    }
+                }
+
+                .project-status {
+                    background: #fef2f5;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 16px;
+                    padding: 10px 0px;
+                    .text-alert {
+                        font-size: 16px;
+                        font-weight: 500;
+                        margin-left: 16px;
+                        color: #686c8b;
                     }
                 }
             }
@@ -577,6 +616,6 @@ export default {
     .project-header {
         display: flex;
         flex-direction: column;
-    }    
+    }
 }
 </style>
